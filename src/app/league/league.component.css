@@ -1,0 +1,61 @@
+.league-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.loading, .no-leagues {
+  text-align: center;
+  padding: 20px;
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.league-card {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.league-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.league-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 15px;
+}
+
+.league-header h2 {
+  margin: 0;
+  color: #2c3e50;
+}
+
+.league-details {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-label {
+  font-weight: bold;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.detail-value {
+  font-size: 1.1rem;
+  color: #333;
+}

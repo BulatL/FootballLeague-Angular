@@ -1,1 +1,97 @@
-/* You can add global styles to this file, and also import other style files */
+
+html{
+  font-family: "Open Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 100;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+
+}
+body{
+    margin: 0rem;
+    background-color: #f8f9fa;
+}
+
+.padding-2-5{
+  padding: 2rem 5rem;
+}
+
+.disabled-color{
+  color: #adb5bd;
+}
+
+.highlight-gold-color{
+  color: #ffd700;
+}
+
+.highlight-red-color{
+  color: #ae1822;
+}
+
+.highlight-blue-color{
+  color: #01234c;
+}
+
+.background-gold-color{
+  background-color: #ffd700;
+}
+
+.text-xs{
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
+.text-l{
+  font-size: 1.35rem;
+  font-weight: bold;
+  line-height: 1rem;
+}
+
+.items-center{
+  align-items: center;
+}
+
+.content-center{
+  align-content: center;
+}
+
+.justify-center{
+  justify-content: center;
+}
+
+
+.w-full{
+  width: 100%;
+}
+
+.rounded-lg{
+  border-radius: .5rem;
+}
+
+.display-flex{
+  display: flex;
+}
+
+.gap-1{
+  gap: 1rem;
+}
+
+.justify-content-space-between{
+  justify-content: space-between;
+}
+
+.margin-left-5{
+  margin-left: 5px;
+}
+
+.float-right{
+  float: right;
+}
+
+
+.flex-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+}

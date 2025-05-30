@@ -1,0 +1,164 @@
+.player-image-s{
+  width: 4rem;
+}
+
+.season-leaders-card {
+  max-width: 400px;
+  background: #fff;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 8px;
+  margin-bottom: 16px;
+}
+
+.header h2 {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.icon {
+  font-size: 20px;
+}
+
+.top-player {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.top-player .info {
+  flex: 1;
+}
+
+.firstname {
+  color: #888;
+  margin: 0;
+}
+
+.lastname {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.score {
+  font-size: 32px;
+  font-weight: bold;
+  margin: 4px 0 0 0;
+}
+
+.top-player-img {
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
+  margin-left: auto;
+}
+
+.players-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.player-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #eee;
+  padding: 10px 0;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.rank {
+  font-weight: bold;
+  width: 20px;
+  text-align: right;
+}
+
+.left img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.name {
+  font-weight: 600;
+  margin: 0;
+}
+
+.team {
+  font-size: 12px;
+  color: #777;
+  margin: 0;
+}
+
+.goals {
+  font-weight: bold;
+}
+
+.season-leaders-container {
+  max-width: 450px;
+  margin: auto;
+}
+
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.button-group {
+  display: flex;
+  gap: 6px;
+}
+
+.button-group button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  background-color: #eee;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.button-group button.active {
+  background-color: #7c3aed;
+  color: white;
+}
+
+.season-leaders-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+#season-leader-header{
+  font-size: 2rem;
+  color: #01234c;
+  font-weight: bold;
+}
+
+.season-leader-header{
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+  border-bottom-color: black;
+  margin-bottom: 15px;
+}
+
+/* Rest same as previous CSS (top-player, players-list etc.) */

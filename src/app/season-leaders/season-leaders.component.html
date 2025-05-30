@@ -1,0 +1,44 @@
+<div class="season-leaders-container">
+  <div class="header-row">
+    <h2>Top Strelci</h2>
+    <div class="button-group">
+      <button 
+        [class.active]="category === 'goal'" 
+        (click)="selectCategory('goal')">Goal</button>
+      <button 
+        [class.active]="category === 'assist'" 
+        (click)="selectCategory('assist')">Assist</button>
+      <button 
+        [class.active]="category === 'save'" 
+        (click)="selectCategory('save')">Save</button>
+    </div>
+  </div>
+
+  <div class="season-leaders-card">
+    <div class="season-leader-header">
+        <span class="highlight-blue-color" id="season-leader-header">Top Strelci</span>
+    </div>
+    <div class="top-player">
+      <div class="info">
+        <p class="firstname">{{ topPlayer.firstName }}</p>
+        <h3 class="lastname">{{ topPlayer.lastName }}</h3>
+        <p class="score highlight-gold-color">{{ topPlayer.goals }}</p>
+      </div>
+      <img [src]="topPlayer.image" alt="{{ topPlayer.lastName }}" class="top-player-img" />
+    </div>
+
+    <ul class="players-list">
+      <li *ngFor="let player of players; index as i" class="player-item">
+        <div class="left">
+          <span class="rank">{{ i + 2 }}</span>
+          <img [src]="player.image" alt="{{ player.name }}" />
+          <div>
+            <p class="name highlight-blue-color">{{ player.name }}</p>
+            <p class="team">{{ player.team }}</p>
+          </div>
+        </div>
+        <span class="goals highlight-gold-color">{{ player.goals }}</span>
+      </li>
+    </ul>
+  </div>
+</div>

@@ -1,0 +1,66 @@
+#standing-section{
+    text-align: center;
+    margin: 5rem;
+    width: 50rem;
+}
+.fixtures-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+  }
+
+
+/* fixture card css*/
+.ticker-container {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  background: #f0f0f0;
+  padding: 12px 0;
+}
+
+.ticker-track {
+  display: flex;
+  width: max-content;
+  animation: scroll 30s linear infinite;
+}
+
+.ticker-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin: 0 30px;
+  padding: 8px 20px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  white-space: nowrap;
+}
+
+.team {
+  font-weight: bold;
+  min-width: 50px;
+  text-align: center;
+}
+
+.score {
+  font-weight: bold;
+  color: #e63946;
+  min-width: 40px;
+  text-align: center;
+}
+
+@keyframes scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+/* END fixture card css*/
+
+#standing-container{
+  width: 50rem;
+}
+
+#season-leaders-container{
+  width: 30rem;
+}

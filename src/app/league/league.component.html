@@ -1,0 +1,35 @@
+<div class="league-container">
+  <h1>Football Leagues</h1>
+
+  <div *ngIf="isLoading" class="loading">
+    Loading leagues...
+  </div>
+
+  <div *ngIf="!isLoading && leagues.length === 0" class="no-leagues">
+    No leagues available
+  </div>
+
+  <div *ngFor="let league of leagues" class="league-card">
+    <div class="league-header">
+      <img *ngIf="league.image" [src]="league.image" [alt]="league.name" class="league-image">
+      <h2>{{ league.name }}</h2>
+    </div>
+    
+    <div class="league-details">
+      <div class="detail-item">
+        <span class="detail-label">Aktivni Timovi:</span>
+        <span class="detail-value">{{ league.numberOfTeams }}</span>
+      </div>
+      
+      <div class="detail-item">
+        <span class="detail-label">Odigrane Sezone:</span>
+        <span class="detail-value">{{ league.numberOfSeasons }}</span>
+      </div>
+      
+      <div class="detail-item">
+        <span class="detail-label">Ukupan broj igraca:</span>
+        <span class="detail-value">{{ league.numberOfPlayers }}</span>
+      </div>
+    </div>
+  </div>
+</div>
