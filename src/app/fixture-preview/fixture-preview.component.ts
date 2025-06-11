@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FixturePreviewService } from './fixture-preview.service';
-import { ApiResponse, Fixture } from './../models/fixture.model';
+import { ApiResponse, Fixture } from '../core/models/fixture.model';
 
 @Component({
   selector: 'app-fixture-preview',

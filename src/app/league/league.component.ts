@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LeagueService } from "./league.service";
-import { ApiResponse, League } from './../models/league.model';
+import { ApiResponse, League } from '../core/models/league.model';
 
 @Component({
   selector: 'app-league',

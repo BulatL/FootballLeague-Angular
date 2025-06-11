@@ -111,20 +111,20 @@
 }
 
 .season-leaders-container {
-  max-width: 450px;
+  max-width: 32rem;
   margin: auto;
+  position: relative; 
+  display: inline-block; 
 }
 
-.header-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 12px;
-}
 
 .button-group {
+  position: absolute;
+  top: 0;
+  right: calc(-100% - 12px); /* Aligns directly beside the card */
   display: flex;
-  gap: 6px;
+  flex-direction: column;
+  z-index: 10000;
 }
 
 .button-group button {
@@ -141,7 +141,15 @@
   color: white;
 }
 
-.season-leaders-card {
+
+.button-group button:hover {
+  background-color: #7c3aed; 
+  color: white;               
+  transition: background-color 0.2s ease;
+}
+
+.season-leaders-card {  
+  position: relative; /* needed for absolute children */
   background: #fff;
   border-radius: 16px;
   padding: 20px;

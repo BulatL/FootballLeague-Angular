@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StandingService } from "./standing.service"
-import { SeasonStanding } from './../models/season-standing.model';
+import { SeasonStanding } from '../core/models/season-standing.model';
 
 
 @Component({

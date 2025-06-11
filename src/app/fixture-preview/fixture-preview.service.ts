@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from './../../environment';
-import { ApiResponse, Fixture } from './../models/fixture.model';
+import { ApiResponse, Fixture } from '../core/models/fixture.model';
 
 @Injectable({
     providedIn: 'root'
