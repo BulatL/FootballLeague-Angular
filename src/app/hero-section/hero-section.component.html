@@ -1,1 +1,34 @@
-<p>hero-section works!</p>
+<div class="hero-section">
+  <div class="carousel">
+    <img
+      *ngFor="let image of images; let i = index"
+      [src]="image.src"
+      [class.active]="i === activeIndex"
+      class="carousel-image"
+    />
+  </div>
+
+  <div class="text-overlay">
+     <h1>🏆 {{ leagueName }}</h1>
+    <p>
+      {{ activeTeams }} Active Teams &bull;
+      {{ totalPlayers }} Players &bull;
+      {{ seasonsPlayed }} Seasons Played
+    </p>
+    <h3 class="current-season">📅 Current Season: {{ currentSeason }}</h3>
+    <!-- <div class="buttons">
+      <button class="btn orange">Become a client</button>
+      <button class="btn outline">Explore success stories</button>
+    </div> -->
+  </div>
+
+  <div class="thumbnails">
+    <img
+      *ngFor="let image of images; let i = index"
+      [src]="image.thumb"
+      class="thumb"
+      [class.active]="i === activeIndex"
+      (click)="setActive(i)"
+    />
+  </div>
+</div>

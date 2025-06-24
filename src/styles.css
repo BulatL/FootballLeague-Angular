@@ -1,5 +1,6 @@
 
 html{
+  
   font-family: "Open Sans", sans-serif;
   font-optical-sizing: auto;
   font-weight: 100;
@@ -98,4 +99,8 @@ body{
 
 .position-relative {
   position: relative;
+}
+
+.margin-top-8{
+  margin-top: 8rem;
 }

@@ -1,57 +1,6 @@
 
 <app-navbar></app-navbar>
 
-<div class="display-flex position-relative">
-    <img src="ChatGPT Image Jun 6, 2025, 08_04_17 PM.png" alt="Indoor Football Pitch" id="league-background-img" />
-    
-    <div id="league-info-container">
-      <div id="season-title">Season Name</div>
-      <div class="league-stats">
-        <div class="league-stat">Broj sezona: 9</div>
-        <div class="league-stat">Broj aktivih timova: 23</div>
-        <div class="league-stat">Broj aktivnih igraca: 92</div>
-      </div>
-    </div>
-</div>
+<router-outlet />
 
-<div class="padding-2-5">
-    <!-- <section id="leagues-section">
-        <app-league></app-league>
-    </section> -->
-    
-    
-    <!-- <div class="col">
-        <div class="row">
-            <div class="col-7">
-                <section id="standing-section">
-                    <app-standing></app-standing>
-                </section>
-            </div>
-            <div class="col-5">
-                <section id="leagues-section">
-                    <app-season-leaders></app-season-leaders>
-                </section>
-            </div>
-        </div>
-    </div> -->
-
-    <div class="flex-container">
-        <div id="standing-container">
-            <section id="standing-section">
-                <app-standing></app-standing>
-            </section>
-        </div>
-        <div id="season-leaders-container">
-            <section id="leagues-section">
-                <app-season-leaders></app-season-leaders>
-            </section>
-        </div>
-    </div>
-
-
-
-    <div class="fixtures-container">
-        <app-fixture-preview></app-fixture-preview>
-    </div>
-    <router-outlet />
-</div>
+<app-footer></app-footer>

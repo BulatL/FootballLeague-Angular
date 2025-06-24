@@ -1,17 +1,11 @@
-<div class="season-leaders-container">
-  <div class="button-group">
-    <button 
-      [class.active]="category === 'goal'" 
-      (click)="selectCategory('goal')">Strelci</button>
-    <button 
-      [class.active]="category === 'assist'" 
-      (click)="selectCategory('assist')">Assistenti</button>
-    <button 
-      [class.active]="category === 'save'" 
-      (click)="selectCategory('save')">Golmani</button>
+<div class="container season-leaders-card">
+  <div class="tabs">
+    <div (click)="selectCategory('goal')" [class.active]="category === 'goal'">Strelci</div>
+    <div (click)="selectCategory('assist')" [class.active]="category === 'assist'">Assistencije</div>
+    <div (click)="selectCategory('points')" [class.active]="category === 'points'">Odbrane</div>
   </div>
 
-  <div class="season-leaders-card">
+  <div class="">
     
     <div class="season-leader-header">
         <span class="highlight-blue-color" id="season-leader-header">Top Strelci</span>

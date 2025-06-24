@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LeagueService } from "./league.service";
-import { ApiResponse, League } from '../core/models/league.model';
+import { League } from '../core/models/league.model';
+import { ApiListResponse } from '../shared/api-list-response';
 
 @Component({
   selector: 'app-league',
@@ -23,7 +24,7 @@ export class LeagueComponent implements OnInit {
 
   loadLeagues(): void {
     this.leagueService.getLeagues().subscribe({
-      next: (response: ApiResponse<League>) => {
+      next: (response: ApiListResponse<League>) => {
         console.log(response);
         this.leagues = response.$values;
         this.isLoading = false;

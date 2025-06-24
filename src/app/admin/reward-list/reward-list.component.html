@@ -1,0 +1,39 @@
+<div class="reward-list-container">
+  <h2>Nagrade</h2>
+
+  <div *ngIf="loading" class="status-message">Ucitavanje...</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+
+  
+  <div class="action-bar">
+    <a routerLink="/admin" class="btn btn-secondary">Back to Dashboard</a>
+    <button class="btn btn-primary" (click)="goToCreate()">+ Dodaj novu nagradu</button>
+  </div>
+
+  <div *ngIf="!loading && rewards.length" class="table-wrapper">
+    <table class="styled-table">
+      <thead>
+        <tr>
+          <th>Naziv</th>
+          <th>Slika</th>
+          <th>Da li je za igraca?</th>
+          <th>Akcija</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let reward of rewards">
+          <td>{{ reward.name }}</td>
+          <td><img [src]="getImageUrl(reward.image)" width="40" height="40" class="reward-img" /></td>
+          <td>
+            <span [class.active]="reward.isForPlayer" [class.inactive]="!reward.isForPlayer">
+              {{ reward.isForPlayer ? 'Da' : 'Ne' }}
+            </span>
+          </td>
+          <td>
+            <button class="btn-secondary" (click)="editRewards(reward.id)">Izmeni</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

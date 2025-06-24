@@ -145,7 +145,7 @@ li a {
   outline: none; /* focus:outline-none */
   border: 2px solid transparent; /* default border */
   transition: all 0.2s ease-in-out; /* transition-all duration-200 */
-  width: 6rem; /* w-48 */
+  width: 8.5rem; /* w-48 */
 }
 
 .navbar .search-input:focus {
@@ -177,6 +177,7 @@ li a {
   transition: color 0.2s ease-in-out; /* transition-colors duration-200 */
   font-weight: 500; /* font-medium */
   text-decoration: none; /* Remove underline */
+  cursor: pointer;
 }
 
 .navbar .nav-link:hover {
@@ -289,7 +290,7 @@ li a {
       padding-right: 3rem; /* md:px-12 */
   }
   .navbar .search-input {
-      width: 6rem; /* md:w-64 */
+      width: 8.5rem; /* md:w-64 */
   }
   .navbar .nav-links {
       display: flex; /* md:flex */

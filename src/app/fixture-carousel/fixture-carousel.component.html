@@ -1,0 +1,29 @@
+<h1 class="highlight-blue-color">
+  Rezultati
+</h1>
+
+<div class="fixture-marquee">
+  <div class="fixture-track" *ngFor="let duplicate of [1, 2]" [attr.aria-hidden]="duplicate === 2">
+    <div class="fixture-card" *ngFor="let fixture of fixtures; trackBy: trackByFixtureId">
+      <div class="round">
+        <img src="soccer-ball-16.png" alt="Round" />
+        <span class="margin-left-5">Kolo: {{ fixture.matchDay }}</span>
+      </div>
+      <div class="teams-container">
+        <div class="team">
+          <img class="fixture-card-team-logo" [src]="fixture.homeTeamLogo" />
+          <div class="team-name margin-left-5">{{ fixture.homeTeamShortName }}</div>
+        </div>
+
+        <div class="score">
+          <span>{{ fixture.homeTeamScore ?? '-' }}</span> - <span>{{ fixture.awayTeamScore ?? '-' }}</span>
+        </div>
+
+        <div class="team">
+          <img class="fixture-card-team-logo" [src]="fixture.awayTeamLogo" />
+          <div class="team-name margin-left-5">{{ fixture.awayTeamShortName }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

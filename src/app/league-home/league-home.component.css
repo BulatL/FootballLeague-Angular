@@ -1,0 +1,26 @@
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem; /* space between the two sections */
+  justify-content: center; /* center horizontally */
+  margin: 2rem 0;
+}
+
+#standing-container,
+#season-leaders-container {
+  flex: 1 1 320px; /* grow, shrink, base width */
+  max-width: 600px; /* prevent them from growing too wide */
+}
+
+/* Stack vertically on small screens */
+@media (max-width: 768px) {
+  .flex-container {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  #standing-container,
+  #season-leaders-container {
+    max-width: 100%;
+  }
+}

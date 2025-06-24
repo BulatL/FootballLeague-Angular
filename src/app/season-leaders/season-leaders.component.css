@@ -1,31 +1,75 @@
-.player-image-s{
-  width: 4rem;
+.season-leaders-container {
+  max-width: 600px;
+  margin: auto;
+  position: relative;
+  display: block; /* changed from inline-block */
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.button-group {
+  position: absolute;
+  top: 1rem;
+  right: -140px; /* align beside the card */
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.button-group button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  background-color: #eee;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.button-group button.active {
+  background-color: #7c3aed;
+  color: white;
+}
+
+.button-group button:hover {
+  background-color: #7c3aed;
+  color: white;
+}
+
+/* Responsive adjustment for button group on small screens */
+@media (max-width: 768px) {
+  .button-group {
+    position: static;
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 1rem;
+    right: auto;
+    top: auto;
+  }
+
+  .button-group button {
+    flex: 1 1 auto;
+    margin: 0 0.25rem;
+  }
 }
 
 .season-leaders-card {
-  max-width: 400px;
   background: #fff;
   border-radius: 16px;
   padding: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+  position: relative;
 }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 8px;
-  margin-bottom: 16px;
+.season-leader-header {
+  border-bottom: 2px solid black;
+  margin-bottom: 15px;
 }
 
-.header h2 {
-  font-size: 20px;
+#season-leader-header {
+  font-size: 2rem;
+  color: #01234c;
   font-weight: bold;
-}
-
-.icon {
-  font-size: 20px;
 }
 
 .top-player {
@@ -110,63 +154,64 @@
   font-weight: bold;
 }
 
-.season-leaders-container {
-  max-width: 32rem;
-  margin: auto;
-  position: relative; 
-  display: inline-block; 
-}
 
 
-.button-group {
-  position: absolute;
-  top: 0;
-  right: calc(-100% - 12px); /* Aligns directly beside the card */
+
+/*
+
+*/
+
+.tabs {
   display: flex;
-  flex-direction: column;
-  z-index: 10000;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 4px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  width: 100%;
 }
 
-.button-group button {
-  padding: 6px 12px;
-  border: none;
-  border-radius: 6px;
-  background-color: #eee;
+.tabs div {
   cursor: pointer;
   font-weight: 500;
+  color: #555;
+  transition: all 0.3s ease;
+  margin: 0 2px;
+  text-align: center;
+  padding: 8px 0;
+  flex: 1; /* Default equal width */
 }
 
-.button-group button.active {
-  background-color: #7c3aed;
+.tabs div:not(.active) {
+  flex: 0 0 20%; /* Fixed 20% width for inactive tabs */
+}
+
+.tabs div.active {
+  flex: 0 0 60%; /* Fixed 60% width for active tab */
+  background: #01234c;
   color: white;
+  font-weight: 600;
+  box-shadow: 0 2px 4px rgba(124, 58, 237, 0.2);
+  border-radius: 6px;
 }
 
-
-.button-group button:hover {
-  background-color: #7c3aed; 
-  color: white;               
-  transition: background-color 0.2s ease;
-}
-
-.season-leaders-card {  
-  position: relative; /* needed for absolute children */
-  background: #fff;
-  border-radius: 16px;
-  padding: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
-}
-
-#season-leader-header{
-  font-size: 2rem;
+.tabs div:hover:not(.active) {
+  background: rgba(124, 58, 237, 0.1);
   color: #01234c;
-  font-weight: bold;
 }
 
-.season-leader-header{
-  border-bottom-width: 2px;
-  border-bottom-style: solid;
-  border-bottom-color: black;
-  margin-bottom: 15px;
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .tabs {
+    justify-content: center;
+  }
+  
+  .tabs div,
+  .tabs div:not(.active),
+  .tabs div.active {
+    flex: 1; /* Equal width on mobile */
+    padding: 8px 12px;
+    font-size: 14px;
+  }
 }
-
-/* Rest same as previous CSS (top-player, players-list etc.) */

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FixturePreviewService } from './fixture-preview.service';
-import { ApiResponse, Fixture } from '../core/models/fixture.model';
+import { Fixture } from '../core/models/fixture.model';
+import { ApiListResponse } from '../shared/api-list-response';
 
 @Component({
   selector: 'app-fixture-preview',
@@ -20,7 +21,7 @@ export class FixturePreviewComponent implements OnInit {
 
   loadFixtures(): void{
     this.fixtureService.getFixtures().subscribe({
-      next: (response: ApiResponse<Fixture>) => {
+      next: (response: ApiListResponse<Fixture>) => {
         this.fixtures = response.$values
         this.isLoading = false;
       },

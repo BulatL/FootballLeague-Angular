@@ -1,0 +1,35 @@
+<div class="player-list-container">
+  <h2>Igraci</h2>
+
+  <div *ngIf="loading" class="status-message">Ucitavanje...</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+
+  <div class="action-bar">
+    <button class="btn-primary" (click)="goToCreate()">+ Dodaj novog igraca</button>
+  </div>
+
+  <div *ngIf="!loading && players.length" class="table-wrapper">
+    <table class="styled-table">
+      <thead>
+        <tr>
+          <th>Slika</th>
+          <th>Ime</th>
+          <th>Datum rodjenja</th>
+          <th>Broj telefona</th>
+          <th>Akcije</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let player of players">
+          <td><img [src]="player.image" width="40" height="40" class="player-img" /></td>
+          <td>{{ player.firstName }} {{ player.lastName }}</td>
+          <td>{{ player.birthDate | date: 'mediumDate' }}</td>
+          <td>{{ player.cellNo }}</td>
+          <td>
+            <button class="btn-secondary" (click)="editPlayer(player.id)">Edit</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

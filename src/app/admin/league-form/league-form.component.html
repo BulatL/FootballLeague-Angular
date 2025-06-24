@@ -1,0 +1,35 @@
+<form [formGroup]="form" (ngSubmit)="submit()" class="league-form">
+
+  <div *ngIf="error" class="error">{{ error }}</div>
+
+  <div class="form-group">
+    <label for="name">Naziv:</label>
+    <input 
+      id="name" 
+      formControlName="name" 
+      class="form-control"
+      [class.is-invalid]="
+        (form.get('name')?.invalid && (form.get('name')?.touched || form.get('name')?.dirty)) 
+        || nameErrorMessage
+      "
+    />
+    <div *ngIf="form.get('name')?.invalid && (form.get('name')?.touched || form.get('name')?.dirty)" class="error">
+      Naziv je obavezan.
+    </div>
+    <div *ngIf="nameErrorMessage" class="error">{{ nameErrorMessage }}</div>
+  </div>
+
+  <div class="form-group">
+    <label for="image">Slika:</label>
+    <input id="image" type="file" (change)="onFileSelected($event)" class="form-control-file" />
+  </div>
+
+  <div class="form-group form-check">
+    <input id="isActive" type="checkbox" formControlName="isActive" class="form-check-input" />
+    <label for="isActive" class="form-check-label">Aktivna?</label>
+  </div>
+
+  <button type="submit" class="btn btn-primary" [disabled]="form.invalid || loading">
+    {{ isEdit ? 'Update' : 'Create' }} Liga
+  </button>
+</form>

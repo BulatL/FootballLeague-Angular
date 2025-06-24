@@ -1,0 +1,37 @@
+<div class="league-list-container">
+  <h2>Lige</h2>
+
+  <div *ngIf="loading" class="status-message">Ucitavanje...</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+
+  <div class="action-bar">
+    <button class="btn-primary" (click)="goToCreate()">+ Dodaj novu ligu</button>
+  </div>
+
+  <div *ngIf="!loading && leagues.length" class="table-wrapper">
+    <table class="styled-table">
+      <thead>
+        <tr>
+          <th>Naziv</th>
+          <th>Slika</th>
+          <th>Aktivna?</th>
+          <th>Akcija</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let league of leagues">
+          <td>{{ league.name }}</td>
+          <td><img [src]="league.image" width="40" height="40" class="league-img" /></td>
+          <td>
+            <span [class.active]="league.isActive" [class.inactive]="!league.isActive">
+              {{ league.isActive ? 'Da' : 'Ne' }}
+            </span>
+          </td>
+          <td>
+            <button class="btn-secondary" (click)="editLeague(league.id)">Edit</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

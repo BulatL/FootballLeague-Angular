@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from './../../environment';
-import { ApiResponse, Fixture } from '../core/models/fixture.model';
+import { Fixture } from '../core/models/fixture.model';
+import { ApiListResponse } from '../shared/api-list-response';
 
 @Injectable({
     providedIn: 'root'
@@ -13,7 +14,7 @@ import { ApiResponse, Fixture } from '../core/models/fixture.model';
   
     constructor(private http: HttpClient) {}
   
-    getFixtures(): Observable<ApiResponse<Fixture>> {
-        return this.http.get<ApiResponse<Fixture>>(this.apiUrl);
+    getFixtures(): Observable<ApiListResponse<Fixture>> {
+        return this.http.get<ApiListResponse<Fixture>>(this.apiUrl);
       }
   }
