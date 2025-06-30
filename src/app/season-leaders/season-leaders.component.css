@@ -189,9 +189,9 @@
 
 .tabs div.active {
   flex: 0 0 60%; /* Fixed 60% width for active tab */
-  background: #01234c;
-  color: white;
-  font-weight: 600;
+  background: linear-gradient(90deg, #01234c, #00ff88, #01234c);
+  color: #01234c;
+  font-weight: 1000;
   box-shadow: 0 2px 4px rgba(124, 58, 237, 0.2);
   border-radius: 6px;
 }

@@ -1,0 +1,150 @@
+<div class="player-info-container">
+      <!-- Player Header Section -->
+      <div class="player-header">
+        <div class="player-image-container">
+          <img [src]="player.image" [alt]="player.firstName + ' ' + player.lastName" class="player-image">
+          <div class="dream-points-badge">
+            <span class="dream-points-label">Dream Points</span>
+            <span class="dream-points-value">{{ player.dreamPoints }}</span>
+          </div>
+        </div>
+        
+        <div class="player-basic-info">
+          <h1 class="player-name">{{ player.firstName }} {{ player.lastName }}</h1>
+          
+          <!-- Quick Statistics Cards -->
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-icon">🎮</div>
+              <div class="stat-content">
+                <span class="stat-value">{{ player.statistics.gamesPlayed }}</span>
+                <span class="stat-label">Utakmice</span>
+              </div>
+            </div>
+            
+            <div class="stat-card">
+              <div class="stat-icon">🏆</div>
+              <div class="stat-content">
+                <span class="stat-value">{{ player.statistics.wins }}</span>
+                <span class="stat-label">Pobede</span>
+              </div>
+            </div>
+            
+            <div class="stat-card">
+              <div class="stat-icon">⚽</div>
+              <div class="stat-content">
+                <span class="stat-value">{{ player.statistics.goals }}</span>
+                <span class="stat-label">Golovi</span>
+              </div>
+            </div>
+            
+            <div class="stat-card">
+              <div class="stat-icon">🎯</div>
+              <div class="stat-content">
+                <span class="stat-value">{{ player.statistics.assists }}</span>
+                <span class="stat-label">Asistencije</span>
+              </div>
+            </div>
+            
+            <div class="stat-card">
+              <div class="stat-icon">🏅</div>
+              <div class="stat-content">
+                <span class="stat-value">{{ player.statistics.trophiesCount }}</span>
+                <span class="stat-label">Trofej</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Fixtures Section -->
+      <div class="section">
+        <h2 class="section-title">
+          <span class="title-icon">📅</span>
+          Poslednje Utakmice
+        </h2>
+        
+        <div class="fixtures-container">
+          <div class="fixture-card" *ngFor="let fixture of player.fixtures">
+            <div class="fixture-header">
+              <span class="match-day">Kolo {{ fixture.matchDay }}</span>
+              <span class="competition">{{ fixture.competition }}</span>
+              <span class="fixture-date">{{ fixture.date | date:'dd.MM.yyyy' }}</span>
+            </div>
+            
+            <div class="fixture-teams">
+              <div class="team" [class.player-team]="fixture.playerTeam === fixture.homeTeam">
+                <img [src]="fixture.homeTeamLogo" [alt]="fixture.homeTeam" class="team-logo">
+                <span class="team-name">{{ fixture.homeTeam }}</span>
+              </div>
+              
+              <div class="fixture-score">
+                <span class="score">{{ fixture.homeScore }} - {{ fixture.awayScore }}</span>
+              </div>
+              
+              <div class="team" [class.player-team]="fixture.playerTeam === fixture.awayTeam">
+                <img [src]="fixture.awayTeamLogo" [alt]="fixture.awayTeam" class="team-logo">
+                <span class="team-name">{{ fixture.awayTeam }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Trophies Section -->
+      <div class="section">
+        <h2 class="section-title">
+          <span class="title-icon">🏆</span>
+          Trofeji
+        </h2>
+        
+        <div class="trophies-grid">
+          <div class="trophy-card" *ngFor="let trophy of player.trophies">
+            <div class="trophy-image-container">
+              <img [src]="trophy.image" [alt]="trophy.name" class="trophy-image">
+            </div>
+            <div class="trophy-info">
+              <h3 class="trophy-name">{{ trophy.name }}</h3>
+              <span class="trophy-season">{{ trophy.season }}</span>
+              <p class="trophy-description" *ngIf="trophy.description">{{ trophy.description }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Season Statistics Table -->
+      <div class="section">
+        <h2 class="section-title">
+          <span class="title-icon">📊</span>
+          Statistike po Sezonama
+        </h2>
+        
+        <div class="table-container">
+          <table class="season-stats-table">
+            <thead>
+              <tr>
+                <th>Sezona</th>
+                <th>Tim</th>
+                <th>Utakmice</th>
+                <th>Pobede</th>
+                <th>Golovi</th>
+                <th>Asistencije</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let season of player.seasonStats">
+                <td class="season-cell">{{ season.season }}</td>
+                <td class="team-cell">
+                  <img [src]="season.teamLogo" [alt]="season.team" class="table-team-logo">
+                  {{ season.team }}
+                </td>
+                <td>{{ season.gamesPlayed }}</td>
+                <td>{{ season.wins }}</td>
+                <td>{{ season.goals }}</td>
+                <td>{{ season.assists }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>

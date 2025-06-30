@@ -1,16 +1,88 @@
-.fixture-marquee {
-  font-size: 15px;
-  padding-block: 8px;
-  overflow: hidden;
-  user-select: none;
-  --gap: 15px;
-  display: flex;
-  gap: var(--gap);
-  background: #f7f8fd;
-  border-radius: 8px;
-  margin: 20px 0;
+/* Main Title Styling */
+.highlight-blue-color {
+  color: #01234c;
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin: 30px 0;
+  background: linear-gradient(135deg, #01234c 0%, #0a3d6b 50%, #01234c 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 4px 8px rgba(1, 35, 76, 0.3);
+  position: relative;
 }
 
+.highlight-blue-color::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 4px;
+  background: linear-gradient(90deg, #01234c, #00ff88, #01234c);
+  border-radius: 2px;
+  animation: titleUnderline 2s ease-in-out infinite alternate;
+}
+
+@keyframes titleUnderline {
+  0% { width: 80px; opacity: 0.7; }
+  100% { width: 120px; opacity: 1; }
+}
+
+/* Enhanced Fixture Marquee Container */
+.fixture-marquee {
+  font-size: 15px;
+  padding: 20px 0;
+  overflow: hidden;
+  user-select: none;
+  --gap: 20px;
+  display: flex;
+  gap: var(--gap);
+  background: linear-gradient(135deg, #f7f8fd 0%, #e8ecf7 50%, #f7f8fd 100%);
+  border: 2px solid rgba(1, 35, 76, 0.1);
+  border-radius: 15px;
+  margin: 20px 0;
+  position: relative;
+  box-shadow: 
+    0 8px 32px rgba(1, 35, 76, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+/* Animated border effect */
+.fixture-marquee::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #01234c, #00ff88, #00ccff, #01234c);
+  background-size: 300% 100%;
+  animation: borderFlow 3s linear infinite;
+  border-radius: 15px 15px 0 0;
+}
+
+.fixture-marquee::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #01234c, #00ff88, #00ccff, #01234c);
+  background-size: 300% 100%;
+  animation: borderFlow 3s linear infinite reverse;
+  border-radius: 0 0 15px 15px;
+}
+
+@keyframes borderFlow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+/* Fixture Track */
 .fixture-track {
   list-style: none;
   flex-shrink: 0;
@@ -18,7 +90,8 @@
   display: flex;
   align-items: center;
   gap: var(--gap);
-  animation: scroll 30s linear infinite;
+  animation: scroll 40s linear infinite;
+  padding: 0 10px;
 }
 
 .fixture-marquee:hover .fixture-track {
@@ -26,62 +99,291 @@
 }
 
 @keyframes scroll {
-  to {
-    transform: translateX(calc(-100% - var(--gap)));
-  }
+  0% { transform: translateX(0); }
+  100% { transform: translateX(calc(-100% - var(--gap))); }
 }
 
+/* Enhanced Fixture Card */
 .fixture-card {
-  background: #01234c;
-  border-radius: 10px;
-  padding: 10px;
-  width: 15rem;
+  background: linear-gradient(145deg, #01234c 0%, #0a3d6b 50%, #01234c 100%);
+  border-radius: 15px;
+  padding: 18px;
+  width: 16rem;
   color: white;
   text-align: center;
   flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 10px 30px rgba(1, 35, 76, 0.4),
+    0 1px 8px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
 }
 
+/* Animated background pattern */
+.fixture-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: 
+    radial-gradient(circle at 30% 30%, rgba(0, 255, 136, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 70% 70%, rgba(0, 204, 255, 0.1) 0%, transparent 50%);
+  animation: patternRotate 15s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes patternRotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.fixture-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Hover effects */
+.fixture-card:hover {
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 
+    0 20px 40px rgba(1, 35, 76, 0.5),
+    0 8px 16px rgba(0, 255, 136, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  border-color: rgba(0, 255, 136, 0.3);
+}
+
+/* Round Section */
 .round {
-  font-size: 0.8rem;
-  color: #ff5e5e;
-  margin-bottom: 5px;
+  font-size: 0.85rem;
+  color: #00ff88;
+  margin-bottom: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
+  background: rgba(0, 255, 136, 0.1);
+  padding: 8px 12px;
+  border-radius: 20px;
+  font-weight: 600;
+  border: 1px solid rgba(0, 255, 136, 0.3);
+  backdrop-filter: blur(5px);
 }
 
+.round img {
+  width: 16px;
+  height: 16px;
+  filter: brightness(0) saturate(100%) invert(84%) sepia(29%) saturate(7485%) hue-rotate(104deg) brightness(104%) contrast(101%);
+  animation: ballSpin 4s linear infinite;
+}
+
+@keyframes ballSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Teams Container */
 .teams-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin: 15px 0;
+  padding: 12px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+/* Team Styling */
 .team {
-  text-align: center;
   display: flex;
-  justify-content: center;
-  font-weight: bold;
-  min-width: 50px;
-  text-align: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  transition: all 0.3s ease;
+}
+
+.team:hover {
+  transform: scale(1.1);
 }
 
 .team-name {
   font-weight: bold;
-  font-size: 1rem;
+  font-size: 0.9rem;
+  color: #ffffff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  transition: color 0.3s ease;
 }
 
+.team:hover .team-name {
+  color: #00ff88;
+}
+
+/* Team Logo */
+.fixture-card-team-logo {
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  padding: 2px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  transition: all 0.3s ease;
+  object-fit: cover;
+}
+
+.fixture-card-team-logo:hover {
+  border-color: #00ff88;
+  background: rgba(0, 255, 136, 0.1);
+  transform: rotate(360deg) scale(1.1);
+  box-shadow: 0 0 15px rgba(0, 255, 136, 0.4);
+}
+
+/* Score Section */
 .score {
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   font-weight: bold;
   color: #ffd700;
-  min-width: 40px;
-  text-align: center;
+  text-shadow: 0 2px 8px rgba(255, 215, 0, 0.5);
+  background: rgba(255, 215, 0, 0.1);
+  padding: 10px 15px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  backdrop-filter: blur(5px);
+  min-width: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
 }
 
-.fixture-card-team-logo {
-  height: 30px;
+.score:hover {
+  background: rgba(255, 215, 0, 0.2);
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
 }
 
+/* Utility Classes */
 .margin-left-5 {
   margin-left: 5px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .highlight-blue-color {
+    font-size: 2rem;
+  }
+  
+  .fixture-card {
+    width: 14rem;
+    padding: 15px;
+  }
+  
+  .team-name {
+    font-size: 0.8rem;
+  }
+  
+  .score {
+    font-size: 1.4rem;
+    padding: 8px 12px;
+  }
+  
+  .fixture-card-team-logo {
+    height: 30px;
+    width: 30px;
+  }
+  
+  .fixture-track {
+    animation-duration: 35s;
+  }
+}
+
+@media (max-width: 480px) {
+  .highlight-blue-color {
+    font-size: 1.6rem;
+    margin: 20px 0;
+  }
+  
+  .fixture-card {
+    width: 12rem;
+    padding: 12px;
+  }
+  
+  .teams-container {
+    margin: 10px 0;
+    padding: 8px 0;
+  }
+  
+  .round {
+    font-size: 0.75rem;
+    padding: 6px 10px;
+  }
+  
+  .fixture-track {
+    animation-duration: 30s;
+  }
+}
+
+/* Performance Optimizations */
+.fixture-marquee {
+  will-change: scroll-position;
+}
+
+.fixture-track {
+  will-change: transform;
+}
+
+.fixture-card {
+  will-change: transform;
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .fixture-track {
+    animation-duration: 60s;
+  }
+  
+  .round img {
+    animation: none;
+  }
+  
+  .fixture-card::before {
+    animation: none;
+  }
+  
+  .titleUnderline {
+    animation: none;
+  }
+  
+  .borderFlow {
+    animation: none;
+  }
+}
+
+/* Focus states for accessibility */
+.fixture-card:focus-within {
+  outline: 2px solid #00ff88;
+  outline-offset: 2px;
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .fixture-card {
+    border: 2px solid #ffffff;
+    background: #01234c;
+  }
+  
+  .round {
+    background: #00ff88;
+    color: #01234c;
+  }
+  
+  .score {
+    background: #ffd700;
+    color: #01234c;
+  }
 }

@@ -8,12 +8,14 @@ import { TeamListComponent } from './admin/team-list/team-list.component';
 import { PlayerListComponent } from './admin/player-list/player-list.component';
 import { RewardListComponent } from './admin/reward-list/reward-list.component';
 import { RewardFormComponent } from './admin/reward-form/reward-form.component';
+import { PlayerInfoComponent } from './player-info/player-info.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'league-home', pathMatch: 'full' },
   { path: 'Index', redirectTo: 'league-home', pathMatch: 'full' },
   { path: 'Home', redirectTo: 'league-home', pathMatch: 'full' },
   { path: 'league-home', component: LeagueHomeComponent },
+  { path: 'player-info', component: PlayerInfoComponent },
    {
     path: 'admin',
     children: [
