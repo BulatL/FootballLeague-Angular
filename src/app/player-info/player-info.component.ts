@@ -1,7 +1,34 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-
+export interface CurrentSeasonStats {
+  general: {
+    matches: number;
+    wins: number;
+    losses: number;
+    draws: number;
+    dreamTeamPts: number;
+    dreamTeamUtakmice: number;
+    trophies: number;
+  };
+  performance: {
+    scoredGoals: number;
+    assists: number;
+    shotsOnTarget: number;
+    autoGoals: number;
+    goalPerMatch: number;
+    winPercentage: number;
+  };
+  discipline: {
+    fouls: number;
+    yellowCards: number;
+    redCards: number;
+  };
+  penalties: {
+    scored7m: number;
+    scored10m: number;
+  };
+}
 export interface Player {
   id: number;
   firstName: string;
@@ -9,6 +36,7 @@ export interface Player {
   image: string;
   dreamPoints: number;
   statistics: PlayerStatistics;
+  currentSeasonStats: CurrentSeasonStats;
   fixtures: PlayerFixture[];
   trophies: Trophy[];
   seasonStats: SeasonStats[];
@@ -68,7 +96,7 @@ export class PlayerInfoComponent {
     id: 1,
     firstName: "Marko",
     lastName: "Petrović",
-    image: "default-player.png",
+    image: "https://via.placeholder.com/200x200/01234c/ffffff?text=MP",
     dreamPoints: 1250,
     statistics: {
       gamesPlayed: 45,
@@ -76,6 +104,34 @@ export class PlayerInfoComponent {
       goals: 15,
       assists: 8,
       trophiesCount: 3
+    },
+    currentSeasonStats: {
+      general: {
+        matches: 5,
+        wins: 4,
+        losses: 1,
+        draws: 0,
+        dreamTeamPts: 61,
+        dreamTeamUtakmice: 12.2,
+        trophies: 2
+      },
+      performance: {
+        scoredGoals: 12,
+        assists: 6,
+        shotsOnTarget: 18,
+        autoGoals: 3,
+        goalPerMatch: 2.4,
+        winPercentage: 80
+      },
+      discipline: {
+        fouls: 8,
+        yellowCards: 2,
+        redCards: 0
+      },
+      penalties: {
+        scored7m: 3,
+        scored10m: 1
+      }
     },
     fixtures: [
       {

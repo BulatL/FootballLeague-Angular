@@ -285,6 +285,8 @@
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  flex: 0 0 calc(100% - 1.5rem);
+  max-width: calc(100% - 1.5rem);
 }
 
 .trophy-card:hover {
@@ -483,5 +485,237 @@
     flex-direction: column;
     gap: 0.25rem;
     text-align: center;
+  }
+}
+
+.stat-number-circle {
+  font-size: 1.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  width: 40px;
+  width: 40px;
+  height: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #01234c 0%, #0a3d6b 100%);
+  background: linear-gradient(135deg, #01234c 0%, #0a3d6b 100%);
+  color: white;
+  border-radius: 50%;
+  border-radius: 50%;
+  display: flex;
+  display: flex;
+  align-items: center;
+  align-items: center;
+  justify-content: center;
+  justify-content: center;
+}
+
+/* Alternative Option 2: Colored Dots */
+.stat-color-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.stat-color-dot.games { background: #01234c; }
+.stat-color-dot.wins { background: #00ff88; }
+.stat-color-dot.goals { background: #ff6b6b; }
+.stat-color-dot.assists { background: #ffd700; }
+.stat-color-dot.trophies { background: #9b59b6; }
+/* Alternative Option 3: Letter Badges */
+.stat-letter-badge {
+  font-size: 1.2rem;
+  font-weight: bold;
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #01234c 0%, #0a3d6b 100%);
+  color: white;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* Alternative Option 4: No Visual Element */
+.stat-card.no-visual .stat-content {
+  margin-left: 0;
+}
+/* Alternative Option 5: Vertical Lines */
+.stat-vertical-line {
+  width: 4px;
+  height: 40px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.stat-vertical-line.games { background: #01234c; }
+.stat-vertical-line.wins { background: #00ff88; }
+.stat-vertical-line.goals { background: #ff6b6b; }
+.stat-vertical-line.assists { background: #ffd700; }
+.stat-vertical-line.trophies { background: #9b59b6; }
+
+
+/* Current Season Statistics */
+.current-stats-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+.stats-category {
+  background: rgba(1, 35, 76, 0.03);
+  border: 1px solid rgba(1, 35, 76, 0.1);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+}
+.stats-category:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(1, 35, 76, 0.1);
+  border-color: rgba(1, 35, 76, 0.2);
+}
+.category-title {
+  color: #01234c;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 0 0 1rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid rgba(1, 35, 76, 0.1);
+}
+.category-icon {
+  font-size: 1.1rem;
+  width: 30px;
+  height: 30px;
+  background: linear-gradient(135deg, #01234c 0%, #0a3d6b 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.stats-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid rgba(1, 35, 76, 0.05);
+  transition: all 0.3s ease;
+}
+.stat-row:hover {
+  background: rgba(1, 35, 76, 0.02);
+  padding-left: 0.5rem;
+  border-radius: 6px;
+}
+.stat-row:last-child {
+  border-bottom: none;
+}
+.stat-name {
+  color: #333;
+  font-size: 0.9rem;
+  font-weight: 500;
+  flex: 1;
+}
+.stat-value {
+  color: #01234c;
+  font-weight: bold;
+  font-size: 1rem;
+  text-align: right;
+  min-width: 50px;
+}
+/* Special styling for different stat types */
+.stat-value.highlighted {
+  background: linear-gradient(135deg, #00ff88 0%, #00ccff 100%);
+  color: #01234c;
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  box-shadow: 0 2px 8px rgba(0, 255, 136, 0.2);
+}
+.stat-value.trophy-count {
+  background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+  color: #01234c;
+  padding: 4px 8px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(255, 215, 0, 0.3);
+}
+.stat-value.performance-stat {
+  background: rgba(1, 35, 76, 0.1);
+  color: #01234c;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-weight: bold;
+}
+.stat-value.percentage {
+  color: #00ff88;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+.stat-value.yellow-card {
+  background: #ffd700;
+  color: #01234c;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  box-shadow: 0 2px 4px rgba(255, 215, 0, 0.3);
+}
+.stat-value.red-card {
+  background: #ff6b6b;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  box-shadow: 0 2px 4px rgba(255, 107, 107, 0.3);
+}
+.stat-value small {
+  font-size: 0.7rem;
+  opacity: 0.8;
+}
+/* Animation for stats on hover */
+.stats-category:hover .stat-row {
+  animation: statsHighlight 0.5s ease-in-out;
+}
+@keyframes statsHighlight {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(2px); }
+  100% { transform: translateX(0); }
+}
+/* Responsive design for current season stats */
+@media (max-width: 768px) {
+  .current-stats-container {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .stats-category {
+    padding: 1rem;
+  }
+  
+  .category-title {
+    font-size: 1.1rem;
+  }
+  
+  .stat-name {
+    font-size: 0.85rem;
+  }
+  
+  .stat-value {
+    font-size: 0.9rem;
+  }
+}
+@media (max-width: 480px) {
+  .stat-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.3rem;
+    text-align: left;
+  }
+  
+  .stat-value {
+    align-self: flex-end;
   }
 }

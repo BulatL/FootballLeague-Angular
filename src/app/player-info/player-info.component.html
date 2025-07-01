@@ -56,6 +56,127 @@
           </div>
         </div>
       </div>
+      <!-- Current Season Statistics Section -->
+      <div class="section">
+        <h2 class="section-title">
+          <span class="title-icon">📊</span>
+          Statistika trenutne sezone
+        </h2>
+        
+        <div class="current-stats-container">
+          <!-- General Stats -->
+          <div class="stats-category">
+            <h3 class="category-title">
+              <span class="category-icon">⚽</span>
+              Generalno
+            </h3>
+            <div class="stats-list">
+              <div class="stat-row">
+                <span class="stat-name">Utakmice</span>
+                <span class="stat-value">{{ player.currentSeasonStats.general.matches }}</span>
+              </div>
+              <div class="stat-row">
+                <span class="stat-name">Pobede</span>
+                <span class="stat-value">{{ player.currentSeasonStats.general.wins }}</span>
+              </div>
+              <div class="stat-row">
+                <span class="stat-name">Izgubljeno</span>
+                <span class="stat-value">{{ player.currentSeasonStats.general.losses }}</span>
+              </div>
+              <div class="stat-row">
+                <span class="stat-name">Nerešeno</span>
+                <span class="stat-value">{{ player.currentSeasonStats.general.draws }}</span>
+              </div>
+              <div class="stat-row">
+                <span class="stat-name">Dream Team pts</span>
+                <span class="stat-value highlighted">{{ player.currentSeasonStats.general.dreamTeamPts }} <small>pts</small></span>
+              </div>
+              <div class="stat-row">
+                <span class="stat-name">Dream Team / Utakmice</span>
+                <span class="stat-value highlighted">{{ player.currentSeasonStats.general.dreamTeamUtakmice }}</span>
+              </div>
+              <div class="stat-row">
+                <span class="stat-name">Trofeji</span>
+                <span class="stat-value trophy-count">{{ player.currentSeasonStats.general.trophies }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Performance Stats -->
+          <div class="stats-category">
+            <h3 class="category-title">
+              <span class="category-icon">🎯</span>
+              Igra
+            </h3>
+            <div class="stats-list">
+              <div class="stat-row">
+                <span class="stat-name">Postignuti Golovi</span>
+                <span class="stat-value">{{ player.currentSeasonStats.performance.scoredGoals }}</span>
+              </div>
+              <div class="stat-row">
+                <span class="stat-name">Asistencije</span>
+                <span class="stat-value">{{ player.currentSeasonStats.performance.assists }}</span>
+              </div>
+              <div class="stat-row">
+                <span class="stat-name">Udarac U Okvir</span>
+                <span class="stat-value">{{ player.currentSeasonStats.performance.shotsOnTarget }}</span>
+              </div>
+              <div class="stat-row">
+                <span class="stat-name">Broj Udaraca Za Gol</span>
+                <span class="stat-value">{{ player.currentSeasonStats.performance.autoGoals }}</span>
+              </div>
+              <div class="stat-row">
+                <span class="stat-name">Gol po utakmici</span>
+                <span class="stat-value performance-stat">{{ player.currentSeasonStats.performance.goalPerMatch }}</span>
+              </div>
+              <div class="stat-row">
+                <span class="stat-name">% Pobeda</span>
+                <span class="stat-value percentage">{{ player.currentSeasonStats.performance.winPercentage }}%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Discipline Stats -->
+          <div class="stats-category">
+            <h3 class="category-title">
+              <span class="category-icon">🟨</span>
+              Disciplina
+            </h3>
+            <div class="stats-list">
+              <div class="stat-row">
+                <span class="stat-name">Faulovi</span>
+                <span class="stat-value">{{ player.currentSeasonStats.discipline.fouls }}</span>
+              </div>
+              <div class="stat-row">
+                <span class="stat-name">Žuti Karton</span>
+                <span class="stat-value yellow-card">{{ player.currentSeasonStats.discipline.yellowCards }}</span>
+              </div>
+              <div class="stat-row">
+                <span class="stat-name">Crveni Karton</span>
+                <span class="stat-value red-card">{{ player.currentSeasonStats.discipline.redCards }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Penalties Stats -->
+          <div class="stats-category">
+            <h3 class="category-title">
+              <span class="category-icon">🥅</span>
+              Penali
+            </h3>
+            <div class="stats-list">
+              <div class="stat-row">
+                <span class="stat-name">Golovi sa Penala 7m</span>
+                <span class="stat-value">{{ player.currentSeasonStats.penalties.scored7m }}</span>
+              </div>
+              <div class="stat-row">
+                <span class="stat-name">Golovi sa Penala 10m</span>
+                <span class="stat-value">{{ player.currentSeasonStats.penalties.scored10m }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <!-- Recent Fixtures Section -->
       <div class="section">
