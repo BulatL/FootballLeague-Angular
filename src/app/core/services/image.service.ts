@@ -9,8 +9,6 @@ import { environment } from './../../../environment';
     constructor(private http: HttpClient) {}
   
     getImageUrl(subfolder: string, fileName: string): string {
-        return `${environment.apiUrl}/images/${encodeURIComponent(subfolder)}/${encodeURIComponent(fileName)}`;    
-        // return this.http.get<ApiListResponse<League>>(environment.mockApiUrl + '/leagues/list');
-         
+        return `${environment.apiUrl}/images/${encodeURIComponent(subfolder)}/${encodeURIComponent(fileName)}`;             
     }
 }

@@ -16,12 +16,25 @@
         </div>
 
         <div class="score">
-          <span>{{ fixture.homeTeamScore ?? '-' }}</span> - <span>{{ fixture.awayTeamScore ?? '-' }}</span>
+          <span [class.winning-score]="isWinningTeam(fixture.homeTeamScore, fixture.awayTeamScore, true)" 
+                [class.losing-score]="isLosingTeam(fixture.homeTeamScore, fixture.awayTeamScore, true)">
+            {{ fixture.homeTeamScore ?? '-' }}
+          </span> 
+          - 
+          <span [class.winning-score]="isWinningTeam(fixture.homeTeamScore, fixture.awayTeamScore, false)" 
+                [class.losing-score]="isLosingTeam(fixture.homeTeamScore, fixture.awayTeamScore, false)">
+            {{ fixture.awayTeamScore ?? '-' }}
+          </span>
         </div>
 
         <div class="team">
           <img class="fixture-card-team-logo" [src]="fixture.awayTeamLogo" />
           <div class="team-name margin-left-5">{{ fixture.awayTeamShortName }}</div>
+        </div>
+      </div>
+      <div class="datetime-container">
+        <div class="fixture-datetime">
+          <span>{{ fixture.date | date:'EEE, MMM d • HH:mm' }}</span>
         </div>
       </div>
     </div>

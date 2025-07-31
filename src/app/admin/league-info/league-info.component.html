@@ -1,0 +1,275 @@
+<div class="league-info-container">
+  <!-- Back button -->
+  <div class="back-button-container">
+    <button class="btn-back" (click)="goBack()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m12 19-7-7 7-7"></path>
+        <path d="m19 12H5"></path>
+      </svg>
+      Nazad na lige
+    </button>
+  </div>
+
+  <!-- League Information Section -->
+  <div class="league-header">
+    <div *ngIf="loading" class="status-message">Učitavanje informacija o ligi...</div>
+    <div *ngIf="error" class="error">{{ error }}</div>
+    
+    <div *ngIf="!loading && league" class="league-details">
+      <div class="league-image">
+        <img [src]="getImage(league.image)" [alt]="league.name" class="league-main-img" />
+      </div>
+      <div class="league-info">
+        <h1>{{ league.name }}</h1>
+        <div class="league-status">
+          <span [class.active]="league.isActive" [class.inactive]="!league.isActive">
+            {{ league.isActive ? 'Aktivna liga' : 'Neaktivna liga' }}
+          </span>
+        </div>
+        <!-- <div class="league-description" *ngIf="league.description">
+          <p>{{ league.description }}</p>
+        </div> -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabs Navigation -->
+  <div class="tabs-container">
+    <div class="tabs-nav">
+      <button 
+        class="tab-button" 
+        [class.active]="activeTab === 'seasons'"
+        (click)="switchTab('seasons')">
+        Sezone
+      </button>
+      <button 
+        class="tab-button" 
+        [class.active]="activeTab === 'teams'"
+        (click)="switchTab('teams')">
+        Timovi
+      </button>
+      <button 
+        class="tab-button" 
+        [class.active]="activeTab === 'players'"
+        (click)="switchTab('players')">
+        Igrači
+      </button>
+    </div>
+
+    <!-- Seasons Tab -->
+    <div class="tab-content" *ngIf="activeTab === 'seasons'">
+      <div class="section-header">
+        <h3>Sezone</h3>
+        <button class="btn-primary" (click)="createSeason()">+ Dodaj novu sezonu</button>
+      </div>
+
+      <div *ngIf="seasonsLoading" class="status-message">Učitavanje sezona...</div>
+      <div *ngIf="seasonsError" class="error">{{ seasonsError }}</div>
+
+      <div *ngIf="!seasonsLoading && seasons.length" class="table-wrapper">
+        <table class="styled-table">
+          <thead>
+            <tr>
+              <th>Naziv</th>
+              <th>Godina</th>
+              <th>Datum početka</th>
+              <th>Datum kraja</th>
+              <th>Status</th>
+              <th>Akcije</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let season of seasons">
+              <td>{{ season.name }}</td>
+              <td>{{ season.year }}</td>
+              <td>{{ season.startDate | date:'dd.MM.yyyy' }}</td>
+              <td>{{ season.endDate | date:'dd.MM.yyyy' }}</td>
+              <td>
+                <span [class.active]="season.isActive" [class.inactive]="!season.isActive">
+                  {{ season.isActive ? 'Aktivna' : 'Neaktivna' }}
+                </span>
+              </td>
+              <td class="action-buttons">
+                <button class="btn-secondary" (click)="editSeason(season.id)">Izmeni</button>
+                <button class="btn-danger" (click)="deleteSeason(season.id)">Obriši</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Seasons Pagination -->
+      <div class="pagination" *ngIf="getSeasonsPages().length > 1">
+        <button 
+          class="pagination-btn" 
+          [disabled]="seasonsCurrentPage === 1"
+          (click)="onSeasonsPageChange(seasonsCurrentPage - 1)">
+          Prethodna
+        </button>
+        <button 
+          *ngFor="let page of getSeasonsPages()" 
+          class="pagination-btn"
+          [class.active]="page === seasonsCurrentPage"
+          (click)="onSeasonsPageChange(page)">
+          {{ page }}
+        </button>
+        <button 
+          class="pagination-btn" 
+          [disabled]="seasonsCurrentPage === getSeasonsPages().length"
+          (click)="onSeasonsPageChange(seasonsCurrentPage + 1)">
+          Sledeća
+        </button>
+      </div>
+    </div>
+
+    <!-- Teams Tab -->
+    <div class="tab-content" *ngIf="activeTab === 'teams'">
+      <div class="section-header">
+        <h3>Timovi</h3>
+        <button class="btn-primary" (click)="createTeam()">+ Dodaj novi tim</button>
+      </div>
+
+      <div *ngIf="teamsLoading" class="status-message">Učitavanje timova...</div>
+      <div *ngIf="teamsError" class="error">{{ teamsError }}</div>
+
+      <div *ngIf="!teamsLoading && teams.length" class="table-wrapper">
+        <table class="styled-table">
+          <thead>
+            <tr>
+              <th>Naziv</th>
+              <th>Logo</th>
+              <th>Grad</th>
+              <th>Osnovan</th>
+              <th>Aktivan</th>
+              <th>Akcije</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let team of teams">
+              <td>{{ team.name }}</td>
+              <td><img [src]="getTeamImage(team.logo)" width="30" height="30" class="team-img" /></td>
+              <td>{{ team.city }}</td>
+              <td>{{ team.foundedYear }}</td>
+              <td>
+                <span [class.active]="team.isActive" [class.inactive]="!team.isActive">
+                  {{ team.isActive ? 'Da' : 'Ne' }}
+                </span>
+              </td>
+              <td class="action-buttons">
+                <button class="btn-secondary" (click)="editTeam(team.id)">Izmeni</button>
+                <button class="btn-danger" (click)="deleteTeam(team.id)">Obriši</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Teams Pagination -->
+      <div class="pagination" *ngIf="getTeamsPages().length > 1">
+        <button 
+          class="pagination-btn" 
+          [disabled]="teamsCurrentPage === 1"
+          (click)="onTeamsPageChange(teamsCurrentPage - 1)">
+          Prethodna
+        </button>
+        <button 
+          *ngFor="let page of getTeamsPages()" 
+          class="pagination-btn"
+          [class.active]="page === teamsCurrentPage"
+          (click)="onTeamsPageChange(page)">
+          {{ page }}
+        </button>
+        <button 
+          class="pagination-btn" 
+          [disabled]="teamsCurrentPage === getTeamsPages().length"
+          (click)="onTeamsPageChange(teamsCurrentPage + 1)">
+          Sledeća
+        </button>
+      </div>
+    </div>
+
+    <!-- Players Tab -->
+    <div class="tab-content" *ngIf="activeTab === 'players'">
+      <div class="section-header">
+        <h3>Igrači</h3>
+        <button class="btn-primary" (click)="createPlayer()">+ Dodaj novog igrača</button>
+      </div>
+
+      <div *ngIf="playersLoading" class="status-message">Učitavanje igrača...</div>
+      <div *ngIf="playersError" class="error">{{ playersError }}</div>
+
+      <div *ngIf="!playersLoading && players.length" class="table-wrapper">
+        <table class="styled-table">
+          <thead>
+            <tr>
+              <th>Ime</th>
+              <th>Slika</th>
+              <th>Pozicija</th>
+              <th>Broj</th>
+              <th>Tim</th>
+              <!-- <th>Aktivan</th> -->
+              <th>Akcije</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let player of players">
+              <td>{{ player.firstName }} {{ player.lastName }}</td>
+              <td><img [src]="getPlayerImage(player.image)" width="30" height="30" class="player-img" /></td>
+              <td>{{ player.firstName }}</td>
+              <td>{{ player.lastName }}</td>
+              <td>{{ player.birthDate }}</td>
+              <!-- <td>
+                <span [class.active]="player.isActive" [class.inactive]="!player">
+                  {{ player.isActive ? 'Da' : 'Ne' }}
+                </span>
+              </td> -->
+              <td class="action-buttons">
+                <button class="btn-secondary" (click)="editPlayer(player.id)">Izmeni</button>
+                <button class="btn-danger" (click)="deletePlayer(player.id)">Obriši</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Players Pagination -->
+      <div class="pagination" *ngIf="getPlayersPages().length > 1">
+        <button 
+          class="pagination-btn" 
+          [disabled]="playersCurrentPage === 1"
+          (click)="onPlayersPageChange(playersCurrentPage - 1)">
+          Prethodna
+        </button>
+        <button 
+          *ngFor="let page of getPlayersPages()" 
+          class="pagination-btn"
+          [class.active]="page === playersCurrentPage"
+          (click)="onPlayersPageChange(page)">
+          {{ page }}
+        </button>
+        <button 
+          class="pagination-btn" 
+          [disabled]="playersCurrentPage === getPlayersPages().length"
+          (click)="onPlayersPageChange(playersCurrentPage + 1)">
+          Sledeća
+        </button>
+      </div>
+    </div>
+
+    <!-- Empty states -->
+    <div class="empty-state" *ngIf="activeTab === 'seasons' && !seasonsLoading && seasons.length === 0">
+      <p>Nema sezona za ovu ligu.</p>
+      <button class="btn-primary" (click)="createSeason()">Dodaj prvu sezonu</button>
+    </div>
+
+    <div class="empty-state" *ngIf="activeTab === 'teams' && !teamsLoading && teams.length === 0">
+      <p>Nema timova za ovu ligu.</p>
+      <button class="btn-primary" (click)="createTeam()">Dodaj prvi tim</button>
+    </div>
+
+    <div class="empty-state" *ngIf="activeTab === 'players' && !playersLoading && players.length === 0">
+      <p>Nema igrača za ovu ligu.</p>
+      <button class="btn-primary" (click)="createPlayer()">Dodaj prvog igrača</button>
+    </div>
+  </div>
+</div>

@@ -23,7 +23,7 @@
       <tbody>
         <tr *ngFor="let reward of rewards">
           <td>{{ reward.name }}</td>
-          <td><img [src]="getImageUrl(reward.image)" width="40" height="40" class="reward-img" /></td>
+          <td><img [src]="getImage(reward.image)" width="40" height="40" class="reward-img" /></td>
           <td>
             <span [class.active]="reward.isForPlayer" [class.inactive]="!reward.isForPlayer">
               {{ reward.isForPlayer ? 'Da' : 'Ne' }}

@@ -9,6 +9,7 @@ import { PlayerListComponent } from './admin/player-list/player-list.component';
 import { RewardListComponent } from './admin/reward-list/reward-list.component';
 import { RewardFormComponent } from './admin/reward-form/reward-form.component';
 import { PlayerInfoComponent } from './player-info/player-info.component';
+import { LeagueInfoComponent } from './admin/league-info/league-info.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'league-home', pathMatch: 'full' },
@@ -26,6 +27,7 @@ export const routes: Routes = [
       { path: 'leagues', component: LeagueListComponent },
       { path: 'leagues/create', component: LeagueFormComponent },
       { path: 'leagues/edit/:id', component: LeagueFormComponent },
+      { path: 'leagues/:id', component: LeagueInfoComponent },
       { path: 'seasons', component: SeasonListComponent },
       { path: 'teams', component: TeamListComponent },
       { path: 'players', component: PlayerListComponent },

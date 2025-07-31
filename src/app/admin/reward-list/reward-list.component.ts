@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { RewardService } from '../core/services/reward.service';
-import { environment } from '../../../environment';
-
+import { ImageService } from '../../core/services/image.service';
 
 @Component({
  selector: 'app-reward-list',
@@ -15,9 +14,8 @@ export class RewardListComponent implements OnInit {
   rewards: any[] = [];
   loading = true;
   error = '';
-  apiBaseUrl = environment.apiUrl
 
-  constructor(private rewardService: RewardService, private router: Router) {}
+  constructor(private rewardService: RewardService, private router: Router, private imageService: ImageService) {}
 
   ngOnInit(): void {
     this.loadRewards();
@@ -46,7 +44,9 @@ export class RewardListComponent implements OnInit {
     this.router.navigate(['/admin/rewards/create']);
   }
   
-  getImageUrl(fileName: string): string {
-      return `${environment.apiUrl}/images/${encodeURIComponent("Rewards")}/${encodeURIComponent(fileName)}`;    
+  getImage(fileName: string): string {
+      var someting = this.imageService.getImageUrl("Rewards", fileName)  
+      console.log(someting);
+      return someting;
   }
 }

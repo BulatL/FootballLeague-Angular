@@ -21,14 +21,20 @@
       <tbody>
         <tr *ngFor="let league of leagues">
           <td>{{ league.name }}</td>
-          <td><img [src]="league.image" width="40" height="40" class="league-img" /></td>
+          <td><img [src]="getImage(league.image)" width="40" height="40" class="league-img" /></td>
           <td>
             <span [class.active]="league.isActive" [class.inactive]="!league.isActive">
               {{ league.isActive ? 'Da' : 'Ne' }}
             </span>
           </td>
-          <td>
-            <button class="btn-secondary" (click)="editLeague(league.id)">Edit</button>
+          <td class="action-buttons">
+            <button class="btn-view" (click)="viewLeague(league.id)" title="Pogledaj ligu">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </button>
+            <button class="btn-secondary" (click)="editLeague(league.id)">Izmeni</button>
           </td>
         </tr>
       </tbody>

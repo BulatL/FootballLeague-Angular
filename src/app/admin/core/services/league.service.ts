@@ -10,13 +10,12 @@ import { ApiResponse } from '../../../shared/api-response';
 @Injectable({ providedIn: 'root' })
 export class LeagueService {
   private apiUrl = `${environment.apiUrl}/leagues`;
+  private apiAdminUrl = `${environment.apiUrl}/admin/leagues`;
 
   constructor(private http: HttpClient) {}
 
   getAll(): Observable<ApiListResponse<League>> {
-    return this.http.get<ApiListResponse<League>>(`${this.apiUrl}/list`, {
-      params: { IsActive: true }
-    });
+    return this.http.get<ApiListResponse<League>>(`${this.apiAdminUrl}/list`);
   }
 
   getById(id: number): Observable<League> {
@@ -26,14 +25,14 @@ export class LeagueService {
   }
 
   create(formData: FormData): Observable<ApiResponse<League>> {
-    return this.http.post<ApiResponse<League>>(`${this.apiUrl}/post`, formData);
+    return this.http.post<ApiResponse<League>>(`${this.apiAdminUrl}/post`, formData);
   }
 
   update(id: number, formData: FormData): Observable<void> {
-    return this.http.put<void>(`${this.apiUrl}/${id}`, formData);
+    return this.http.put<void>(`${this.apiAdminUrl}/${id}`, formData);
   }
 
   deactivateActiveLeague(): Observable<void> {
-    return this.http.put<void>(`${this.apiUrl}/deactivate-active`, {});
+    return this.http.put<void>(`${this.apiAdminUrl}/deactivate-active`, {});
   }
 }

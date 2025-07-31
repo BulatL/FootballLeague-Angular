@@ -243,29 +243,6 @@
   box-shadow: 0 0 15px rgba(0, 255, 136, 0.4);
 }
 
-/* Score Section */
-.score {
-  font-size: 1.6rem;
-  font-weight: bold;
-  color: #ffd700;
-  text-shadow: 0 2px 8px rgba(255, 215, 0, 0.5);
-  background: rgba(255, 215, 0, 0.1);
-  padding: 10px 15px;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 215, 0, 0.3);
-  backdrop-filter: blur(5px);
-  min-width: 70px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-}
-
-.score:hover {
-  background: rgba(255, 215, 0, 0.2);
-  transform: scale(1.05);
-  box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
-}
 
 /* Utility Classes */
 .margin-left-5 {
@@ -386,4 +363,69 @@
     background: #ffd700;
     color: #01234c;
   }
+}
+
+/* Date and Time Container */
+.datetime-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 12px;
+  padding: 10px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.fixture-datetime {
+  text-align: center;
+  font-size: 0.8rem;
+  color: #b0c4de;
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 8px 16px;
+  border-radius: 8px;
+  backdrop-filter: blur(3px);
+  transition: all 0.3s ease;
+}
+
+.fixture-datetime:hover {
+  color: #00ccff;
+  background: rgba(0, 204, 255, 0.1);
+  transform: scale(1.05);
+}
+
+
+/* Score Section */
+.winning-score {
+  font-weight: bold;
+  color: #00ff88;
+  text-shadow: 0 2px 8px rgba(0, 255, 136, 0.5);
+}
+
+.losing-score {
+  font-weight: normal;
+  color: #cccccc;
+  opacity: 0.8;
+}
+
+.score {
+  font-size: 1.6rem;
+  font-weight: normal; /* Changed from bold to normal */
+  color: #ffd700;
+  text-shadow: 0 2px 8px rgba(255, 215, 0, 0.5);
+  background: rgba(255, 215, 0, 0.1);
+  padding: 10px 15px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  backdrop-filter: blur(5px);
+  min-width: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.score:hover {
+  background: rgba(255, 215, 0, 0.2);
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
 }

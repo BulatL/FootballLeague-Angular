@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { League } from '../core/models/league';
 import { LeagueService } from '../core/services/league.service';
 import { Router } from '@angular/router';
+import { environment } from '../../../environment';
+import { ImageService } from '../../core/services/image.service';
 
 @Component({
   selector: 'app-league-list',
@@ -15,7 +17,7 @@ export class LeagueListComponent implements OnInit {
   loading = false;
   error: string = '';
 
-  constructor(private leagueService: LeagueService, private router: Router) {}
+  constructor(private leagueService: LeagueService, private router: Router, private imageService: ImageService) {}
 
   ngOnInit(): void {
     this.loadLeagues();
@@ -42,5 +44,12 @@ export class LeagueListComponent implements OnInit {
 
   goToCreate(): void {
     this.router.navigate(['/admin/leagues/create']);
+  }
+  
+  getImage(fileName: string): string {
+      return this.imageService.getImageUrl("Leagues", fileName)  
+  }
+  viewLeague(id: number): void{ 
+    this.router.navigate([`/admin/leagues/${id}`]);
   }
 }

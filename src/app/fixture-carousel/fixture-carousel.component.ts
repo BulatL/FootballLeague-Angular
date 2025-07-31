@@ -61,4 +61,14 @@ export class FixtureCarouselComponent {
   trackByFixtureId(index: number, fixture: Fixture): number {
     return fixture.id;
   }
+
+  isWinningTeam(homeScore: number | null, awayScore: number | null, isHome: boolean): boolean {
+    if (homeScore == null || awayScore == null) return false;
+    return isHome ? homeScore > awayScore : awayScore > homeScore;
+  }
+
+  isLosingTeam(homeScore: number | null, awayScore: number | null, isHome: boolean): boolean {
+    if (homeScore == null || awayScore == null) return false;
+    return isHome ? homeScore < awayScore : awayScore < homeScore;
+  }
 }
