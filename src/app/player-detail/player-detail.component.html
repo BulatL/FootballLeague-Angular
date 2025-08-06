@@ -186,7 +186,10 @@
         </h2>
         
         <div class="fixtures-container">
-          <div class="fixture-card" *ngFor="let fixture of player.fixtures">
+          <div class="fixture-card" 
+               *ngFor="let fixture of player.fixtures"
+               [routerLink]="['/fixture', fixture.id]"
+               style="cursor: pointer;">
             <div class="fixture-header">
               <span class="match-day">Kolo {{ fixture.matchDay }}</span>
               <span class="competition">{{ fixture.competition }}</span>

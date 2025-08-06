@@ -19,8 +19,8 @@ export class SeasonService {
     return this.http.get<Season>(`${this.apiUrl}/${id}`);
   }
 
-  getByLeague(leagueId: number, page: number = 1, pageSize: number = 5): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/league/${leagueId}?page=${page}&pageSize=${pageSize}`);
+  getByLeague(leagueId: number, pageNumber: number = 1, pageSize: number = 5): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/league/${leagueId}?page=${pageNumber}&pageSize=${pageSize}`);
   }
 
   create(season: Partial<Season>): Observable<Season> {

@@ -74,6 +74,7 @@ li a {
 
 
 /* Navbar styles */
+/* Updated Navbar Styles */
 .navbar {
   position: fixed;
   top: 0;
@@ -87,21 +88,19 @@ li a {
 }
 
 .navbar-scrolled {
-  background-color: #01234c; /* Opaque dark background on scroll */
+  background-color: #01234c; /* Your brand color instead of original dark */
   backdrop-filter: blur(8px); /* Subtle blur effect */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* New: Nav link color change when navbar is scrolled */
+/* Nav link color change when navbar is scrolled */
 .navbar-scrolled .nav-link {
-  color: #D1D5DB; /* A slightly darker light grey when scrolled */
-  /* You can choose any color here, e.g., #FFD700 (yellow) or #E4002B (red) */
+  color: #D1D5DB; /* Light grey when scrolled */
 }
 
 .navbar-scrolled .nav-link:hover {
-  color: #E4002B; /* Keep hover effect consistent or change as desired */
+  color: #00ff88; /* Your green accent color instead of red */
 }
-
 
 .navbar .container {
   max-width: 1280px; /* Equivalent to a large Tailwind container */
@@ -110,6 +109,7 @@ li a {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0 1rem;
 }
 
 .navbar .logo-container {
@@ -135,7 +135,7 @@ li a {
 }
 
 .navbar .search-input {
-  background-color: #1F2937; /* bg-gray-800 */
+  background-color: rgba(1, 35, 76, 0.8); /* Your brand color with transparency */
   color: #FFFFFF; /* text-white */
   padding-left: 2.5rem; /* pl-10 (40px) */
   padding-right: 1rem; /* pr-4 (16px) */
@@ -149,15 +149,20 @@ li a {
 }
 
 .navbar .search-input:focus {
-  box-shadow: 0 0 0 2px #DC2626; /* focus:ring-2 focus:ring-red-600 */
+  box-shadow: 0 0 0 2px #00ff88; /* Your green accent color */
   border-color: transparent; /* focus:border-transparent */
   width: 16rem;
+  background-color: rgba(1, 35, 76, 0.9); /* Slightly more opaque on focus */
+}
+
+.navbar .search-input::placeholder {
+  color: #9CA3AF; /* text-gray-400 */
 }
 
 .navbar .search-icon {
   position: absolute;
   left: 0.75rem; /* left-3 (12px) */
-  top: 43%;
+  top: 50%;
   transform: translateY(-50%); /* transform -translate-y-1/2 */
   color: #9CA3AF; /* text-gray-400 */
   width: 20px;
@@ -174,137 +179,106 @@ li a {
 .navbar .nav-link {
   padding: 0.5rem 1rem; /* px-4 py-2 */
   border-radius: 9999px; /* rounded-full */
-  transition: color 0.2s ease-in-out; /* transition-colors duration-200 */
+  transition: all 0.3s ease-in-out; /* transition-colors duration-200 */
   font-weight: 500; /* font-medium */
   text-decoration: none; /* Remove underline */
   cursor: pointer;
+  color: #01234c; /* Your brand color */
+  position: relative;
 }
 
 .navbar .nav-link:hover {
-  color: #E4002B; /* hover:text-[#E4002B] */
+  color: #00ff88; /* Your green accent color */
+  transform: translateY(-2px); /* Subtle lift effect */
 }
 
-/* Mobile menu button (hidden by default) */
+/* Active link styling */
+.navbar .nav-link.active {
+  color: #00ff88;
+  background: rgba(0, 255, 136, 0.1);
+}
+
+/* When navbar is scrolled, override link colors */
+.navbar-scrolled .nav-link {
+  color: #D1D5DB;
+}
+
+.navbar-scrolled .nav-link:hover,
+.navbar-scrolled .nav-link.active {
+  color: #00ff88;
+}
+
+/* Mobile menu button */
 .navbar .mobile-menu-button {
   display: block; /* md:hidden */
-  color: #FFFFFF;
+  color: #01234c;
   background: none;
   border: none;
   cursor: pointer;
   outline: none;
+  transition: color 0.3s ease;
 }
+
+.navbar .mobile-menu-button:hover {
+  color: #00ff88;
+}
+
+.navbar-scrolled .mobile-menu-button {
+  color: #FFFFFF;
+}
+
 .navbar .mobile-menu-button svg {
   width: 1.5rem; /* w-6 */
   height: 1.5rem; /* h-6 */
 }
 
-/* Hero section styles */
-.hero-section {
-  position: relative;
-  min-height: 100vh; /* min-h-screen */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  color: #FFFFFF; /* text-white */
-  padding: 1rem; /* p-4 */
-  background-image: url('https://placehold.co/1920x1080/1A2A3A/FFFFFF?text=Football+Court'); /* Placeholder */
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
-.hero-overlay {
-  position: absolute;
-  inset: 0; /* top-0 right-0 bottom-0 left-0 */
-  background-color: rgba(0, 0, 0, 0.6); /* bg-black bg-opacity-60 */
-}
-
-.hero-content {
-  position: relative;
-  z-index: 10;
-  max-width: 800px; /* max-w-4xl (approx. 800px) */
-  margin-left: auto;
-  margin-right: auto; /* mx-auto */
-  padding: 1.5rem; /* p-6 */
-  border-radius: 0.75rem; /* rounded-xl */
-  background-color: rgba(0, 0, 0, 0.4); /* bg-black bg-opacity-40 */
-  backdrop-filter: blur(4px); /* backdrop-blur-sm */
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
-  border: 1px solid rgba(228, 0, 43, 0.3); /* border border-red-600/30 */
-}
-
-.hero-title {
-  font-size: 2.25rem; /* text-4xl */
-  font-weight: 800; /* font-extrabold */
-  font-family: 'Oswald', sans-serif;
-  margin-bottom: 2rem; /* mb-8 */
-  letter-spacing: 0.025em; /* tracking-wide */
-}
-
-.hero-title .highlight {
-  color: #E4002B; /* text-[#E4002B] */
-}
-
-.hero-description {
-  font-size: 1.125rem; /* text-lg */
-  font-family: 'Inter', sans-serif;
-  margin-bottom: 2.5rem; /* mb-10 */
-  opacity: 0.9; /* opacity-90 */
-  line-height: 1.625; /* leading-relaxed */
-}
-
-.league-stats {
-  display: grid;
-  grid-template-columns: repeat(1, minmax(0, 1fr)); /* grid-cols-1 */
-  gap: 2rem; /* gap-8 */
-  margin-top: 2rem; /* mt-8 */
-}
-
-.stat-card {
-  background-color: rgba(17, 24, 39, 0.7); /* bg-gray-900 bg-opacity-70 */
-  border-radius: 0.5rem; /* rounded-lg */
-  padding: 1.5rem; /* p-6 */
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1); /* shadow-xl */
-  border-bottom: 4px solid rgba(228, 0, 43, 0.7); /* border-b-4 border-red-600/70 */
-}
-
-.stat-number {
-  font-size: 3rem; /* text-5xl */
-  font-family: 'Oswald', sans-serif;
-  font-weight: 700; /* font-bold */
-  color: #EF4444; /* text-red-500 */
-  margin-bottom: 0.5rem; /* mb-2 */
-}
-
-.stat-label {
-  font-size: 1.125rem; /* text-lg */
-  font-family: 'Inter', sans-serif;
-  color: #D1D5DB; /* text-gray-300 */
-}
-
 /* Media Queries for Responsiveness */
 @media (min-width: 768px) { /* md breakpoint */
   .navbar {
-      padding-left: 3rem; /* md:px-12 */
-      padding-right: 3rem; /* md:px-12 */
+    padding-left: 3rem; /* md:px-12 */
+    padding-right: 3rem; /* md:px-12 */
   }
+  
+  .navbar .container {
+    padding: 0;
+  }
+  
   .navbar .search-input {
-      width: 8.5rem; /* md:w-64 */
+    width: 12rem; /* md:w-64 */
   }
+  
   .navbar .nav-links {
-      display: flex; /* md:flex */
+    display: flex; /* md:flex */
   }
+  
   .navbar .mobile-menu-button {
-      display: none; /* md:hidden */
+    display: none; /* md:hidden */
   }
-  .hero-title {
-      font-size: 3.75rem; /* md:text-6xl */
+}
+
+@media (max-width: 767px) {
+  .navbar .nav-right {
+    gap: 1rem;
   }
-  .hero-description {
-      font-size: 1.25rem; /* md:text-xl */
+  
+  .navbar .search-input {
+    width: 7rem;
   }
-  .league-stats {
-      grid-template-columns: repeat(4, minmax(0, 1fr)); /* md:grid-cols-4 */
+  
+  .navbar .search-input:focus {
+    width: 12rem;
   }
+}
+
+/* Additional styling for your highlight-blue-color class */
+.highlight-blue-color {
+  color: #01234c;
+}
+
+.navbar-scrolled .highlight-blue-color {
+  color: #D1D5DB;
+}
+
+.navbar-scrolled .highlight-blue-color:hover {
+  color: #00ff88;
 }

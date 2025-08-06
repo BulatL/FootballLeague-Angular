@@ -5,6 +5,7 @@ import { environment } from '../../../../environment';
 import { League } from '../models/league';
 import { ApiListResponse } from '../../../shared/api-list-response';
 import { ApiResponse } from '../../../shared/api-response';
+import { CommandResult } from '../models/command-result';
 
 
 @Injectable({ providedIn: 'root' })
@@ -24,8 +25,8 @@ export class LeagueService {
     });
   }
 
-  create(formData: FormData): Observable<ApiResponse<League>> {
-    return this.http.post<ApiResponse<League>>(`${this.apiAdminUrl}/post`, formData);
+  create(formData: FormData): Observable<CommandResult<League>> {
+    return this.http.post<CommandResult<League>>(`${this.apiAdminUrl}/post`, formData);
   }
 
   update(id: number, formData: FormData): Observable<void> {

@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule  } from '@angular/router';
+
 
 export interface CurrentSeasonStats {
   general: {
@@ -83,20 +85,20 @@ export interface SeasonStats {
 }
 
 @Component({
-  selector: 'app-player-info',
-  imports: [CommonModule],
-  templateUrl: './player-info.component.html',
-  styleUrl: './player-info.component.css'
+  selector: 'app-player-detail',
+  imports: [CommonModule, RouterModule ],
+  templateUrl: './player-detail.component.html',
+  styleUrl: './player-detail.component.css'
 })
-export class PlayerInfoComponent {
+export class PlayerDetailComponent {
 @Input() playerId!: number;
-  
+
   // Mock data - replace with actual service call
   player: Player = {
     id: 1,
     firstName: "Marko",
     lastName: "Petrović",
-    image: "https://via.placeholder.com/200x200/01234c/ffffff?text=MP",
+    image: "default-player.png",
     dreamPoints: 1250,
     statistics: {
       gamesPlayed: 45,
