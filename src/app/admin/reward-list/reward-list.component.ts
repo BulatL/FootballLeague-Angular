@@ -45,8 +45,7 @@ export class RewardListComponent implements OnInit {
   }
   
   getImage(fileName: string): string {
-      var someting = this.imageService.getImageUrl("Rewards", fileName)  
-      console.log(someting);
-      return someting;
+      var imageUrl = this.imageService.getImageUrl("Rewards", fileName)  
+      return imageUrl;
   }
 }

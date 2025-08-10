@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Observable } from 'rxjs';
 import { RewardService } from '../core/services/reward.service';
 
@@ -10,7 +10,7 @@ import { RewardService } from '../core/services/reward.service';
   templateUrl: './reward-form.component.html',
   styleUrls: ['./reward-form.component.css'],
   standalone: true,
-  imports: [ ReactiveFormsModule, CommonModule ]
+  imports: [ ReactiveFormsModule, CommonModule, RouterModule ]
 })
 export class RewardFormComponent {
    form!: FormGroup;
@@ -53,7 +53,7 @@ export class RewardFormComponent {
           isForPlayer: reward.isForPlayer
         });
       },
-      error: () => (this.error = 'Failed to load reward')
+      error: (err) => (console.log(err), this.error = 'Failed to load reward')
     });
   }
 

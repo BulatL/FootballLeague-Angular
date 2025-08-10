@@ -1,0 +1,156 @@
+<div class="season-details-container">
+  <div *ngIf="loading" class="loading">Učitavanje...</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+
+  <div *ngIf="season && !loading" class="season-content">
+    <!-- Season Header -->
+    <div class="season-header">
+      <div class="header-info">
+        <h1>{{ season.name }}</h1>
+        <div class="header-meta">
+          <span class="league-badge">Ime lige</span>
+          <span class="date-range">
+            <!-- {{ formatDate(season.startDate) }}  -->
+              {{season.startDate}}
+            <span *ngIf="season.endDate"> - {{ season.endDate }}</span>
+          </span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <a [routerLink]="['/admin/seasons', season.id, 'edit']" class="btn btn-outline">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+          </svg>
+          Izmeni
+        </a>
+      </div>
+    </div>
+
+    <!-- Quick Stats Cards -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-number">{{ statistics.teamsCount }}</div>
+        <div class="stat-label">Timova</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">{{ statistics.fixturesTotal }}</div>
+        <div class="stat-label">Ukupno utakmica</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">{{ statistics.fixturesPlayed }}</div>
+        <div class="stat-label">Odigrano</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">{{ statistics.roundsTotal }}</div>
+        <div class="stat-label">Kola</div>
+      </div>
+    </div>
+
+    <!-- Main Action Grid -->
+    <div class="action-grid">
+      <a [routerLink]="['teams']" class="action-card teams">
+        <div class="action-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+        </div>
+        <div class="action-content">
+          <h3>Upravljaj Timovima</h3>
+          <p>Dodaj ili ukloni timove iz sezone</p>
+          <span class="action-stat">{{ statistics.teamsCount }} timova</span>
+        </div>
+      </a>
+
+      <a [routerLink]="['fixtures']" class="action-card fixtures">
+        <div class="action-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+          </svg>
+        </div>
+        <div class="action-content">
+          <h3>Raspored Utakmica</h3>
+          <p>Pregledaj i upravljaj utakmicama</p>
+          <span class="action-stat">{{ statistics.fixturesPlayed }}/{{ statistics.fixturesTotal }}</span>
+        </div>
+      </a>
+
+      <a [routerLink]="['standings']" class="action-card standings">
+        <div class="action-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
+            <path d="M14 15h1.5a2.5 2.5 0 0 1 0 5H14"></path>
+            <path d="M6 2v6"></path>
+            <path d="M14 6v6"></path>
+            <path d="M6 10h8"></path>
+            <path d="M6 14h8"></path>
+            <path d="M14 14v6"></path>
+            <path d="M6 14v6"></path>
+          </svg>
+        </div>
+        <div class="action-content">
+          <h3>Tabela</h3>
+          <p>Pregled tabele i statistika</p>
+          <span class="action-stat">{{ getLeaderTeam() }}</span>
+        </div>
+      </a>
+
+      <button 
+        (click)="generateFixtures()" 
+        class="action-card generate"
+        [disabled]="statistics.teamsCount < 2 || fixturesGenerated"
+        [class.generated]="fixturesGenerated"
+      >
+        <div class="action-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+          </svg>
+        </div>
+        <div class="action-content">
+          <h3>{{ fixturesGenerated ? 'Raspored Generisan' : 'Generiši Raspored' }}</h3>
+          <p>{{ fixturesGenerated ? 'Utakmice su već generisane' : 'Automatski kreiraj utakmice' }}</p>
+          <span class="action-stat" *ngIf="!fixturesGenerated && statistics.teamsCount >= 2">
+            {{ statistics.teamsCount }} timova
+          </span>
+          <span class="action-stat" *ngIf="statistics.teamsCount < 2">
+            Potrebno minimum 2 tima
+          </span>
+        </div>
+      </button>
+    </div>
+
+    <!-- Recent Activity (Optional) -->
+    <div class="recent-activity" *ngIf="recentMatches.length > 0">
+      <h3>Poslednje utakmice</h3>
+      <div class="match-list">
+        <div *ngFor="let match of recentMatches" class="match-item">
+          <div class="match-teams">
+            <span class="home-team">{{ match.homeTeamName }}</span>
+            <div class="match-score" *ngIf="match.homeTeamScore != null">
+              {{ match.homeTeamScore }} - {{ match.awayTeamScore }}
+            </div>
+            <div class="match-vs" *ngIf="match.homeTeamScore == null">vs</div>
+            <span class="away-team">{{ match.awayTeamName}}</span>
+          </div>
+          <div class="match-date">{{ match.date }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation Back -->
+  <div class="back-navigation">
+    <a [routerLink]="['/admin/leagues', season?.leagueId]" class="btn btn-secondary">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M19 12H6m6-7-7 7 7 7"></path>
+      </svg>
+      Nazad na ligu
+    </a>
+  </div>
+</div>

@@ -1,0 +1,173 @@
+<form [formGroup]="form" (ngSubmit)="submit()" class="player-form">
+  <h2>{{ isEdit ? 'Izmeni Igrača' : 'Dodaj Novog Igrača' }}</h2>
+  
+  <div *ngIf="error" class="error">{{ error }}</div>
+
+  <!-- Player Basic Info Section -->
+  <div class="section">
+    <h3>Osnovni podaci</h3>
+    
+    <div class="form-group">
+      <label for="firstName">Ime:</label>
+      <input 
+        id="firstName" 
+        formControlName="firstName" 
+        class="form-control"
+        [class.is-invalid]="
+          (form.get('firstName')?.invalid && (form.get('firstName')?.touched || form.get('firstName')?.dirty)) 
+          || firstNameErrorMessage
+        "
+      />
+      <div *ngIf="form.get('firstName')?.invalid && (form.get('firstName')?.touched || form.get('firstName')?.dirty)" class="validation-message">
+        Ime je obavezno.
+      </div>
+      <div *ngIf="firstNameErrorMessage" class="validation-message">{{ firstNameErrorMessage }}</div>
+    </div>
+
+    <div class="form-group">
+      <label for="lastName">Prezime:</label>
+      <input 
+        id="lastName" 
+        formControlName="lastName" 
+        class="form-control"
+        [class.is-invalid]="
+          (form.get('lastName')?.invalid && (form.get('lastName')?.touched || form.get('lastName')?.dirty)) 
+          || lastNameErrorMessage
+        "
+      />
+      <div *ngIf="form.get('lastName')?.invalid && (form.get('lastName')?.touched || form.get('lastName')?.dirty)" class="validation-message">
+        Prezime je obavezno.
+      </div>
+      <div *ngIf="lastNameErrorMessage" class="validation-message">{{ lastNameErrorMessage }}</div>
+    </div>
+
+    <div class="form-group">
+      <label for="birthDate">Datum rođenja:</label>
+      <input 
+        id="birthDate" 
+        type="date" 
+        formControlName="birthDate" 
+        class="form-control"
+        [class.is-invalid]="
+          (form.get('birthDate')?.invalid && (form.get('birthDate')?.touched || form.get('birthDate')?.dirty))
+        "
+      />
+      <div *ngIf="form.get('birthDate')?.invalid && (form.get('birthDate')?.touched || form.get('birthDate')?.dirty)" class="validation-message">
+        Datum rođenja je obavezan.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="cellNo">Broj telefona:</label>
+      <input 
+        id="cellNo" 
+        formControlName="cellNo" 
+        class="form-control"
+        placeholder="+381 60 123 456"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="image">Slika igrača:</label>
+      <input id="image" type="file" (change)="onFileSelected($event)" class="form-control-file" accept="image/*" />
+      
+      <div class="image-preview-container">
+        <!-- Current saved image -->
+        <div *ngIf="currentImageUrl" class="current-image">
+          <p>Trenutna slika:</p>
+          <img [src]="currentImageUrl" alt="Current player image" class="player-preview" />
+        </div>
+        
+        <!-- Preview of new uploaded image -->
+        <div *ngIf="selectedFilePreview" class="new-image">
+          <p>Nova slika:</p>
+          <img [src]="selectedFilePreview" alt="New player image" class="player-preview" />
+          <button type="button" class="btn-remove" (click)="removeSelectedFile()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Team Assignment Section -->
+  <div class="section" *ngIf="teams.length > 0">
+    <h3>Dodela tima</h3>
+    
+    <div class="form-group">
+      <label for="teamId">Tim:</label>
+      <select 
+        id="teamId" 
+        formControlName="teamId" 
+        class="form-control"
+      >
+        <option value="">Izaberite tim (opciono)</option>
+        <option *ngFor="let team of teams" [value]="team.id">{{ team.name }}</option>
+      </select>
+    </div>
+
+    <div class="form-group" *ngIf="form.get('teamId')?.value">
+      <label for="position">Pozicija:</label>
+      <select 
+        id="position" 
+        formControlName="position" 
+        class="form-control"
+      >
+        <option value="">Izaberite poziciju</option>
+        <option value="Golman">Golman</option>
+        <option value="Odbrana">Odbrana</option>
+        <option value="Vezna linija">Vezna linija</option>
+        <option value="Napad">Napad</option>
+      </select>
+    </div>
+
+    <div class="form-group" *ngIf="form.get('teamId')?.value">
+      <label for="seasonId">Sezona:</label>
+      <select 
+        id="seasonId" 
+        formControlName="seasonId" 
+        class="form-control"
+      >
+        <option value="">Izaberite sezonu</option>
+        <option *ngFor="let season of seasons" [value]="season.id">{{ season.name }}</option>
+      </select>
+    </div>
+
+    <div class="form-group form-check" *ngIf="form.get('teamId')?.value">
+      <input id="isPlaying" type="checkbox" formControlName="isPlaying" class="form-check-input" />
+      <label for="isPlaying" class="form-check-label">Aktivan u timu?</label>
+    </div>
+  </div>
+
+  <!-- Existing Team Assignments (for edit mode) -->
+  <div class="section" *ngIf="isEdit && playerTeams.length > 0">
+    <h3>Trenutne dodele timova</h3>
+    <div class="team-assignments">
+      <div *ngFor="let pt of playerTeams" class="team-assignment-card">
+        <div class="team-info">
+          <strong>{{ pt.team?.name || 'N/A' }}</strong>
+          <span class="position">{{ pt.position }}</span>
+          <span class="season">{{ pt.season?.name || 'N/A' }}</span>
+          <span [class]="pt.isPlaying ? 'status-active' : 'status-inactive'">
+            {{ pt.isPlaying ? 'Aktivan' : 'Neaktivan' }}
+          </span>
+        </div>
+        <button type="button" class="btn-toggle" 
+                (click)="togglePlayerTeamStatus(pt.id, !pt.isPlaying)"
+                [disabled]="loading">
+          {{ pt.isPlaying ? 'Deaktiviraj' : 'Aktiviraj' }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="action-buttons-container">
+    <a routerLink="/admin/players" class="btn btn-secondary float-left">Nazad</a>
+    <button type="submit" class="btn btn-primary float-right" [disabled]="form.invalid || loading">
+      {{ isEdit ? 'Izmeni' : 'Kreiraj' }} Igrača
+    </button>
+  </div>
+</form>

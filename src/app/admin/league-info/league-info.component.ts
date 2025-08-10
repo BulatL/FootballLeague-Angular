@@ -7,7 +7,7 @@ import { Team } from '../core/models/team';
 import { Player } from '../core/models/player';
 import { LeagueService } from '../core/services/league.service';
 import { SeasonService } from '../core/services/season.service';
-import { TeamService } from '../core/services/team.season';
+import { TeamService } from '../core/services/team.service';
 import { PlayerService } from '../core/services/player.service';
 import { ImageService } from '../../core/services/image.service';
 
@@ -101,7 +101,7 @@ export class LeagueInfoComponent implements OnInit {
   // Seasons methods
   loadSeasons(): void {
     this.seasonsLoading = true;
-    this.seasonService.getByLeague(this.leagueId, this.seasonsCurrentPage, this.seasonsItemsPerPage).subscribe({
+    this.seasonService.getByLeagueWithPagination(this.leagueId, this.seasonsCurrentPage, this.seasonsItemsPerPage).subscribe({
       next: (data) => {
         this.seasons = data.$values || data;
         this.seasonsTotalItems = data.totalCount || this.seasons.length;
@@ -120,11 +120,17 @@ export class LeagueInfoComponent implements OnInit {
   }
 
   createSeason(): void {
-    this.router.navigate([`/admin/seasons/create`], { queryParams: { leagueId: this.leagueId } });
+    this.router.navigate([`/admin/seasons/create`], 
+      { 
+        queryParams: { leagueId: this.leagueId }
+      });
   }
 
   editSeason(id: number): void {
-    this.router.navigate([`/admin/seasons/edit/${id}`]);
+    console.log("this.leagueId", this.leagueId);
+    this.router.navigate([`/admin/seasons/edit/${id}`], {
+        queryParams: { leagueId: this.leagueId }
+    });
   }
 
   deleteSeason(id: number): void {
@@ -138,6 +144,12 @@ export class LeagueInfoComponent implements OnInit {
         }
       });
     }
+  }
+  
+  viewSeason(id: number): void{ 
+    this.router.navigate([`/admin/seasons/${id}`], {
+      state: { leagueId: this.leagueId }
+    });
   }
 
   // Teams methods

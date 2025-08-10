@@ -2,6 +2,9 @@
 
   <div *ngIf="error" class="error">{{ error }}</div>
 
+  <!-- Add ID error message display here, right after the general error -->
+  <div *ngIf="idErrorMessage" class="error">{{ idErrorMessage }}</div>
+
   <div class="form-group">
     <label for="name">Naziv:</label>
     <input 
@@ -19,17 +22,28 @@
     <div *ngIf="nameErrorMessage" class="error">{{ nameErrorMessage }}</div>
   </div>
 
-  <div class="form-group">
+  <!-- <div class="form-group">
     <label for="image">Slika:</label>
     <input id="image" type="file" (change)="onFileSelected($event)" class="form-control-file" />
-  </div>
+  </div> -->
 
   <div class="form-group form-check">
-    <input id="isActive" type="checkbox" formControlName="isActive" class="form-check-input" />
-    <label for="isActive" class="form-check-label">Aktivna?</label>
+    <input 
+      id="isActive" 
+      type="checkbox" 
+      formControlName="isActive" 
+      class="form-check-input"
+    />
+    <label for="isActive" class="form-check-label">
+      Aktivna?
+      <span *ngIf="isEdit" class="readonly-note">(nije moguće menjati)</span>
+    </label>
   </div>
 
-  <button type="submit" class="btn btn-primary" [disabled]="form.invalid || loading">
-    {{ isEdit ? 'Update' : 'Create' }} Liga
-  </button>
+  <div class="action-buttons-container">
+    <a routerLink="/admin/leagues" class="btn btn-secondary float-left">Nazad</a>
+    <button type="submit" class="btn btn-primary float-right" [disabled]="form.invalid || loading">
+      {{ isEdit ? 'Update' : 'Create' }} Liga
+    </button>
+  </div>
 </form>

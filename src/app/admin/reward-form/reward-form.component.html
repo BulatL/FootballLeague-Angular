@@ -28,7 +28,10 @@
     <label for="isForPlayer" class="form-check-label">Za igraca?</label>
   </div>
 
-  <button type="submit" class="btn btn-primary" [disabled]="form.invalid || loading">
-    {{ isEdit ? 'Update' : 'Create' }} Nagrada
-  </button>
+  <div class="action-buttons-container">
+    <a routerLink="/admin/rewards" class="btn btn-secondary float-left">Nazad</a>
+    <button type="submit" class="btn btn-primary float-right" [disabled]="form.invalid || loading">
+      {{ isEdit ? 'Izmeni' : 'Kreiraj' }} Nagrada
+    </button>
+  </div>
 </form>

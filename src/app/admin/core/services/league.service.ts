@@ -29,11 +29,11 @@ export class LeagueService {
     return this.http.post<CommandResult<League>>(`${this.apiAdminUrl}/post`, formData);
   }
 
-  update(id: number, formData: FormData): Observable<void> {
-    return this.http.put<void>(`${this.apiAdminUrl}/${id}`, formData);
+  update(formData: FormData): Observable<void> {
+    return this.http.patch<void>(`${this.apiAdminUrl}/patch`, formData);
   }
 
-  deactivateActiveLeague(): Observable<void> {
-    return this.http.put<void>(`${this.apiAdminUrl}/deactivate-active`, {});
+  deactivateActiveLeague(id: number): Observable<void> {
+    return this.http.put<void>(`${this.apiAdminUrl}/deactivate-active/${id}`, {});
   }
 }

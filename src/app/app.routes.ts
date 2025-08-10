@@ -3,7 +3,6 @@ import { LeagueListComponent } from './admin/league-list/league-list.component';
 import { LeagueHomeComponent } from './league-home/league-home.component';
 import { LeagueFormComponent } from './admin/league-form/league-form.component';
 import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
-import { SeasonListComponent } from './admin/season-list/season-list.component';
 import { TeamListComponent } from './admin/team-list/team-list.component';
 import { PlayerListComponent } from './admin/player-list/player-list.component';
 import { RewardListComponent } from './admin/reward-list/reward-list.component';
@@ -11,6 +10,11 @@ import { RewardFormComponent } from './admin/reward-form/reward-form.component';
 import { PlayerDetailComponent } from './player-detail/player-detail.component';
 import { LeagueInfoComponent } from './admin/league-info/league-info.component';
 import { FixtureDetailComponent } from './fixture-detail/fixture-detail.component';
+import { PlayerFormComponent } from './admin/player-form/player-form.component';
+import { SeasonFormComponent } from './admin/season-form/season-form.component';
+import { SeasonDetailsComponent } from './admin/season-details/season-details.component';
+import { TeamFormComponent } from './admin/team-form/team-form.component';
+import { SeasonTeamsComponent } from './admin/season-teams/season-teams.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'league-home', pathMatch: 'full' },
@@ -23,16 +27,28 @@ export const routes: Routes = [
     path: 'admin',
     children: [
       { path: '', component: AdminDashboardComponent },
+      // Rewards
       { path: 'rewards', component: RewardListComponent },
       { path: 'rewards/create', component: RewardFormComponent },
       { path: 'rewards/edit/:id', component: RewardFormComponent },
+      // Leagues
       { path: 'leagues', component: LeagueListComponent },
       { path: 'leagues/create', component: LeagueFormComponent },
       { path: 'leagues/edit/:id', component: LeagueFormComponent },
       { path: 'leagues/:id', component: LeagueInfoComponent },
-      { path: 'seasons', component: SeasonListComponent },
+      // Seasons
+      { path: 'seasons/create', component: SeasonFormComponent },
+      { path: 'seasons/edit/:id', component: SeasonFormComponent },
+      { path: 'seasons/:id', component: SeasonDetailsComponent },
+      { path: 'seasons/:seasonId/teams', component: SeasonTeamsComponent },
+      // Teams
       { path: 'teams', component: TeamListComponent },
+      { path: 'teams/edit/:id', component: TeamFormComponent },
+      { path: 'teams/create', component: TeamFormComponent },
+      // Players
       { path: 'players', component: PlayerListComponent },
+      { path: 'players/create', component: PlayerFormComponent },
+      { path: 'players/edit/:id', component: PlayerFormComponent },
     ]
   }
 ];

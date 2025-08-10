@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { PlayerService } from '../core/services/player.service';
 import { Player } from '../core/models/player';
-import { AsyncPipe, DatePipe, NgIf, NgFor } from '@angular/common';
+import { DatePipe, NgIf, NgFor } from '@angular/common';
+import { ImageService } from '../../core/services/image.service';
 
 @Component({
   selector: 'app-player-list',
-  imports: [NgIf, NgFor, DatePipe],
+  imports: [NgIf, NgFor, DatePipe, RouterModule],
   templateUrl: './player-list.component.html',
   styleUrls: ['./player-list.component.css']
 })
@@ -15,7 +16,7 @@ export class PlayerListComponent implements OnInit {
   loading = false;
   error: string = '';
 
-  constructor(private playerService: PlayerService, private router: Router) {}
+  constructor(private playerService: PlayerService, private router: Router, private imageService: ImageService) {}
 
   ngOnInit(): void {
     this.loadPlayers();
@@ -25,10 +26,12 @@ export class PlayerListComponent implements OnInit {
     this.loading = true;
     this.playerService.getAll().subscribe({
       next: (res) => {
-        this.players = res.$values;
+        console.log(res);
+        this.players = res;
         this.loading = false;
       },
-      error: () => {
+      error: (err) => {
+        console.log(err);
         this.error = 'Greska pri ucitavanju igraca';
         this.loading = false;
       }
@@ -41,5 +44,11 @@ export class PlayerListComponent implements OnInit {
 
   goToCreate(): void {
     this.router.navigate(['/admin/players/create']);
+  }
+  
+  getImage(fileName: string): string {
+      var someting = this.imageService.getImageUrl("Players", fileName)  
+      console.log(someting);
+      return someting;
   }
 }

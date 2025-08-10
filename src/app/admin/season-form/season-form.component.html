@@ -1,0 +1,101 @@
+<form [formGroup]="form" (ngSubmit)="submit()" class="season-form">
+  <h2>{{ isEdit ? 'Izmeni Sezonu' : 'Dodaj Novu Sezonu' }}</h2>
+  
+  <div *ngIf="error" class="error">{{ error }}</div>
+
+  <div class="form-group">
+    <label for="name">Naziv sezone:</label>
+    <input 
+      id="name" 
+      formControlName="name" 
+      class="form-control"
+      placeholder="npr. Sezona 2024/25"
+      [class.is-invalid]="
+        (form.get('name')?.invalid && (form.get('name')?.touched || form.get('name')?.dirty)) 
+        || nameErrorMessage
+      "
+    />
+    <div *ngIf="form.get('name')?.invalid && (form.get('name')?.touched || form.get('name')?.dirty)" class="validation-message">
+      Naziv sezone je obavezan.
+    </div>
+    <div *ngIf="nameErrorMessage" class="validation-message">{{ nameErrorMessage }}</div>
+  </div>
+
+  <div class="form-group">
+    <label for="leagueId">Liga:</label>
+    <select 
+      id="leagueId" 
+      formControlName="leagueId" 
+      class="form-control"
+      [class.is-invalid]="
+        (form.get('leagueId')?.invalid && (form.get('leagueId')?.touched || form.get('leagueId')?.dirty))
+      "
+    >
+      <option value="">Izaberite ligu</option>
+      <option *ngFor="let league of leagues" [value]="league.id">{{ league.name }}</option>
+    </select>
+    <div *ngIf="form.get('leagueId')?.invalid && (form.get('leagueId')?.touched || form.get('leagueId')?.dirty)" class="validation-message">
+      Liga je obavezna.
+    </div>
+  </div>
+
+  <div class="date-row">
+    <div class="form-group">
+      <label for="startDate">Datum početka:</label>
+      <input 
+        id="startDate" 
+        type="date" 
+        formControlName="startDate" 
+        class="form-control"
+        [class.is-invalid]="
+          (form.get('startDate')?.invalid && (form.get('startDate')?.touched || form.get('startDate')?.dirty))
+        "
+      />
+      <div *ngIf="form.get('startDate')?.invalid && (form.get('startDate')?.touched || form.get('startDate')?.dirty)" class="validation-message">
+        Datum početka je obavezan.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="endDate">Datum kraja (opciono):</label>
+      <input 
+        id="endDate" 
+        type="date" 
+        formControlName="endDate" 
+        class="form-control"
+        [class.is-invalid]="dateRangeError"
+      />
+      <div *ngIf="dateRangeError" class="validation-message">{{ dateRangeError }}</div>
+    </div>
+  </div>
+
+  <!-- Season Management Actions (only in edit mode) -->
+  <div *ngIf="isEdit && seasonId" class="management-section">
+    <h3>Upravljanje sezonom</h3>
+    <div class="management-actions">
+      <a [routerLink]="['/admin/seasons', seasonId, 'teams']" class="btn btn-info">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+          <circle cx="9" cy="7" r="4"></circle>
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+        </svg>
+        Upravljaj timovima
+      </a>
+      <a [routerLink]="['/admin/seasons', seasonId, 'standings']" class="btn btn-success">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 3v18h18"></path>
+          <path d="M7 12l3 3 7-10"></path>
+        </svg>
+        Tabela i rezultati
+      </a>
+    </div>
+  </div>
+
+  <div class="action-buttons-container">
+    <a [routerLink]="getBackRoute()" class="btn btn-secondary float-left">Nazad</a>
+    <button type="submit" class="btn btn-primary float-right" [disabled]="form.invalid || loading">
+      {{ isEdit ? 'Izmeni' : 'Kreiraj' }} Sezonu
+    </button>
+  </div>
+</form>

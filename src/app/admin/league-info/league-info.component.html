@@ -60,7 +60,7 @@
     <div class="tab-content" *ngIf="activeTab === 'seasons'">
       <div class="section-header">
         <h3>Sezone</h3>
-        <button class="btn-primary" (click)="createSeason()">+ Dodaj novu sezonu</button>
+        <button class="btn-primary-admin" (click)="createSeason()">+ Dodaj novu sezonu</button>
       </div>
 
       <div *ngIf="seasonsLoading" class="status-message">Učitavanje sezona...</div>
@@ -71,7 +71,6 @@
           <thead>
             <tr>
               <th>Naziv</th>
-              <th>Godina</th>
               <th>Datum početka</th>
               <th>Datum kraja</th>
               <th>Status</th>
@@ -81,7 +80,6 @@
           <tbody>
             <tr *ngFor="let season of seasons">
               <td>{{ season.name }}</td>
-              <td>{{ season.year }}</td>
               <td>{{ season.startDate | date:'dd.MM.yyyy' }}</td>
               <td>{{ season.endDate | date:'dd.MM.yyyy' }}</td>
               <td>
@@ -90,8 +88,9 @@
                 </span>
               </td>
               <td class="action-buttons">
-                <button class="btn-secondary" (click)="editSeason(season.id)">Izmeni</button>
-                <button class="btn-danger" (click)="deleteSeason(season.id)">Obriši</button>
+                <button class="btn-secondary-admin" (click)="editSeason(season.id)">Izmeni</button>
+                <button class="btn-danger-admin" (click)="deleteSeason(season.id)">Obriši</button>
+                <button class="btn-view-admin" (click)="viewSeason(season.id)">Detalji</button>
               </td>
             </tr>
           </tbody>
@@ -138,21 +137,19 @@
             <tr>
               <th>Naziv</th>
               <th>Logo</th>
-              <th>Grad</th>
-              <th>Osnovan</th>
-              <th>Aktivan</th>
+              <th>Datum dodavanja</th>
+              <th>Aktivna sezona</th>
               <th>Akcije</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let team of teams">
-              <td>{{ team.name }}</td>
+              <td>{{ team.fullName }}</td>
               <td><img [src]="getTeamImage(team.logo)" width="30" height="30" class="team-img" /></td>
-              <td>{{ team.city }}</td>
-              <td>{{ team.foundedYear }}</td>
+              <td>{{ team.joinedDate }}</td>
               <td>
-                <span [class.active]="team.isActive" [class.inactive]="!team.isActive">
-                  {{ team.isActive ? 'Da' : 'Ne' }}
+                <span [class.active]="true">
+                  {{ team.seasonName ? 'Da' : 'Ne' }}
                 </span>
               </td>
               <td class="action-buttons">

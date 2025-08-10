@@ -2,13 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { League } from '../core/models/league';
 import { LeagueService } from '../core/services/league.service';
-import { Router } from '@angular/router';
-import { environment } from '../../../environment';
-import { ImageService } from '../../core/services/image.service';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-league-list',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './league-list.component.html',
   styleUrl: './league-list.component.css'
 })
@@ -17,7 +15,7 @@ export class LeagueListComponent implements OnInit {
   loading = false;
   error: string = '';
 
-  constructor(private leagueService: LeagueService, private router: Router, private imageService: ImageService) {}
+  constructor(private leagueService: LeagueService, private router: Router) {}
 
   ngOnInit(): void {
     this.loadLeagues();
@@ -45,9 +43,18 @@ export class LeagueListComponent implements OnInit {
   goToCreate(): void {
     this.router.navigate(['/admin/leagues/create']);
   }
-  
-  getImage(fileName: string): string {
-      return this.imageService.getImageUrl("Leagues", fileName)  
+
+  deactivateLeague(id: number): void {
+    if (confirm('Da li ste sigurni da želite da deaktivirate/aktivirate ligu?')) {
+      this.leagueService.deactivateActiveLeague(id).subscribe({
+        next: () => {
+          this.loadLeagues();
+        },
+        error: () => {
+          alert('Greška pri deaktiviranju/aktiviranju lige...');
+        }
+      });
+    }
   }
   viewLeague(id: number): void{ 
     this.router.navigate([`/admin/leagues/${id}`]);

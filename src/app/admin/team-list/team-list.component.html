@@ -1,1 +1,99 @@
-<p>team-list works!</p>
+<div class="team-list-container">
+  <h2>Timovi</h2>
+
+  <div *ngIf="loading" class="status-message">Učitavanje...</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+
+  <div class="action-bar">
+    <button class="btn-primary" (click)="goToCreate()">+ Dodaj novi tim</button>
+    <div class="results-info">
+      <span>Ukupno: {{ teams.length }} timova</span>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && teams.length" class="table-wrapper">
+    <table class="styled-table">
+      <thead>
+        <tr>
+          <th>Logo</th>
+          <th>Naziv</th>
+          <th>Kratki naziv</th>
+          <th>Aktivna sezona</th>
+          <th>Datum pristupanja</th>
+          <th>Akcija</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let team of paginatedTeams; trackBy: trackByTeamId">
+          <td><img [src]="getImage(team.logo)" width="40" height="40" class="reward-img" /></td>
+          <td class="team-name">
+            <strong>{{ team.fullName }}</strong>
+          </td>
+          <td>
+            <span class="short-name-badge">{{ team.shortName }}</span>
+          </td>
+          <td>
+            <span class="season-info" *ngIf="team.seasonName">
+              {{ team.seasonName }}
+            </span>
+            <span class="no-data" *ngIf="!team.seasonName">Nema aktivne sezone</span>
+          </td>
+          <td>{{ formatDate(team.joinedDate) }}</td>
+          <td class="action-buttons">
+            <button class="btn-icon btn-view" (click)="viewTeam(team.id)" title="Pogledaj tim">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </button>
+            <button class="btn-icon btn-edit" (click)="editTeam(team.id)" title="Izmeni tim">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+              </svg>
+            </button>
+            <button class="btn-icon btn-delete" (click)="deleteTeam(team.id)" title="Obriši tim">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="3,6 5,6 21,6"></polyline>
+                <path d="M19,6v14a2,2 0 0,1 -2,2H7a2,2 0 0,1 -2,-2V6m3,0V4a2,2 0 0,1 2,-2h4a2,2 0 0,1 2,2v2"></path>
+                <line x1="10" y1="11" x2="10" y2="17"></line>
+                <line x1="14" y1="11" x2="14" y2="17"></line>
+              </svg>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Empty state -->
+  <div *ngIf="!loading && teams.length === 0" class="empty-state">
+    <div class="empty-icon">⚽</div>
+    <h3>Nema timova</h3>
+    <p>Dodajte prvi tim da biste počeli.</p>
+    <button class="btn-primary" (click)="goToCreate()">Dodaj tim</button>
+  </div>
+
+  <!-- Pagination -->
+  <div *ngIf="totalPages > 1" class="pagination">
+    <button 
+      class="pagination-btn" 
+      (click)="goToPage(currentPage - 1)" 
+      [disabled]="currentPage === 1"
+    >
+      Prethodna
+    </button>
+    
+    <div class="pagination-info">
+      Strana {{ currentPage }} od {{ totalPages }}
+    </div>
+    
+    <button 
+      class="pagination-btn" 
+      (click)="goToPage(currentPage + 1)" 
+      [disabled]="currentPage === totalPages"
+    >
+      Sledeća
+    </button>
+  </div>
+</div>

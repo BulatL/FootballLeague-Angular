@@ -89,6 +89,10 @@ body{
   float: right;
 }
 
+.float-left{
+  float: left;
+}
+
 
 .flex-container{
   display: flex;
@@ -103,4 +107,71 @@ body{
 
 .margin-top-8{
   margin-top: 8rem;
+}
+
+.margin-8-auto{
+  margin: 8rem auto;
+}
+.action-buttons-container{
+  display: flow-root;
+}
+
+/* Button Styles */
+.btn-primary-admin {
+  background-color: #007bff;
+  border: none;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.btn-primary-admin:hover {
+  background-color: #0056b3;
+}
+
+.btn-secondary-admin {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  margin-right: 0.5rem;
+}
+
+.btn-secondary-admin:hover {
+  background-color: #5a6268;
+}
+
+.btn-danger-admin {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  margin-right: 0.5rem;
+}
+
+.btn-danger-admin:hover {
+  background-color: #c82333;
+}
+
+.btn-view-admin {
+  background-color: #01234c;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  margin-right: 0.5rem;
+}
+
+.btn-view-admin:hover {
+  background-color: #01234c;
 }

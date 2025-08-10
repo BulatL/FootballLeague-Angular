@@ -1,0 +1,164 @@
+<form [formGroup]="form" (ngSubmit)="submit()" class="team-form">
+  <h2>{{ isEdit ? 'Izmeni Tim' : 'Dodaj Novi Tim' }}</h2>
+  
+  <div *ngIf="error" class="error">{{ error }}</div>
+
+  <!-- Basic Team Info Section -->
+  <div class="section">
+    <h3>Osnovni podaci</h3>
+    
+    <div class="form-group">
+      <label for="name">Ime tima:</label>
+      <input 
+        id="name" 
+        formControlName="name" 
+        class="form-control"
+        placeholder="npr. FK Partizan"
+        [class.is-invalid]="
+          (form.get('name')?.invalid && (form.get('name')?.touched || form.get('name')?.dirty)) 
+          || nameErrorMessage
+        "
+      />
+      <div *ngIf="form.get('name')?.invalid && (form.get('name')?.touched || form.get('name')?.dirty)" class="validation-message">
+        Ime tima je obavezano.
+      </div>
+      <div *ngIf="nameErrorMessage" class="validation-message">{{ nameErrorMessage }}</div>
+    </div>
+
+    <div class="form-group">
+      <label for="shortName">Kratko ime:</label>
+      <input 
+        id="shortName" 
+        formControlName="shortName" 
+        class="form-control"
+        placeholder="npr. PAR"
+        maxlength="3"
+        [class.is-invalid]="
+          (form.get('shortName')?.invalid && (form.get('shortName')?.touched || form.get('shortName')?.dirty)) 
+          || shortNameErrorMessage
+        "
+      />
+      <div class="char-counter">{{ form.get('shortName')?.value?.length || 0 }}/3 karaktera</div>
+      <div *ngIf="form.get('shortName')?.invalid && (form.get('shortName')?.touched || form.get('shortName')?.dirty)" class="validation-message">
+        Kratki naziv je obavezan i može imati maksimalno 3 karaktera.
+      </div>
+      <div *ngIf="shortNameErrorMessage" class="validation-message">{{ shortNameErrorMessage }}</div>
+    </div>
+
+    <div class="form-group">
+      <label for="leagueId">Liga:</label>
+      <select 
+        id="leagueId" 
+        formControlName="leagueId" 
+        class="form-control"
+        [class.is-invalid]="
+          (form.get('leagueId')?.invalid && (form.get('leagueId')?.touched || form.get('leagueId')?.dirty))
+        "
+      >
+        <option value="">Izaberite ligu</option>
+        <option *ngFor="let league of leagues" [value]="league.id">{{ league.name }}</option>
+      </select>
+      <div *ngIf="form.get('leagueId')?.invalid && (form.get('leagueId')?.touched || form.get('leagueId')?.dirty)" class="validation-message">
+        Liga je obavezna.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="activeSeasonId">Aktivna sezona (opciono):</label>
+      <select 
+        id="activeSeasonId" 
+        formControlName="activeSeasonId" 
+        class="form-control"
+      >
+        <option value="">Bez aktivne sezone</option>
+        <option *ngFor="let season of filteredSeasons" [value]="season.id">{{ season.name }}</option>
+      </select>
+      <div class="help-text">Sezona u kojoj tim trenutno učestvuje</div>
+    </div>
+  </div>
+
+  <!-- Logo Section -->
+  <div class="section">
+    <h3>Logo tima</h3>
+    
+    <div class="form-group">
+      <label for="logo">Logo:</label>
+      <input id="logo" type="file" (change)="onFileSelected($event)" class="form-control-file" accept="image/*" />
+      
+      <div class="logo-preview-container">
+        <!-- Current saved logo -->
+        <div *ngIf="currentLogoUrl" class="current-logo">
+          <p>Trenutni logo:</p>
+          <img [src]="getImage(currentLogoUrl)" alt="Current team logo" class="logo-preview" />
+        </div>
+        
+        <!-- Preview of new uploaded logo -->
+        <div *ngIf="selectedFilePreview" class="new-logo">
+          <p>Novi logo:</p>
+          <img [src]="selectedFilePreview" alt="New team logo" class="logo-preview" />
+          <button type="button" class="btn-remove" (click)="removeSelectedFile()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Team Statistics (for edit mode) -->
+  <div class="section" *ngIf="isEdit && teamStats">
+    <h3>Statistike tima</h3>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-number">{{ teamStats.playersCount || 0 }}</div>
+        <div class="stat-label">Igrača</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">{{ teamStats.matchesPlayed || 0 }}</div>
+        <div class="stat-label">Odigranih utakmica</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">{{ teamStats.wins || 0 }}</div>
+        <div class="stat-label">Pobeda</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">{{ teamStats.goalsScored || 0 }}</div>
+        <div class="stat-label">Golova</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Management Actions (for edit mode) -->
+  <div class="section" *ngIf="isEdit && teamId">
+    <h3>Upravljanje timom</h3>
+    <div class="management-actions">
+      <a [routerLink]="['/admin/teams', teamId, 'players']" class="btn btn-info">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+          <circle cx="9" cy="7" r="4"></circle>
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+        </svg>
+        Upravljaj igračima
+      </a>
+      <a [routerLink]="['/admin/teams', teamId, 'matches']" class="btn btn-success">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+          <line x1="16" y1="2" x2="16" y2="6"></line>
+          <line x1="8" y1="2" x2="8" y2="6"></line>
+          <line x1="3" y1="10" x2="21" y2="10"></line>
+        </svg>
+        Utakmice i rezultati
+      </a>
+    </div>
+  </div>
+
+  <div class="action-buttons-container">
+    <a routerLink="/admin/teams" class="btn btn-secondary float-left">Nazad</a>
+    <button type="submit" class="btn btn-primary float-right" [disabled]="form.invalid || loading">
+      {{ isEdit ? 'Izmeni' : 'Kreiraj' }} Tim
+    </button>
+  </div>
+</form>
