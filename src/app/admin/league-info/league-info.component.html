@@ -256,7 +256,7 @@
     <!-- Empty states -->
     <div class="empty-state" *ngIf="activeTab === 'seasons' && !seasonsLoading && seasons.length === 0">
       <p>Nema sezona za ovu ligu.</p>
-      <button class="btn-primary" (click)="createSeason()">Dodaj prvu sezonu</button>
+      <!-- <button class="btn-primary" (click)="createSeason()">Dodaj prvu sezonu</button> -->
     </div>
 
     <div class="empty-state" *ngIf="activeTab === 'teams' && !teamsLoading && teams.length === 0">

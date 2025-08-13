@@ -9,6 +9,7 @@ import { environment } from '../../../../environment';
 })
 export class SeasonTeamsService {
   private apiAdminUrl = `${environment.apiUrl}/admin/seasonteams`;
+  private apiAdminSeasonUrl = `${environment.apiUrl}/admin/seasons`;
 
   constructor(private http: HttpClient) {}
 
@@ -32,8 +33,8 @@ export class SeasonTeamsService {
     }): Observable<any>{
         return this.http.post<any>(`${this.apiAdminUrl}/Update`, data);
     }
-
-    getBySeasonId(seasonId: number, page: number = 1, pageSize: number = 5): Observable<any> {
-        return this.http.get<any>(`${this.apiAdminUrl}/league/${seasonId}?page=${page}&pageSize=${pageSize}`);
-    }
+  
+  listSeasonTeamsBySeasonId(seasonId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiAdminSeasonUrl}/${seasonId}/ListSeasonTeamsBySeasonId/`);
+  }
 }

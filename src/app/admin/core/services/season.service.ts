@@ -53,4 +53,8 @@ export class SeasonService {
   listByLeague(leagueId: number, pageNumber: number, pageSize: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/ListByLeagues/${leagueId}?pageNumber=${pageNumber}&pageSize=${pageSize}`);
   }
+  
+  listSeasonTeamsBySeasonId(seasonId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/${seasonId}/ListSeasonTeamsBySeasonId/`);
+  }
 }

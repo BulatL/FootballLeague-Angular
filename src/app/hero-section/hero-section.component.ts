@@ -12,19 +12,7 @@ import { ApiListResponse } from '../shared/api-list-response';
 })
 export class HeroSectionComponent implements OnInit, OnDestroy {
   images = [
-    { src: 'ChatGPT Image Jun 6, 2025, 08_04_17 PM.png', thumb: 'ChatGPT Image Jun 6, 2025, 08_04_17 PM.png' },
     { src: 'teren.jpg', thumb: 'teren.jpg' },
-    { src: 'teren2.jpg', thumb: 'teren2.jpg' },
-    { src: 'IMG-20250801-WA0002.jpg', thumb: 'teren2.jpg' },
-    { src: 'IMG-20250801-WA0003.jpg', thumb: 'teren2.jpg' },
-    { src: 'IMG-20250801-WA0004.jpg', thumb: 'teren2.jpg' },
-    { src: 'IMG-20250801-WA0005.jpg', thumb: 'teren2.jpg' },
-    { src: 'IMG-20250801-WA0006.jpg', thumb: 'teren2.jpg' },
-    { src: 'IMG-20250801-WA0007.jpg', thumb: 'teren2.jpg' },
-    { src: 'IMG-20250801-WA0008.jpg', thumb: 'teren2.jpg' },
-    { src: 'IMG-20250801-WA0009.jpg', thumb: 'teren2.jpg' },
-    { src: 'IMG-20250801-WA00010.jpg', thumb: 'teren2.jpg' },
-    { src: 'IMG-20250801-WA00011.jpg', thumb: 'teren2.jpg' }
   ];
   activeIndex = 0;
   intervalId: any;

@@ -214,10 +214,6 @@ export class SeasonFormComponent implements OnInit {
 
   // Helper method to get the correct navigation route
   getBackRoute(): string {
-    return this.leagueId ? `/admin/leagues/${this.leagueId}` : '/admin/seasons';
+    return this.leagueId ? `/admin/leagues/${this.leagueId}` : `/admin/seasons/${this.seasonId}`;
   }
 }
-
-// Template update needed:
-// Replace: <a [routerLink]="['/admin/leagues', leagueId]" class="btn btn-secondary float-left">Nazad</a>
-// With: <a [routerLink]="getBackRoute()" class="btn btn-secondary float-left">Nazad</a>

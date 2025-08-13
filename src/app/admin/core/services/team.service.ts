@@ -16,7 +16,7 @@ export class TeamService {
 
 
   listByLeague(leagueId: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/listbyleague/${leagueId}`);
+    return this.http.get<any>(`${this.apiAdminUrl}/listbyleague/${leagueId}`);
   }
 
   getAll(): Observable<any> {

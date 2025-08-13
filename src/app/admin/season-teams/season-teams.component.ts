@@ -82,9 +82,10 @@ export class SeasonTeamsComponent implements OnInit {
     if (!this.season?.leagueId) return;
 
     // Load all teams from the same league
-    this.teamService.getByLeague(this.season.leagueId).subscribe({
+    this.teamService.listByLeague(this.season.leagueId).subscribe({
       next: (teams) => {
-        this.availableTeams = teams || [];
+        console.log(teams);
+        this.availableTeams = teams.$values || [];
         this.preprocessTeamLogos();
         this.loadCurrentSeasonTeams();
       },
@@ -98,9 +99,9 @@ export class SeasonTeamsComponent implements OnInit {
 
   private loadCurrentSeasonTeams(): void {
     // Load teams currently in this season
-    this.seasonTeamsService.getBySeasonId(this.seasonId).subscribe({
+    this.seasonTeamsService.listSeasonTeamsBySeasonId(this.seasonId).subscribe({
       next: (seasonTeams) => {
-        this.currentSeasonTeams = seasonTeams || [];
+        this.currentSeasonTeams = seasonTeams.$values || [];
         this.selectedTeams = this.currentSeasonTeams
           .filter(st => st.isActive)
           .map(st => st.teamId);
