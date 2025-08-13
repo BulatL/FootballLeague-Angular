@@ -66,6 +66,7 @@
         [class.is-invalid]="dateRangeError"
       />
       <div *ngIf="dateRangeError" class="validation-message">{{ dateRangeError }}</div>
+      <span *ngIf="isEdit" class="readonly-note">(nije moguće menjati)</span>
     </div>
   </div>
 

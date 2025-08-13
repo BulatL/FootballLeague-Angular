@@ -73,7 +73,6 @@
               <th>Naziv</th>
               <th>Datum početka</th>
               <th>Datum kraja</th>
-              <th>Status</th>
               <th>Akcije</th>
             </tr>
           </thead>
@@ -82,11 +81,6 @@
               <td>{{ season.name }}</td>
               <td>{{ season.startDate | date:'dd.MM.yyyy' }}</td>
               <td>{{ season.endDate | date:'dd.MM.yyyy' }}</td>
-              <td>
-                <span [class.active]="season.isActive" [class.inactive]="!season.isActive">
-                  {{ season.isActive ? 'Aktivna' : 'Neaktivna' }}
-                </span>
-              </td>
               <td class="action-buttons">
                 <button class="btn-secondary-admin" (click)="editSeason(season.id)">Izmeni</button>
                 <button class="btn-danger-admin" (click)="deleteSeason(season.id)">Obriši</button>

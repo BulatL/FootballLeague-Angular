@@ -25,7 +25,12 @@
               </td>
               <td class="action-buttons">
                 <button class="btn-secondary-admin" (click)="editLeague(league.id)">Izmeni</button>
-                <button class="btn-danger-admin" (click)="deactivateLeague(league.id)">Deaktiviraj</button>
+                <button 
+                  [class]="league.isActive ? 'btn-danger-admin' : 'btn-success-admin'" 
+                  (click)="toggleStatus(league.id)"
+                  [disabled]="loading">
+                  {{ league.isActive ? 'Deaktiviraj' : 'Aktiviraj' }}
+                </button>               
                 <button class="btn-view-admin" (click)="viewLeague(league.id)">Detalji</button>
               </td>
             </tr>

@@ -41,20 +41,15 @@
       <div *ngIf="lastNameErrorMessage" class="validation-message">{{ lastNameErrorMessage }}</div>
     </div>
 
+    
     <div class="form-group">
-      <label for="birthDate">Datum rođenja:</label>
+      <label for="birthDate">Datum rođenja (opciono):</label>
       <input 
         id="birthDate" 
         type="date" 
         formControlName="birthDate" 
         class="form-control"
-        [class.is-invalid]="
-          (form.get('birthDate')?.invalid && (form.get('birthDate')?.touched || form.get('birthDate')?.dirty))
-        "
       />
-      <div *ngIf="form.get('birthDate')?.invalid && (form.get('birthDate')?.touched || form.get('birthDate')?.dirty)" class="validation-message">
-        Datum rođenja je obavezan.
-      </div>
     </div>
 
     <div class="form-group">

@@ -81,13 +81,7 @@
       </div>
       
       <div class="team-info">
-        <img 
-          [src]="getTeamLogo(team.logo)" 
-          [alt]="team.fullName + ' logo'"
-          class="team-logo"
-          (error)="onImageError($event)"
-        />
-        
+        <img [src]="getTeamLogo(team.logo)" width="40" height="40" class="team-logo" />
         <div class="team-details">
           <h4>{{ team.fullName }}</h4>
           <span class="team-short-name">{{ team.shortName }}</span>

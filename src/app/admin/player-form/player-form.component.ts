@@ -98,7 +98,7 @@ export class PlayerFormComponent implements OnInit {
     this.form = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      birthDate: ['', Validators.required],
+      birthDate: [''],
       cellNo: [''],
       // Team assignment fields
       teamId: [''],

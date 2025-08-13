@@ -33,7 +33,7 @@ export class LeagueService {
     return this.http.patch<void>(`${this.apiAdminUrl}/patch`, formData);
   }
 
-  deactivateActiveLeague(id: number): Observable<void> {
-    return this.http.put<void>(`${this.apiAdminUrl}/deactivate-active/${id}`, {});
+  toggleStatus(formData: FormData): Observable<void> {
+    return this.http.patch<void>(`${this.apiAdminUrl}/toggleStatus/`, formData);
   }
 }

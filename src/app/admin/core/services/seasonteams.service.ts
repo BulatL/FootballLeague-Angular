@@ -31,7 +31,7 @@ export class SeasonTeamsService {
     teamsToAdd: number[];
     teamsToRemove: number[];
     }): Observable<any>{
-        return this.http.post<any>(`${this.apiAdminUrl}/Update`, data);
+        return this.http.post<any>(`${this.apiAdminSeasonUrl}/PostSeasonTeams`, data);
     }
   
   listSeasonTeamsBySeasonId(seasonId: number): Observable<any> {

@@ -44,9 +44,12 @@ export class LeagueListComponent implements OnInit {
     this.router.navigate(['/admin/leagues/create']);
   }
 
-  deactivateLeague(id: number): void {
+  toggleStatus(id: number): void {
     if (confirm('Da li ste sigurni da želite da deaktivirate/aktivirate ligu?')) {
-      this.leagueService.deactivateActiveLeague(id).subscribe({
+      var formData = new FormData();
+      formData.append('id', id.toString());
+      formData.append('auditUsername', 'admin');
+      this.leagueService.toggleStatus(formData).subscribe({
         next: () => {
           this.loadLeagues();
         },

@@ -84,7 +84,6 @@ export class SeasonTeamsComponent implements OnInit {
     // Load all teams from the same league
     this.teamService.listByLeague(this.season.leagueId).subscribe({
       next: (teams) => {
-        console.log(teams);
         this.availableTeams = teams.$values || [];
         this.preprocessTeamLogos();
         this.loadCurrentSeasonTeams();
@@ -222,36 +221,58 @@ export class SeasonTeamsComponent implements OnInit {
     const updateData = {
       seasonId: this.seasonId,
       teamsToAdd: teamsToAdd,
-      teamsToRemove: teamsToRemove
+      teamsToRemove: teamsToRemove,
+      auditUsername: "admin"
     };
-
     this.seasonTeamsService.updateSeasonTeams(updateData).subscribe({
       next: (response) => {
-        if (response.isSuccess) {
+        if (response.isValid == true) {
           this.originalSelectedTeams = [...this.selectedTeams];
           this.loadCurrentSeasonTeams(); // Refresh data
           // Show success message
           alert(`Uspešno ažurirani timovi! Dodano: ${teamsToAdd.length}, Uklonjeno: ${teamsToRemove.length}`);
-        } else {
-          this.error = response.message || 'Failed to update season teams.';
+        } 
+        else {
+           if (response.errors && response.errors.$values.length > 0) {
+            // Display all validation errors
+            console.log('response.errors.$values', response.errors.$values);
+            this.error = response.errors.$values
+                                           .map((err: any) => err.message)
+                                           .join('\n'); // or ', ' if you want them comma-separated
+            // this.error = response.errors.$values.join('\n');
+            console.log('this.error: ', this.error);
+          } else {
+            // Fallback to general message
+            this.error = response.message || 'Failed to update season teams.';
+          }
         }
         this.loading = false;
       },
       error: (err) => {
         console.error('Error updating season teams:', err);
-        this.error = 'Failed to save changes due to network error.';
+        
+        // Check if it's a validation error response
+        if (err.error && err.error.errors && err.error.errors.length > 0) {
+          this.error = err.error.errors.join('\n');
+        } else if (err.error && err.error.message) {
+          this.error = err.error.message;
+        } else {
+          this.error = 'Failed to save changes due to network error.';
+        }
+        
         this.loading = false;
       }
     });
   }
 
   getTeamLogo(logoFileName: string): string {
-    if (!logoFileName) return 'assets/images/teams/default-team.png';
-    return this.imageService.getImageUrl('Teams', logoFileName);
+    if (!logoFileName) return 'public/default-team.png';
+    var logoResult = this.imageService.getImageUrl('Teams', logoFileName);
+    return logoResult
   }
 
   onImageError(event: any): void {
-    event.target.src = 'assets/images/teams/default-team.png';
+    event.target.src = 'public/default-team.png';
   }
 
   formatDate(dateString: string): string {

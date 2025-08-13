@@ -161,6 +161,22 @@ body{
   background-color: #c82333;
 }
 
+
+.btn-success-admin {
+  background-color: #00ff88;
+  color: black;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  margin-right: 0.5rem;
+}
+
+.btn-success-admin:hover {
+  background-color: #02e079;
+}
+
 .btn-view-admin {
   background-color: #01234c;
   color: white;

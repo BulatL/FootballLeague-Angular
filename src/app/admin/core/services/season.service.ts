@@ -38,8 +38,8 @@ export class SeasonService {
     return this.http.post<CommandResult<Season>>(`${this.apiAdminUrl}/post`, formData);
   }
 
-  update(id: number, formData: FormData): Observable<CommandResult<Season>> {
-    return this.http.put<CommandResult<Season>>(`${this.apiAdminUrl}/${id}`, formData);
+  update(formData: FormData): Observable<CommandResult<Season>> {
+    return this.http.patch<CommandResult<Season>>(`${this.apiAdminUrl}/"patch"`, formData);
   }
 
   delete(id: number): Observable<void> {

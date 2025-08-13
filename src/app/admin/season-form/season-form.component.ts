@@ -52,6 +52,7 @@ export class SeasonFormComponent implements OnInit {
     if (idParam) {
       this.isEdit = true;
       this.seasonId = +idParam;
+      this.form.get('endDate')?.disable();
     }
 
     // Load leagues first, then handle form population
@@ -163,8 +164,11 @@ export class SeasonFormComponent implements OnInit {
     formData.append('endDate', this.form.value.endDate);
     formData.append('auditUsername', 'admin'); // Replace with actual username
 
+    if(this.isEdit)
+      formData.append('id', this.seasonId!.toString());
+
     const save$: Observable<any> = this.isEdit
-      ? this.seasonService.update(this.seasonId!, formData)
+      ? this.seasonService.update(formData)
       : this.seasonService.create(formData);
 
     save$.subscribe({
