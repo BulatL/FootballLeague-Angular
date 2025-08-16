@@ -127,7 +127,6 @@ export class LeagueInfoComponent implements OnInit {
   }
 
   editSeason(id: number): void {
-    console.log("this.leagueId", this.leagueId);
     this.router.navigate([`/admin/seasons/edit/${id}`], {
         queryParams: { leagueId: this.leagueId }
     });

@@ -1,5 +1,12 @@
 export interface GenerateFixturesResponse {
-  seasonId: number;           
-  matchesCount: number;         
-  roundsCount: number;        
+  isValid: boolean;
+  errors: {
+    $values: Array<{ message: string }>;
+  }
+  data?: {
+    matchesCount: number;
+    roundsCount: number;
+    firstMatchDate: string;
+    lastMatchDate: string;
+  };  
 }

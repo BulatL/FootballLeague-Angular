@@ -46,7 +46,6 @@ export class RewardFormComponent {
   loadReward(id: number): void {
     this.rewardService.getById(id).subscribe({
       next: (res) => {
-        console.log(res);
         const reward = res; 
         this.form.patchValue({
           name: res.name,

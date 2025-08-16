@@ -96,7 +96,7 @@ export class TeamListComponent implements OnInit {
   }
 
   editTeam(teamId: number): void {
-    this.router.navigate(['/admin/teams', teamId, 'edit']);
+    this.router.navigate(['/admin/teams/edit', teamId]);
   }
 
   deleteTeam(teamId: number): void {

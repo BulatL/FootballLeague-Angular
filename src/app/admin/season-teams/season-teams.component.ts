@@ -235,12 +235,9 @@ export class SeasonTeamsComponent implements OnInit {
         else {
            if (response.errors && response.errors.$values.length > 0) {
             // Display all validation errors
-            console.log('response.errors.$values', response.errors.$values);
             this.error = response.errors.$values
                                            .map((err: any) => err.message)
                                            .join('\n'); // or ', ' if you want them comma-separated
-            // this.error = response.errors.$values.join('\n');
-            console.log('this.error: ', this.error);
           } else {
             // Fallback to general message
             this.error = response.message || 'Failed to update season teams.';

@@ -1,4 +1,8 @@
-import { Routes } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { AuthGuard } from './core/auth/guards/auth.guard';
+import { AdminGuard } from './core/auth/guards/admin.guard';
+
 import { LeagueListComponent } from './admin/league-list/league-list.component';
 import { LeagueHomeComponent } from './league-home/league-home.component';
 import { LeagueFormComponent } from './admin/league-form/league-form.component';
@@ -15,6 +19,7 @@ import { SeasonFormComponent } from './admin/season-form/season-form.component';
 import { SeasonDetailsComponent } from './admin/season-details/season-details.component';
 import { TeamFormComponent } from './admin/team-form/team-form.component';
 import { SeasonTeamsComponent } from './admin/season-teams/season-teams.component';
+import { LoginComponent } from './login/login.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'league-home', pathMatch: 'full' },
@@ -23,6 +28,7 @@ export const routes: Routes = [
   { path: 'league-home', component: LeagueHomeComponent },
   { path: 'player-detail', component: PlayerDetailComponent },
   { path: 'fixture/:id', component: FixtureDetailComponent },
+  { path: 'login', component: LoginComponent },
    {
     path: 'admin',
     children: [
@@ -49,6 +55,7 @@ export const routes: Routes = [
       { path: 'players', component: PlayerListComponent },
       { path: 'players/create', component: PlayerFormComponent },
       { path: 'players/edit/:id', component: PlayerFormComponent },
-    ]
+    ],
+    canActivate: [AdminGuard]
   }
 ];

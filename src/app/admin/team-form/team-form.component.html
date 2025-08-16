@@ -64,11 +64,12 @@
     </div>
 
     <div class="form-group">
-      <label for="activeSeasonId">Aktivna sezona (opciono):</label>
+      <label for="activeSeasonId">Aktivna sezona (nije moguće menjati):</label>
       <select 
         id="activeSeasonId" 
         formControlName="activeSeasonId" 
         class="form-control"
+        
       >
         <option value="">Bez aktivne sezone</option>
         <option *ngFor="let season of filteredSeasons" [value]="season.id">{{ season.name }}</option>
@@ -108,7 +109,7 @@
   </div>
 
   <!-- Team Statistics (for edit mode) -->
-  <div class="section" *ngIf="isEdit && teamStats">
+  <!-- <div class="section" *ngIf="isEdit && teamStats">
     <h3>Statistike tima</h3>
     <div class="stats-grid">
       <div class="stat-card">
@@ -128,7 +129,7 @@
         <div class="stat-label">Golova</div>
       </div>
     </div>
-  </div>
+  </div> -->
 
   <!-- Management Actions (for edit mode) -->
   <div class="section" *ngIf="isEdit && teamId">
@@ -143,7 +144,7 @@
         </svg>
         Upravljaj igračima
       </a>
-      <a [routerLink]="['/admin/teams', teamId, 'matches']" class="btn btn-success">
+      <!-- <a [routerLink]="['/admin/teams', teamId, 'matches']" class="btn btn-success">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
           <line x1="16" y1="2" x2="16" y2="6"></line>
@@ -151,7 +152,7 @@
           <line x1="3" y1="10" x2="21" y2="10"></line>
         </svg>
         Utakmice i rezultati
-      </a>
+      </a> -->
     </div>
   </div>
 

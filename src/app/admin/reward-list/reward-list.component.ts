@@ -25,7 +25,6 @@ export class RewardListComponent implements OnInit {
     this.loading = true;
     this.rewardService.getAll().subscribe({
       next: (data) => {
-        console.log(data);
         this.rewards = data.$values;
         this.loading = false;
       },

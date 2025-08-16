@@ -6,6 +6,7 @@ import { Fixture } from '../../../core/models/fixture.model';
 import { ApiListResponse } from '../../../shared/api-list-response';
 import { CommandResult } from '../models/command-result';
 import { GenerateFixturesResponse } from '../models/ApiResponse/Fixture/generate-fixtures-response';
+import { GenerateFixturesRequest } from '../models/ApiRequest/generate-fixtures-request';
 
 
 @Injectable({ providedIn: 'root' })
@@ -37,7 +38,19 @@ export class FixtureService {
     return this.http.get<Fixture[]>(`${this.apiAdminUrl}/GetBySeason/${id}?limit=${limit}`);
   }
 
-  generateForSeason(seasonId: number): Observable<CommandResult<GenerateFixturesResponse>> {
-    return this.http.post<CommandResult<GenerateFixturesResponse>>(`${this.apiAdminUrl}/GenerateForSeason`, seasonId);
+  generateForSeasonWithSchedule(request: GenerateFixturesRequest): Observable<GenerateFixturesResponse> {
+    const payload = {
+      seasonId: request.seasonId,
+      startDate: request.startDate,
+      timeSlots: request.timeSlots.map(slot => ({
+        dayOfWeek: slot.day, // 0=Sunday, 1=Monday, etc.
+        time: slot.time      // HH:mm format
+      }))
+    };
+
+    return this.http.post<GenerateFixturesResponse>(
+      `${this.apiAdminUrl}/GenerateSchedule`, 
+      payload
+    );
   }
 }

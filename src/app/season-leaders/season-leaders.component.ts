@@ -48,6 +48,5 @@ sevenGoalPlayers = [
     this.category = category;
     // TODO: Fetch or update `topPlayer` and `players` based on `category`
     // This is where you'd call your API or update the data manually
-    console.log('Selected category:', category);
   }
 }

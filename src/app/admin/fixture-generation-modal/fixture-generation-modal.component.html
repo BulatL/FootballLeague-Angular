@@ -1,0 +1,135 @@
+<div class="modal-overlay" [class.active]="isVisible" >
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>Generiši Raspored Utakmica</h3>
+          <button type="button" class="close-btn" (click)="close()">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <form (ngSubmit)="onSubmit()" #fixtureForm="ngForm">
+            <!-- Start Date Selection -->
+            <div class="form-group">
+              <label for="startDate">Datum prve utakmice</label>
+              <input
+                type="date"
+                id="startDate"
+                [(ngModel)]="startDate"
+                name="startDate"
+                class="form-control"
+                required
+                [min]="minDate"
+              />
+            </div>
+
+            <!-- Time Slots Configuration -->
+            <div class="form-group">
+              <label>Termini za utakmice</label>
+              <div class="time-slots-container">
+                <div 
+                  *ngFor="let slot of timeSlots; let i = index; trackBy: trackByIndex" 
+                  class="time-slot-item"
+                >
+                  <select 
+                    [(ngModel)]="slot.day" 
+                    [name]="'day_' + i"
+                    class="form-control day-select"
+                    required
+                  >
+                    <option value="" disabled>Dan</option>
+                    <option value="1">Ponedeljak</option>
+                    <option value="2">Utorak</option>
+                    <option value="3">Sreda</option>
+                    <option value="4">Četvrtak</option>
+                    <option value="5">Petak</option>
+                    <option value="6">Subota</option>
+                    <option value="0">Nedelja</option>
+                  </select>
+
+                  <input
+                    type="time"
+                    [(ngModel)]="slot.time"
+                    [name]="'time_' + i"
+                    class="form-control time-input"
+                    required
+                  />
+
+                  <button 
+                    type="button" 
+                    class="btn btn-danger btn-sm"
+                    (click)="removeTimeSlot(i)"
+                    [disabled]="timeSlots.length <= 1"
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polyline points="3,6 5,6 21,6"></polyline>
+                      <path d="M19,6v14a2,2 0 0,1 -2,2H7a2,2 0 0,1 -2,-2V6m3,0V4a2,2 0 0,1 2,-2h4a2,2 0 0,1 2,2v2"></path>
+                    </svg>
+                  </button>
+                </div>
+
+                <button 
+                  type="button" 
+                  class="btn btn-outline btn-sm add-slot-btn"
+                  (click)="addTimeSlot()"
+                >
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                  </svg>
+                  Dodaj termin
+                </button>
+              </div>
+            </div>
+
+            <!-- Generation Preview -->
+            <div class="preview-info" *ngIf="teamsCount > 0">
+              <h4>Pregled generisanja</h4>
+              <div class="preview-stats">
+                <div class="preview-item">
+                  <span class="preview-label">Broj timova:</span>
+                  <span class="preview-value">{{ teamsCount }}</span>
+                </div>
+                <div class="preview-item">
+                  <span class="preview-label">Ukupno utakmica:</span>
+                  <span class="preview-value">{{ calculateTotalMatches() }}</span>
+                </div>
+                <div class="preview-item">
+                  <span class="preview-label">Broj kola:</span>
+                  <span class="preview-value">{{ calculateRounds() }}</span>
+                </div>
+                <div class="preview-item">
+                  <span class="preview-label">Termina po kolu:</span>
+                  <span class="preview-value">{{ timeSlots.length }}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Warning Messages -->
+            <div class="alert alert-warning" *ngIf="getValidationWarnings().length > 0">
+              <ul class="warning-list">
+                <li *ngFor="let warning of getValidationWarnings()">{{ warning }}</li>
+              </ul>
+            </div>
+          </form>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="close()">
+            Otkaži
+          </button>
+          <button 
+            type="button" 
+            class="btn btn-primary"
+            (click)="onSubmit()"
+            [disabled]="!isFormValid() || loading"
+          >
+            <span *ngIf="loading" class="spinner"></span>
+            {{ loading ? 'Generiše...' : 'Generiši Raspored' }}
+          </button>
+        </div>
+      </div>
+    </div>

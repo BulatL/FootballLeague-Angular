@@ -7,14 +7,15 @@ import { FixtureService } from '../core/services/fixture.service';
 import { Fixture } from '../../core/models/fixture.model';
 import { Season } from '../core/models/season';
 import { GetStatisticsResponse } from '../core/models/ApiResponse/Season/get-statistics-response';
-
+import { FixtureGenerationModalComponent } from './../fixture-generation-modal/fixture-generation-modal.component';
+import { GenerateFixturesRequest } from '../core/models/ApiRequest/generate-fixtures-request';
 
 @Component({
   selector: 'app-season-details',
   templateUrl: './season-details.component.html',
   styleUrls: ['./season-details.component.css'],
   standalone: true,
-  imports: [CommonModule, RouterModule]
+  imports: [CommonModule, RouterModule, FixtureGenerationModalComponent]
 })
 export class SeasonDetailsComponent implements OnInit {
   seasonId!: number;
@@ -22,6 +23,10 @@ export class SeasonDetailsComponent implements OnInit {
   loading = true;
   error = '';
   fixturesGenerated = false;
+  
+  // Modal state
+  showFixtureModal = false;
+  modalLoading = false;
   
   statistics: GetStatisticsResponse = {
     teamsCount: 0,
@@ -63,8 +68,6 @@ export class SeasonDetailsComponent implements OnInit {
       recentMatches: this.fixtureService.getRecentBySeason(this.seasonId, 5)
     }).subscribe({
       next: (data) => {
-        console.log(data);
-        console.log("daaaaaa");
         this.season = data.season;
         this.statistics = data.statistics;
         this.recentMatches = data.recentMatches || [];
@@ -79,6 +82,7 @@ export class SeasonDetailsComponent implements OnInit {
     });
   }
 
+  // Updated method to show modal instead of direct generation
   generateFixtures(): void {
     if (this.statistics.teamsCount < 2) {
       alert('Potrebno je minimum 2 tima za generisanje rasporeda.');
@@ -86,28 +90,48 @@ export class SeasonDetailsComponent implements OnInit {
     }
 
     if (this.fixturesGenerated) {
-      const confirmRegenerate = confirm('Raspored je već generisan. Da li želite da ga ponovo kreirate? Ovo će obrisati postojeće utakmice.');
+      const confirmRegenerate = confirm(
+        'Raspored je već generisan. Da li želite da ga ponovo kreirate? Ovo će obrisati postojeće utakmice.'
+      );
       if (!confirmRegenerate) return;
     }
 
-    this.loading = true;
-    this.fixtureService.generateForSeason(this.seasonId).subscribe({
+    this.showFixtureModal = true;
+  }
+
+  // Handle the actual fixture generation from modal
+  onGenerateFixtures(request: GenerateFixturesRequest): void {
+    this.modalLoading = true;
+    
+    this.fixtureService.generateForSeasonWithSchedule(request).subscribe({
       next: (response) => {
-        if (response.IsValid) {
+        if (response.isValid) {
           this.fixturesGenerated = true;
+          this.showFixtureModal = false;
+          this.modalLoading = false;
           this.loadSeasonDetails(); // Refresh data
-          alert(`Uspešno generisan raspored! Kreirano je ${response.Data?.matchesCount} utakmica u ${response.Data?.roundsCount} kola.`);
+          
+          const message = `Uspešno generisan raspored!
+Kreirano je ${response.data?.matchesCount} utakmica u ${response.data?.roundsCount} kola.
+Prva utakmica: ${this.formatDate(response.data?.firstMatchDate!)}`;
+          
+          alert(message);
         } else {
-          this.error = response.Erros[0].Message || 'Failed to generate fixtures.';
+          this.error = response.errors.$values[0].message || 'Failed to generate fixtures.';
+          this.modalLoading = false;
         }
-        this.loading = false;
       },
       error: (err) => {
         console.error('Error generating fixtures:', err);
         this.error = 'Failed to generate fixtures due to network error.';
-        this.loading = false;
+        this.modalLoading = false;
       }
     });
+  }
+
+  onCloseModal(): void {
+    this.showFixtureModal = false;
+    this.modalLoading = false;
   }
 
   formatDate(dateString: string): string {

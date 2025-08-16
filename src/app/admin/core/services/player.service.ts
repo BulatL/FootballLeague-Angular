@@ -35,8 +35,8 @@ export class PlayerService {
     return this.http.post<CommandResult<Player>>(`${this.adminApiUrl}/post`, formData);
   }
     
-  update(id: number, formData: FormData): Observable<CommandResult<Player>> {
-    return this.http.put<CommandResult<Player>>(`${this.adminApiUrl}/${id}`, formData);
+  update(formData: FormData): Observable<CommandResult<Player>> {
+    return this.http.patch<CommandResult<Player>>(`${this.adminApiUrl}/patch`, formData);
   }
 
   delete(id: number): Observable<void> {

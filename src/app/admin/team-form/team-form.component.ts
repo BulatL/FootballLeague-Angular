@@ -39,7 +39,7 @@ export class TeamFormComponent implements OnInit {
   filteredSeasons: Season[] = [];
   
   // Team statistics (for edit mode)
-  teamStats?: GetStatisticsResponse;
+  // teamStats?: GetStatisticsResponse;
 
   constructor(
     private fb: FormBuilder,
@@ -56,7 +56,6 @@ export class TeamFormComponent implements OnInit {
     this.loadInitialData();
 
     const idParam = this.route.snapshot.paramMap.get('id');
-    console.log("id1", idParam);
     if (idParam) {
       this.isEdit = true;
       this.teamId = +idParam;
@@ -86,7 +85,6 @@ export class TeamFormComponent implements OnInit {
   private loadInitialData(): void {
     this.leagueService.getAll().subscribe({
       next: (leaguesResponse: any) => {
-        console.log('leaguesResponse: ',leaguesResponse);
         this.leagues = leaguesResponse?.$values || [];
         this.leagues = this.leagues.filter(league => league.isActive);
       },
@@ -113,7 +111,6 @@ export class TeamFormComponent implements OnInit {
    private loadSeasonsByLeague(leagueId: number): void {
     this.seasonService.listByLeague(leagueId, 1, 100).subscribe({
       next: (seasonsResponse: any) => {
-        console.log('seasonsResponse: ',seasonsResponse);
         this.filteredSeasons = seasonsResponse?.seasons?.$values || [];
       },
       error: (err) => {
@@ -132,8 +129,9 @@ export class TeamFormComponent implements OnInit {
     // Load team data first
     this.teamService.getById(id).subscribe({
       next: (team: any) => {
+        console.log(team);
         this.form.patchValue({
-          name: team.name,
+          name: team.fullName,
           shortName: team.shortName,
           leagueId: team.leagueId,
           activeSeasonId: team.activeSeasonId || ''
@@ -147,7 +145,7 @@ export class TeamFormComponent implements OnInit {
         }
         
         // Load statistics separately (optional)
-        this.loadTeamStatistics(id);
+        // this.loadTeamStatistics(id);
         
         this.loading = false;
       },
@@ -159,19 +157,19 @@ export class TeamFormComponent implements OnInit {
     });
   }
 
-   private loadTeamStatistics(teamId: number): void {
-    if (this.teamService.getStatistics) {
-      this.teamService.getStatistics(teamId).subscribe({
-        next: (stats: GetStatisticsResponse) => {
-          this.teamStats = stats;
-        },
-        error: (err) => {
-          console.warn('Failed to load team statistics:', err);
-          // Don't show error to user, statistics are optional
-        }
-      });
-    }
-  }
+  //  private loadTeamStatistics(teamId: number): void {
+  //   if (this.teamService.getStatistics) {
+  //     this.teamService.getStatistics(teamId).subscribe({
+  //       next: (stats: GetStatisticsResponse) => {
+  //         this.teamStats = stats;
+  //       },
+  //       error: (err) => {
+  //         console.warn('Failed to load team statistics:', err);
+  //         // Don't show error to user, statistics are optional
+  //       }
+  //     });
+  //   }
+  // }
 
   onFileSelected(event: any): void {
     const file = event.target.files[0];
@@ -246,7 +244,7 @@ export class TeamFormComponent implements OnInit {
     }
 
     const save$: Observable<any> = this.isEdit
-      ? this.teamService.update(this.teamId!, formData)
+      ? this.teamService.update(formData)
       : this.teamService.create(formData);
 
     save$.subscribe({

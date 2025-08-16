@@ -37,14 +37,6 @@ interface PlayerTeam {
   season?: Season;
 }
 
-interface Player {
-  id: number;
-  firstName: string;
-  lastName: string;
-  birthDate: string;
-  cellNo?: string;
-  image?: string;
-}
 
 @Component({
   selector: 'app-player-form',
@@ -257,9 +249,11 @@ export class PlayerFormComponent implements OnInit {
       formData.append('seasonId', this.form.value.seasonId || '');
       formData.append('isPlaying', this.form.value.isPlaying.toString());
     }
+    if(this.isEdit)
+      formData.append('id', this.playerId!.toString());
 
     const save$: Observable<any> = this.isEdit
-      ? this.playerService.update(this.playerId!, formData)
+      ? this.playerService.update(formData)
       : this.playerService.create(formData);
 
     save$.subscribe({

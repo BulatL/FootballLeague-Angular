@@ -19,9 +19,7 @@ export class StandingComponent implements OnInit {
   ngOnInit(): void {
     this.standingService.getStandings(1).subscribe({
       next: (data) => {
-        console.log('Fetched standings:', data);
         this.seasonStanding = (data as any)['$values'];
-        console.log(this.seasonStanding);
       },
       error: (err) => console.error(err)
     });

@@ -49,7 +49,6 @@ export class LeagueFormComponent implements OnInit {
   loadLeague(id: number): void {
     this.leagueService.getById(id).subscribe({
       next: (res) => {
-        console.log(res);
         const league = res; 
         this.form.patchValue({
           name: res.name,

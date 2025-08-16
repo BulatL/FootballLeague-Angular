@@ -25,7 +25,6 @@ export class LeagueComponent implements OnInit {
   loadLeagues(): void {
     this.leagueService.getLeagues().subscribe({
       next: (response: ApiListResponse<League>) => {
-        console.log(response);
         this.leagues = response.$values;
         this.isLoading = false;
       },

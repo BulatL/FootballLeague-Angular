@@ -25,7 +25,6 @@ export class LeagueListComponent implements OnInit {
     this.loading = true;
     this.leagueService.getAll().subscribe({
       next: (data) => {
-        console.log(data);
         this.leagues = data.$values;
         this.loading = false;
       },

@@ -26,12 +26,10 @@ export class PlayerListComponent implements OnInit {
     this.loading = true;
     this.playerService.getAll().subscribe({
       next: (res) => {
-        console.log(res);
         this.players = res;
         this.loading = false;
       },
       error: (err) => {
-        console.log(err);
         this.error = 'Greska pri ucitavanju igraca';
         this.loading = false;
       }
@@ -48,7 +46,6 @@ export class PlayerListComponent implements OnInit {
   
   getImage(fileName: string): string {
       var someting = this.imageService.getImageUrl("Players", fileName)  
-      console.log(someting);
       return someting;
   }
 }

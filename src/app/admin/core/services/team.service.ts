@@ -24,7 +24,7 @@ export class TeamService {
   }
 
   getById(id: number): Observable<Team> {
-    return this.http.get<Team>(`${this.apiUrl}/${id}`);
+    return this.http.get<Team>(`${this.apiAdminUrl}/${id}`);
   }
 
   getByLeague(leagueId: number, page: number = 1, pageSize: number = 5): Observable<any> {
@@ -35,8 +35,8 @@ export class TeamService {
     return this.http.post<Team>(`${this.apiAdminUrl}/post`, formData);
   }
 
-  update(id: number, formData: FormData): Observable<Team> {
-    return this.http.put<Team>(`${this.apiAdminUrl}/${id}`, formData);
+  update(formData: FormData): Observable<Team> {
+    return this.http.patch<Team>(`${this.apiAdminUrl}/patch`, formData);
   }
 
   delete(id: number): Observable<void> {
