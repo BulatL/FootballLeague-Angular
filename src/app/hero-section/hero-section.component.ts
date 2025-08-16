@@ -16,8 +16,8 @@ export class HeroSectionComponent implements OnInit, OnDestroy {
   ];
   activeIndex = 0;
   intervalId: any;
-  leagueName = 'InLiga Mini Football League';
-  activeTeams = 12;
+  leagueName = 'InLiga';
+  activeTeams = 14;
   totalPlayers = 102;
   seasonsPlayed = 5;
   currentSeason = 'Spring 2025';

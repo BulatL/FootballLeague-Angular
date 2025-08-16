@@ -15,7 +15,7 @@
             <a href="#standing" class="nav-link highlight-blue-color">Tabela</a>
             <a href="#teams" class="nav-link highlight-blue-color">Timovi</a>
             <a routerLink="/player-detail" routerLinkActive="active" class="nav-link highlight-blue-color">Igraci</a>
-            <a routerLink="/admin" routerLinkActive="active" class="nav-link highlight-blue-color">Admin</a>
+            <a *ngIf="displayAdmin()" routerLink="/admin" routerLinkActive="active" class="nav-link highlight-blue-color">Admin</a>
         </div>
         
           <!-- Search Bar -->
