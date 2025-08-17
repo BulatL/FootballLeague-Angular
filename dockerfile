@@ -3,20 +3,29 @@ FROM node:18-alpine AS build
 
 WORKDIR /app
 COPY package*.json ./
-RUN npm ci --only=production
+RUN npm ci
 
 COPY . .
-RUN npm run build
+RUN npm run build -- --configuration=production
 
 # Production stage
 FROM nginx:alpine AS production
 
-# Copy built app to nginx - using your actual output path
-COPY --from=build /app/dist/football-league-angular /usr/share/nginx/html
+# Remove default nginx content
+RUN rm -rf /usr/share/nginx/html/*
 
-# Copy custom nginx config
-COPY nginx.conf /etc/nginx/nginx.conf
+# Copy built app from the browser subfolder to nginx root
+COPY --from=build /app/dist/football-league-angular/browser/ /usr/share/nginx/html/
+
+# Simple nginx config for Angular routing
+RUN echo 'server { \
+    listen 80; \
+    root /usr/share/nginx/html; \
+    index index.html; \
+    location / { \
+        try_files $uri $uri/ /index.html; \
+    } \
+}' > /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
-
-CMD ["nginx", "-g", "daemon off;"] 
+CMD ["nginx", "-g", "daemon off;"]
