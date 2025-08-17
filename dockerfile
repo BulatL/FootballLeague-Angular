@@ -1,5 +1,5 @@
 # Stage 1: Build Angular
-FROM node:20 AS build
+FROM node:22.17 AS build
 WORKDIR /app
 COPY package*.json ./
 RUN npm ci
