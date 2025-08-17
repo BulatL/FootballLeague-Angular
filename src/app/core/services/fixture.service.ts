@@ -9,12 +9,12 @@ import { ApiListResponse } from '../../shared/api-list-response';
     providedIn: 'root'
   })
   export class FixtureService {
-    // private apiUrl = environment.apiUrl + '/leagues/list?isActive=true';
-    private apiUrl = environment.mockApiUrl + '/fixture/previewactivematchday';
+    private apiUrl = environment.apiUrl + '/fixtures';
+    // private apiUrl = environment.mockApiUrl + '/fixture/previewactivematchday';
   
     constructor(private http: HttpClient) {}
   
-    getFixtures(): Observable<ApiListResponse<Fixture>> {
-        return this.http.get<ApiListResponse<Fixture>>(this.apiUrl);
+    listCurrentRound(seasonId: number): Observable<ApiListResponse<Fixture>> {
+        return this.http.get<ApiListResponse<Fixture>>(`${this.apiUrl}/ListCurrentRound/${seasonId}`);
       }
   }

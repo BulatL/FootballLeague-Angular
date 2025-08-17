@@ -2,7 +2,7 @@
   max-width: 600px;
   margin: auto;
   position: relative;
-  display: block; /* changed from inline-block */
+  display: block;
   padding: 1rem;
   box-sizing: border-box;
 }
@@ -10,7 +10,7 @@
 .button-group {
   position: absolute;
   top: 1rem;
-  right: -140px; /* align beside the card */
+  right: -140px;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -24,6 +24,7 @@
   cursor: pointer;
   font-weight: 500;
   transition: background-color 0.2s ease;
+  white-space: nowrap;
 }
 
 .button-group button.active {
@@ -36,8 +37,23 @@
   color: white;
 }
 
-/* Responsive adjustment for button group on small screens */
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .button-group {
+    right: -120px;
+  }
+  
+  .button-group button {
+    padding: 5px 10px;
+    font-size: 0.9rem;
+  }
+}
+
 @media (max-width: 768px) {
+  .season-leaders-container {
+    padding: 0.5rem;
+  }
+  
   .button-group {
     position: static;
     flex-direction: row;
@@ -50,6 +66,8 @@
   .button-group button {
     flex: 1 1 auto;
     margin: 0 0.25rem;
+    font-size: 0.85rem;
+    padding: 8px 4px;
   }
 }
 
@@ -59,6 +77,19 @@
   padding: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
   position: relative;
+}
+
+@media (max-width: 768px) {
+  .season-leaders-card {
+    padding: 15px;
+    border-radius: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .season-leaders-card {
+    padding: 12px;
+  }
 }
 
 .season-leader-header {
@@ -72,10 +103,32 @@
   font-weight: bold;
 }
 
+@media (max-width: 768px) {
+  #season-leader-header {
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 480px) {
+  #season-leader-header {
+    font-size: 1.4rem;
+  }
+}
+
 .top-player {
   display: flex;
   align-items: center;
   margin-bottom: 24px;
+  gap: 1rem;
+}
+
+@media (max-width: 480px) {
+  .top-player {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+    margin-bottom: 20px;
+  }
 }
 
 .top-player .info {
@@ -85,6 +138,7 @@
 .firstname {
   color: #888;
   margin: 0;
+  font-size: 0.9rem;
 }
 
 .lastname {
@@ -93,17 +147,57 @@
   margin: 0;
 }
 
+@media (max-width: 768px) {
+  .lastname {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .lastname {
+    font-size: 18px;
+  }
+}
+
 .score {
   font-size: 32px;
   font-weight: bold;
   margin: 4px 0 0 0;
 }
 
+@media (max-width: 768px) {
+  .score {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 480px) {
+  .score {
+    font-size: 24px;
+  }
+}
+
 .top-player-img {
   width: 96px;
   height: 96px;
   object-fit: cover;
+  border-radius: 50%;
   margin-left: auto;
+}
+
+@media (max-width: 768px) {
+  .top-player-img {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+@media (max-width: 480px) {
+  .top-player-img {
+    width: 70px;
+    height: 70px;
+    margin-left: 0;
+  }
 }
 
 .players-list {
@@ -120,16 +214,38 @@
   padding: 10px 0;
 }
 
+@media (max-width: 480px) {
+  .player-item {
+    padding: 8px 0;
+  }
+}
+
 .left {
   display: flex;
   align-items: center;
   gap: 10px;
+  flex: 1;
+  min-width: 0; /* Allows text to truncate */
+}
+
+@media (max-width: 480px) {
+  .left {
+    gap: 8px;
+  }
 }
 
 .rank {
   font-weight: bold;
   width: 20px;
   text-align: right;
+  flex-shrink: 0;
+}
+
+@media (max-width: 480px) {
+  .rank {
+    width: 16px;
+    font-size: 0.9rem;
+  }
 }
 
 .left img {
@@ -137,30 +253,63 @@
   height: 32px;
   border-radius: 50%;
   object-fit: cover;
+  flex-shrink: 0;
+}
+
+@media (max-width: 480px) {
+  .left img {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+.left div {
+  flex: 1;
+  min-width: 0;
 }
 
 .name {
   font-weight: 600;
   margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 480px) {
+  .name {
+    font-size: 0.9rem;
+  }
 }
 
 .team {
   font-size: 12px;
   color: #777;
   margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 480px) {
+  .team {
+    font-size: 11px;
+  }
 }
 
 .goals {
   font-weight: bold;
+  flex-shrink: 0;
+  margin-left: 8px;
 }
 
+@media (max-width: 480px) {
+  .goals {
+    font-size: 0.9rem;
+  }
+}
 
-
-
-/*
-
-*/
-
+/* Tabs */
 .tabs {
   display: flex;
   justify-content: flex-end;
@@ -180,15 +329,18 @@
   margin: 0 2px;
   text-align: center;
   padding: 8px 0;
-  flex: 1; /* Default equal width */
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .tabs div:not(.active) {
-  flex: 0 0 20%; /* Fixed 20% width for inactive tabs */
+  flex: 0 0 20%;
 }
 
 .tabs div.active {
-  flex: 0 0 60%; /* Fixed 60% width for active tab */
+  flex: 0 0 60%;
   background: linear-gradient(90deg, #01234c, #00ff88, #01234c);
   color: #01234c;
   font-weight: 1000;
@@ -201,17 +353,77 @@
   color: #01234c;
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
   .tabs {
     justify-content: center;
+    margin-bottom: 15px;
   }
   
   .tabs div,
   .tabs div:not(.active),
   .tabs div.active {
-    flex: 1; /* Equal width on mobile */
-    padding: 8px 12px;
+    flex: 1;
+    padding: 8px 4px;
     font-size: 14px;
+    margin: 0 1px;
+  }
+}
+
+@media (max-width: 480px) {
+  .tabs {
+    padding: 3px;
+  }
+  
+  .tabs div {
+    font-size: 12px;
+    padding: 6px 2px;
+  }
+}
+
+/* No data state */
+.no-data-container {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #6c757d;
+}
+
+@media (max-width: 768px) {
+  .no-data-container {
+    padding: 2rem 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .no-data-container {
+    padding: 1.5rem 0.5rem;
+  }
+}
+
+.no-data-icon {
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+.no-data-container h4 {
+  margin: 0 0 0.5rem 0;
+  color: #495057;
+  font-weight: 600;
+}
+
+@media (max-width: 480px) {
+  .no-data-container h4 {
+    font-size: 1rem;
+  }
+}
+
+.no-data-container p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+@media (max-width: 480px) {
+  .no-data-container p {
+    font-size: 0.8rem;
   }
 }

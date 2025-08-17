@@ -2,7 +2,8 @@
   Rezultati
 </h1>
 
-<div class="fixture-marquee">
+<!-- Show fixtures when available -->
+<div class="fixture-marquee" *ngIf="fixtures && fixtures.length > 0; else noFixturesTemplate">
   <div class="fixture-track" *ngFor="let duplicate of [1, 2]" [attr.aria-hidden]="duplicate === 2">
     <div class="fixture-card" *ngFor="let fixture of fixtures; trackBy: trackByFixtureId">
       <div class="round">
@@ -40,3 +41,22 @@
     </div>
   </div>
 </div>
+
+<!-- Show when no fixtures available -->
+<ng-template #noFixturesTemplate>
+  <div class="no-fixtures-container">
+    <div class="no-fixtures-content">
+      <div class="no-fixtures-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M8 12h8"></path>
+        </svg>
+      </div>
+      <h3>Nema utakmica</h3>
+      <p>Trenutno nema zakazanih ili odigranih utakmica za prikaz.</p>
+      <div class="no-fixtures-suggestion">
+        <p>Utakmice će biti prikazane kada se sezona pokrene.</p>
+      </div>
+    </div>
+  </div>
+</ng-template>

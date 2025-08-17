@@ -23,6 +23,7 @@ export class SeasonDetailsComponent implements OnInit {
   loading = true;
   error = '';
   fixturesGenerated = false;
+  isStandingGenerated = false;
   
   // Modal state
   showFixtureModal = false;
@@ -72,6 +73,7 @@ export class SeasonDetailsComponent implements OnInit {
         this.statistics = data.statistics;
         this.recentMatches = data.recentMatches || [];
         this.fixturesGenerated = data.statistics.fixturesTotal > 0;
+        this.isStandingGenerated = data.season.isStandingGenerated!;
         this.loading = false;
       },
       error: (err) => {
@@ -144,11 +146,37 @@ Prva utakmica: ${this.formatDate(response.data?.firstMatchDate!)}`;
     });
   }
 
-  getLeaderTeam(): string {
-    // This would typically come from standings data
-    // For now, return a placeholder
-    return 'Tabela se učitava...';
-  }
+  generateStandings(): void {
+  if (this.isStandingGenerated) return;
+
+  const confirmed = confirm('Da li su svi timovi dodati? Timovi ne mogu da se naknadno ubace!');
+  if (!confirmed) return;
+
+  this.loading = true;
+
+    const generateStandingData = {
+      seasonId: this.seasonId
+    };
+
+  this.seasonService.generateStanding(generateStandingData).subscribe({
+    next: (response) => {
+      if (response.isValid) {
+        this.isStandingGenerated = true;
+        this.loadSeasonDetails(); // Refresh data
+        console.log(response);
+        alert('Tabela je uspešno generisana! Dodato ' + response.data + ' timova.');
+      } else {
+        this.error = response.erros.$values[0].message || 'Failed to generate standings.';
+      }
+      this.loading = false;
+    },
+    error: (err) => {
+      console.error('Error generating standings:', err);
+      this.error = 'Failed to generate standings due to network error.';
+      this.loading = false;
+    }
+  });
+}
 
   // Navigation methods (optional, since we're using routerLink)
   goToTeams(): void {

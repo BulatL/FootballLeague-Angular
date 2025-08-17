@@ -62,3 +62,45 @@ width: 1.7rem;
 height: 1.7rem;
 margin-right: 0.5rem;
 }
+
+.legend-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start; /* Align to top */
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: flex-start; /* Align to top */
+  gap: 0.5rem;
+  flex: 1; /* Equal width distribution */
+}
+
+.legend-indicator {
+  height: 1.5rem;
+  width: 1.7rem;
+  border-radius: 6px;
+  flex-shrink: 0; /* Prevent shrinking */
+  margin-top: 0.1rem; /* Small adjustment to align with text baseline */
+}
+
+.legend-item p {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  color: #495057;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .legend-container {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .legend-item p {
+    font-size: 0.8rem;
+  }
+}

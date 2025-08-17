@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Fixture } from '../core/models/fixture.model';
 import { FixtureService } from '../core/services/fixture.service';
 import { ApiListResponse } from '../shared/api-list-response';
+import { SeasonService } from '../core/services/season.service';
 
 @Component({
   selector: 'app-fixture-carousel',
@@ -15,19 +16,22 @@ export class FixtureCarouselComponent {
   isHovered = false;
   fixtures: Fixture[] = [];
   isLoading = true;
+  seasonId: number | null = 0;
 
   trackFixture(index: number, fixture: any): any {
     return fixture.id;
   }
 
-  constructor(private fixtureService: FixtureService){}
+  constructor(private fixtureService: FixtureService,
+              private seasonService: SeasonService ){}
 
   ngOnInit(): void {
     this.loadFixtures();
   }
 
   loadFixtures(): void{
-    this.fixtureService.getFixtures().subscribe({
+    this.seasonId = this.seasonService.getSeasonId();
+    this.fixtureService.listCurrentRound(this.seasonId!).subscribe({
       next: (response: ApiListResponse<Fixture>) => {
         this.fixtures = response.$values
         this.isLoading = false;

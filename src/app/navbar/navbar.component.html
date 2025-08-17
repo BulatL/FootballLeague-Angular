@@ -9,16 +9,15 @@
 
       <!-- Search Bar and Nav Links -->
       <div class="nav-right">
-
-        <!-- Nav Links -->
+        <!-- Desktop Nav Links -->
         <div class="nav-links">
             <a href="#standing" class="nav-link highlight-blue-color">Tabela</a>
             <a href="#teams" class="nav-link highlight-blue-color">Timovi</a>
             <a routerLink="/player-detail" routerLinkActive="active" class="nav-link highlight-blue-color">Igraci</a>
             <a *ngIf="displayAdmin()" routerLink="/admin" routerLinkActive="active" class="nav-link highlight-blue-color">Admin</a>
         </div>
-        
-          <!-- Search Bar -->
+      </div>
+      <!-- Search Bar -->
           <!-- <div class="search-container">
               <input type="text" placeholder="Pretraga..." class="search-input">
               <span class="search-icon">
@@ -29,14 +28,32 @@
                   </svg>
               </span>
           </div> -->
-      </div>
 
-      <!-- Mobile menu button (optional, can be added later) -->
+      <!-- Mobile menu button -->
       <div class="mobile-menu-button">
-          <!-- Hamburger icon -->
-          <button>
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+          <button (click)="toggleMenu()" [attr.aria-expanded]="isMenuOpen" aria-label="Toggle menu">
+              <!-- Hamburger icon -->
+              <svg *ngIf="!isMenuOpen" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+              </svg>
+              <!-- Close icon -->
+              <svg *ngIf="isMenuOpen" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
           </button>
       </div>
   </div>
+
+  <!-- Mobile Navigation Menu -->
+  <div class="mobile-nav" [class.mobile-nav-open]="isMenuOpen">
+    <div class="mobile-nav-content">
+      <a href="#standing" class="mobile-nav-link" (click)="closeMenu()">Tabela</a>
+      <a href="#teams" class="mobile-nav-link" (click)="closeMenu()">Timovi</a>
+      <a routerLink="/player-detail" class="mobile-nav-link" (click)="closeMenu()">Igraci</a>
+      <a *ngIf="displayAdmin()" routerLink="/admin" class="mobile-nav-link" (click)="closeMenu()">Admin</a>
+    </div>
+  </div>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-overlay" [class.mobile-overlay-open]="isMenuOpen" (click)="closeMenu()"></div>
 </nav>

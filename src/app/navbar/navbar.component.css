@@ -1,16 +1,3 @@
-/* Old navbar with transparent background on  top of the page
- .navbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 50;
-  transition: all 0.3s ease-in-out;
-  padding: 1rem 0rem;
-  background-color: transparent;
-  backdrop-filter: blur(4px);  backdrop-blur-sm 
-} */
-
 /* Navbar styles */
 /* Updated Navbar Styles */
 .navbar {
@@ -204,4 +191,88 @@
 /* Additional styling for your highlight-blue-color class */
 .highlight-blue-color {
   color: #01234c;
+}
+
+/* Mobile Navigation Styles */
+.mobile-nav {
+  position: fixed;
+  top: 0;
+  right: -100%; /* hidden offscreen */
+  width: 75%; /* covers 75% of screen */
+  max-width: 320px;
+  height: 100%;
+  background: linear-gradient(180deg, #01234c 0%, #001a3a 100%);
+  display: flex;
+  flex-direction: column;
+  padding: 3rem 2rem;
+  transition: right 0.35s ease-in-out;
+  z-index: 60;
+  box-shadow: -4px 0 12px rgba(0, 0, 0, 0.4);
+  border-top-left-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+}
+
+.mobile-nav.mobile-nav-open {
+  right: 0; /* slide in */
+  height: 25rem;
+}
+
+.mobile-nav-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+  margin-top: 2rem;
+}
+
+.mobile-nav-link {
+  color: #f3f4f6; /* near white */
+  font-size: 1.4rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  position: relative;
+  padding: 0.5rem 0;
+}
+
+.mobile-nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0;
+  height: 2px;
+  background: #00ff88;
+  transition: width 0.3s ease;
+}
+
+.mobile-nav-link:hover {
+  color: #00ff88;
+}
+
+.mobile-nav-link:hover::after {
+  width: 40%;
+}
+
+/* Overlay when menu is open */
+.mobile-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;   /* make sure it spans full width */
+  height: 100vh;  /* make sure it spans full height */
+  background: rgba(0,0,0,0.55);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 50; /* must be LESS than mobile-nav (60), MORE than navbar (50) */
+}
+
+.mobile-overlay.mobile-overlay-open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* Prevent scroll when menu open */
+body.menu-open {
+  overflow: hidden;
 }

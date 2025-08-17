@@ -57,4 +57,8 @@ export class SeasonService {
   listSeasonTeamsBySeasonId(seasonId: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/${seasonId}/ListSeasonTeamsBySeasonId/`);
   }
+
+  generateStanding(data: { seasonId: number; }): Observable<any>{
+    return this.http.post<any>(`${this.apiAdminUrl}/GenerateStanding/`, data);
+  }
 }

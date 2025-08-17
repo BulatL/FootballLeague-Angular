@@ -7,13 +7,12 @@ import { environment } from './../../environment';
   providedIn: 'root'
 })
 export class StandingService {
-  // private apiUrl = environment.apiUrl + '/standings/list';
-  private apiUrl = environment.mockApiUrl + '/season/standing';
+  private apiUrl = environment.apiUrl + '/standings';
 
 
   constructor(private http: HttpClient) {}
 
   getStandings(seasonId: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}/${seasonId}`);
+    return this.http.get(`${this.apiUrl}/${seasonId}/list`);
   }
 }

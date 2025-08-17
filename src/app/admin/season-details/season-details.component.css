@@ -385,3 +385,53 @@
     text-align: center;
   }
 }
+/* Add this to your existing CSS */
+
+/* Standings button when generated */
+.action-card.standings.generated {
+  background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);
+  color: white;
+}
+
+.action-card.standings.generated .action-content p {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.action-card.standings.generated .action-stat {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.action-card.standings.generated .action-icon {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+/* Standings button when disabled */
+.action-card.standings:disabled {
+  background: #e9ecef;
+  color: #6c757d;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.action-card.standings:disabled:hover {
+  background: #e9ecef;
+  color: #6c757d;
+  transform: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.action-card.standings:disabled .action-icon {
+  background-color: rgba(108, 117, 125, 0.1);
+  color: #6c757d;
+}
+
+.action-card.standings:disabled .action-content p {
+  color: #6c757d;
+}
+
+.action-card.standings:disabled .action-stat {
+  background-color: #f8f9fa;
+  color: #6c757d;
+}

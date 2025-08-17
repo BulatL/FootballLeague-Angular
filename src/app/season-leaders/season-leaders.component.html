@@ -1,36 +1,55 @@
 <div class="container season-leaders-card">
   <div class="tabs">
     <div (click)="selectCategory('goal')" [class.active]="category === 'goal'">Strelci</div>
-    <div (click)="selectCategory('assist')" [class.active]="category === 'assist'">Assistencije</div>
+    <div (click)="selectCategory('assist')" [class.active]="category === 'assist'">Asistencije</div>
     <div (click)="selectCategory('points')" [class.active]="category === 'points'">Odbrane</div>
   </div>
 
   <div class="">
-    
     <div class="season-leader-header">
-        <span class="highlight-blue-color" id="season-leader-header">Top Strelci</span>
-    </div>
-    <div class="top-player">
-      <div class="info">
-        <p class="firstname">{{ topPlayer.firstName }}</p>
-        <h3 class="lastname">{{ topPlayer.lastName }}</h3>
-        <p class="score highlight-gold-color">{{ topPlayer.goals }}</p>
-      </div>
-      <img [src]="topPlayer.image" alt="{{ topPlayer.lastName }}" class="top-player-img" />
+      <span class="highlight-blue-color" id="season-leader-header">
+        {{ getCategoryTitle() }}
+      </span>
     </div>
 
-    <ul class="players-list">
-      <li *ngFor="let player of players; index as i" class="player-item">
-        <div class="left">
-          <span class="rank">{{ i + 2 }}</span>
-          <img [src]="player.image" alt="{{ player.name }}" />
-          <div>
-            <p class="name highlight-blue-color">{{ player.name }}</p>
-            <p class="team">{{ player.team }}</p>
-          </div>
+    <!-- Show content when there's data -->
+    <div *ngIf="hasLeaderData(); else noDataTemplate">
+      <div class="top-player">
+        <div class="info">
+          <p class="firstname">{{ topPlayer.firstName }}</p>
+          <h3 class="lastname">{{ topPlayer.lastName }}</h3>
+          <p class="score highlight-gold-color">{{ getTopPlayerScore() }}</p>
         </div>
-        <span class="goals highlight-gold-color">{{ player.goals }}</span>
-      </li>
-    </ul>
+        <img [src]="topPlayer.image" alt="{{ topPlayer.lastName }}" class="top-player-img" />
+      </div>
+
+      <ul class="players-list">
+        <li *ngFor="let player of players; index as i" class="player-item">
+          <div class="left">
+            <span class="rank">{{ i + 2 }}</span>
+            <img [src]="player.image" alt="{{ player.name }}" />
+            <div>
+              <p class="name highlight-blue-color">{{ player.name }}</p>
+              <p class="team">{{ player.team }}</p>
+            </div>
+          </div>
+          <span class="goals highlight-gold-color">{{ getPlayerScore(player) }}</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Show when no data available -->
+    <ng-template #noDataTemplate>
+      <div class="no-data-container">
+        <div class="no-data-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.35-4.35"></path>
+          </svg>
+        </div>
+        <h4>Nema podataka</h4>
+        <p>{{ getNoDataMessage() }}</p>
+      </div>
+    </ng-template>
   </div>
 </div>

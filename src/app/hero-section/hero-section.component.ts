@@ -1,8 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LeagueService } from "../core/services/league.service";
-import { League } from '../core/models/league.model';
-import { ApiListResponse } from '../shared/api-list-response';
+import { SeasonService } from '../core/services/season.service';
 
 @Component({
   selector: 'app-hero-section',
@@ -16,13 +15,20 @@ export class HeroSectionComponent implements OnInit, OnDestroy {
   ];
   activeIndex = 0;
   intervalId: any;
-  leagueName = 'InLiga';
-  activeTeams = 14;
-  totalPlayers = 102;
-  seasonsPlayed = 5;
-  currentSeason = 'Spring 2025';
+  loading = true;
+  
+  leagueId: number = 0;
+  leagueName: string = "";
+  activeTeams: number = 0; 
+  activePlayers: number = 0
+  totalPlayers: number = 0;
+  seasonsPlayed: number = 0;
+  currentSeason: string = "";
+
+  constructor(private leagueService: LeagueService, private seasonService: SeasonService) {}
 
   ngOnInit() {
+    this.getLeagueInfo();
     this.startCarousel();
   }
 
@@ -38,5 +44,27 @@ export class HeroSectionComponent implements OnInit, OnDestroy {
     this.intervalId = setInterval(() => {
       this.activeIndex = (this.activeIndex + 1) % this.images.length;
     }, 5000); // rotates every 5 seconds
+  }
+
+  getLeagueInfo(){
+    this.loading = true;
+    this.leagueService.getLeageuInfo().subscribe({
+      next: (data) => {
+        this.leagueService.setLeagueId(data.id);
+        this.seasonService.setSeasonId(data.currentSeason.id);
+        this.leagueId = data.id;
+        this.currentSeason = data.currentSeason.name;
+
+        this.leagueName = data.name;
+        this.seasonsPlayed = data.seasonsPlayed;
+        this.activeTeams = data.activeTeams;
+        this.activePlayers = data.activePlayers;
+        this.loading = false;
+      },
+      error: () => {
+        // this.error = 'Greska pri ucitavanju nagrada...';
+        this.loading = false;
+      }
+    });
   }
 }

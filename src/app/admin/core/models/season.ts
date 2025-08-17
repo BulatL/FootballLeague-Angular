@@ -7,4 +7,5 @@ export interface Season {
   isActive: boolean;
   leagueId: number;
   leagueName?: string;
+  isStandingGenerated?: boolean;
 }
