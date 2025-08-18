@@ -7,6 +7,7 @@ import { ApiListResponse } from '../../../shared/api-list-response';
 import { CommandResult } from '../models/command-result';
 import { GenerateFixturesResponse } from '../models/ApiResponse/Fixture/generate-fixtures-response';
 import { GenerateFixturesRequest } from '../models/ApiRequest/generate-fixtures-request';
+import { MatchDay } from '../../../core/models/match-day';
 
 
 @Injectable({ providedIn: 'root' })
@@ -53,4 +54,15 @@ export class FixtureService {
       payload
     );
   }
+  
+  listMatchDays(): Observable<ApiListResponse<MatchDay>> {
+    return this.http.get<ApiListResponse<MatchDay>>(`${this.apiUrl}/ListMatchDay`);
+  }
+
+
+  listFixturesByMatchDay(matchDayId: number): Observable<ApiListResponse<Fixture>> {
+    return this.http.get<ApiListResponse<Fixture>>(`${this.apiUrl}/ListByMatchDay/${matchDayId}`);
+  }
+
+
 }

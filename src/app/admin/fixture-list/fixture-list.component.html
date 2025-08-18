@@ -1,0 +1,134 @@
+<!-- fixture-list.component.html -->
+<div class="margin-8-auto">
+  <div class="container">
+    
+    <!-- Header -->
+    <div class="row mb-4">
+      <div class="col-12">
+        <h2 class="text-center mb-3">Fixtures</h2>
+        <p class="text-center text-muted">Select a round to view fixtures</p>
+      </div>
+    </div>
+
+    <!-- Match Days Navigation -->
+    <div class="row mb-4">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="mb-0">Rounds</h5>
+          </div>
+          <div class="card-body">
+            
+            <!-- Loading Match Days -->
+            <div *ngIf="isLoadingMatchDays" class="text-center py-3">
+              <div class="spinner-border spinner-border-sm" role="status">
+                <span class="visually-hidden">Loading rounds...</span>
+              </div>
+              <span class="ms-2">Loading rounds...</span>
+            </div>
+
+            <!-- Match Days Buttons -->
+            <div *ngIf="!isLoadingMatchDays" class="d-flex flex-wrap gap-2">
+              <button 
+                *ngFor="let matchDay of matchDays" 
+                type="button"
+                class="btn"
+                [class.btn-primary]="isMatchDaySelected(matchDay.id)"
+                [class.btn-outline-primary]="!isMatchDaySelected(matchDay.id)"
+                [class.btn-success]="matchDay.isFinished && isMatchDaySelected(matchDay.id)"
+                [class.btn-outline-success]="matchDay.isFinished && !isMatchDaySelected(matchDay.id)"
+                (click)="selectMatchDay(matchDay.id)">
+                {{ getMatchDayDisplayText(matchDay) }}
+              </button>
+            </div>
+
+            <!-- No Match Days -->
+            <div *ngIf="!isLoadingMatchDays && matchDays.length === 0" class="text-center py-3 text-muted">
+              No rounds available
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fixtures Section -->
+    <div class="row" *ngIf="selectedMatchDayId">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="mb-0">
+              Round {{ getSelectedRoundNumber() }} Fixtures
+            </h5>
+          </div>
+          <div class="card-body">
+            
+            <!-- Loading Fixtures -->
+            <div *ngIf="isLoadingFixtures" class="text-center py-4">
+              <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading fixtures...</span>
+              </div>
+              <p class="mt-2">Loading fixtures...</p>
+            </div>
+
+            <!-- Fixtures List -->
+            <div *ngIf="!isLoadingFixtures && hasFixtures()" class="fixtures-container">
+              <div 
+                *ngFor="let fixture of fixtures" 
+                class="fixture-row"
+                (click)="onFixtureClick(fixture.id)">
+                
+                <div class="fixture-content">
+                  <!-- Home Team -->
+                  <div class="team home-team">
+                    <img 
+                      [src]="getTeamLogo(fixture.homeTeamLogo)" 
+                      [alt]="fixture.homeTeamName"
+                      class="team-logo">
+                    <span class="team-name">{{ fixture.homeTeamName }}</span>
+                  </div>
+
+                  <!-- Score -->
+                  <div class="score-section">
+                    <div class="match-time">
+                      {{ fixture.date | date:'EEE, MMM d • HH:mm' }}
+                    </div>
+                    <div class="score">
+                      <span class="home-score">{{ fixture.homeTeamScore }}</span>
+                      <span class="score-separator">-</span>
+                      <span class="away-score">{{ fixture.awayTeamScore }}</span>
+                    </div>
+                  </div>
+
+                  <!-- Away Team -->
+                  <div class="team away-team">
+                    <span class="team-name">{{ fixture.awayTeamName }}</span>
+                    <img 
+                      [src]="getTeamLogo(fixture.awayTeamLogo)" 
+                      [alt]="fixture.awayTeamName"
+                      class="team-logo">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- No Fixtures -->
+            <div *ngIf="!isLoadingFixtures && !hasFixtures()" class="text-center py-4 text-muted">
+              <p class="mb-0">No fixtures available for this round</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- No Round Selected -->
+    <div class="row" *ngIf="!selectedMatchDayId && !isLoadingMatchDays && matchDays.length > 0">
+      <div class="col-12">
+        <div class="text-center py-5 text-muted">
+          <h5>Select a round to view fixtures</h5>
+          <p>Choose a round from the buttons above</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

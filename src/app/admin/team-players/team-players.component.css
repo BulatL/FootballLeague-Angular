@@ -1,0 +1,112 @@
+/* team-players.component.css */
+
+.card {
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  border: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.card-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.border-primary {
+  border-color: #0d6efd !important;
+}
+
+.border-success {
+  border-color: #198754 !important;
+}
+
+/* Player Cards */
+.card-body {
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+/* Player Images */
+img.rounded-circle {
+  border: 3px solid #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Available Players List */
+.d-flex.align-items-center.mb-3.p-2.border.rounded {
+  transition: all 0.2s ease;
+  background-color: #f8f9fa;
+}
+
+.d-flex.align-items-center.mb-3.p-2.border.rounded:hover {
+  background-color: #e9ecef;
+  border-color: #6c757d !important;
+}
+
+/* Position Indicators */
+.text-primary {
+  color: #0d6efd !important;
+}
+
+.text-success {
+  color: #198754 !important;
+}
+
+/* Loading and Empty States */
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .col-lg-4, .col-lg-8 {
+    margin-bottom: 1rem;
+  }
+  
+  .d-flex.justify-content-between {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .d-flex.justify-content-between .btn {
+    align-self: flex-start;
+  }
+}
+
+/* Button States */
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-outline-danger:hover {
+  color: #fff;
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+/* Form Controls */
+.form-select-sm {
+  font-size: 0.875rem;
+}
+
+/* Icons */
+/* Using emoji instead of Bootstrap Icons */
+
+/* Section Spacing */
+.mb-4 {
+  margin-bottom: 1.5rem !important;
+}
+
+/* Card Body Spacing */
+.card-body .row {
+  margin: 0 -0.5rem;
+}
+
+.card-body .col-md-6,
+.card-body .col-lg-4 {
+  padding: 0 0.5rem;
+}

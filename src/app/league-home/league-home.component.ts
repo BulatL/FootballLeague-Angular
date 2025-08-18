@@ -3,10 +3,11 @@ import { StandingComponent } from './../standing/standing.component';
 import { SeasonLeadersComponent } from './../season-leaders/season-leaders.component';
 import { HeroSectionComponent } from "./../hero-section/hero-section.component";
 import { FixtureCarouselComponent } from "./../fixture-carousel/fixture-carousel.component";
+import { SponsorCarouselComponent } from '../sponsor-carousel/sponsor-carousel.component';
 
 @Component({
   selector: 'app-league-home',
-  imports: [StandingComponent, SeasonLeadersComponent, HeroSectionComponent, FixtureCarouselComponent],
+  imports: [StandingComponent, SeasonLeadersComponent, HeroSectionComponent, FixtureCarouselComponent, SponsorCarouselComponent],
   templateUrl: './league-home.component.html',
   styleUrl: './league-home.component.css',
   template: `
@@ -14,6 +15,7 @@ import { FixtureCarouselComponent } from "./../fixture-carousel/fixture-carousel
     <app-season-leaders></app-season-leaders>
     <app-league></app-league>
     <app-fixture-preview></app-fixture-preview>
+    <app-sponsor-carousel></app-sponsor-carousel>
   `
 })
 export class LeagueHomeComponent {

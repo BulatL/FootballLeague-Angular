@@ -188,7 +188,7 @@
         <div class="fixtures-container">
           <div class="fixture-card" 
                *ngFor="let fixture of player.fixtures"
-               [routerLink]="['/fixture', fixture.id]"
+               [routerLink]="['/fixtures', fixture.id]"
                style="cursor: pointer;">
             <div class="fixture-header">
               <span class="match-day">Kolo {{ fixture.matchDay }}</span>

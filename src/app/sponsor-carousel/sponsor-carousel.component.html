@@ -1,0 +1,46 @@
+<!-- sponsors-carousel.component.html -->
+<h1 class="highlight-blue-color">
+  Sponzori
+</h1>
+
+<!-- Show sponsors when available -->
+<div class="sponsors-marquee" *ngIf="sponsors && sponsors.length > 0; else noSponsorsTemplate">
+  <div class="sponsors-track" *ngFor="let duplicate of [1, 2]" [attr.aria-hidden]="duplicate === 2">
+    <div class="sponsor-card" 
+         *ngFor="let sponsor of sponsors; trackBy: trackBySponsorId"
+         (click)="onSponsorClick(sponsor)"
+         [style.cursor]="sponsor.website ? 'pointer' : 'default'"
+         [title]="sponsor.name">
+      <div class="sponsor-image-container">
+        <img 
+          class="sponsor-logo" 
+          [src]="getSponsorLogo(sponsor.logo)" 
+          [alt]="sponsor.name"
+          loading="lazy" />
+      </div>
+      <div class="sponsor-name">
+        {{ sponsor.name }}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Show when no sponsors available -->
+<ng-template #noSponsorsTemplate>
+  <div class="no-sponsors-container">
+    <div class="no-sponsors-content">
+      <div class="no-sponsors-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+          <line x1="8" y1="21" x2="16" y2="21"></line>
+          <line x1="12" y1="17" x2="12" y2="21"></line>
+        </svg>
+      </div>
+      <h3>Nema sponzora</h3>
+      <p>Trenutno nema sponzora za prikaz.</p>
+      <div class="no-sponsors-suggestion">
+        <p>Dodajte sponzore u listu.</p>
+      </div>
+    </div>
+  </div>
+</ng-template>

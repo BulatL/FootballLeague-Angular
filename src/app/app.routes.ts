@@ -20,6 +20,9 @@ import { SeasonDetailsComponent } from './admin/season-details/season-details.co
 import { TeamFormComponent } from './admin/team-form/team-form.component';
 import { SeasonTeamsComponent } from './admin/season-teams/season-teams.component';
 import { LoginComponent } from './login/login.component';
+import { TeamPlayersComponent } from './admin/team-players/team-players.component';
+import { AdminFixtureListComponent } from './admin/fixture-list/fixture-list.component';
+import { FixtureListComponent } from './fixture-list/fixture-list.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'league-home', pathMatch: 'full' },
@@ -27,7 +30,8 @@ export const routes: Routes = [
   { path: 'Home', redirectTo: 'league-home', pathMatch: 'full' },
   { path: 'league-home', component: LeagueHomeComponent },
   { path: 'player-detail', component: PlayerDetailComponent },
-  { path: 'fixture/:id', component: FixtureDetailComponent },
+  { path: 'fixtures/:id', component: FixtureDetailComponent },
+  { path: 'fixtures', component: FixtureListComponent },
   { path: 'login', component: LoginComponent },
    {
     path: 'admin',
@@ -51,10 +55,13 @@ export const routes: Routes = [
       { path: 'teams', component: TeamListComponent },
       { path: 'teams/edit/:id', component: TeamFormComponent },
       { path: 'teams/create', component: TeamFormComponent },
+      { path: 'teams/:teamId/players', component: TeamPlayersComponent },
       // Players
       { path: 'players', component: PlayerListComponent },
       { path: 'players/create', component: PlayerFormComponent },
       { path: 'players/edit/:id', component: PlayerFormComponent },
+      // Fixtures
+      { path: "seasons/:seasonId/fixtures", component: AdminFixtureListComponent}
     ],
     canActivate: [AdminGuard]
   }

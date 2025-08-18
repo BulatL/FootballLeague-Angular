@@ -1,0 +1,499 @@
+/* user-fixture-list.component.css */
+
+.fixture-list-container {
+  max-width: 1200px;
+  margin: 10rem auto;
+  padding: 0 1rem;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  min-height: 100vh;
+}
+
+/* Main Title Styling - Same as carousel */
+.highlight-blue-color {
+  color: #01234c;
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin: 30px 0;
+  background: linear-gradient(135deg, #01234c 0%, #0a3d6b 50%, #01234c 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 4px 8px rgba(1, 35, 76, 0.3);
+  position: relative;
+}
+
+.highlight-blue-color::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 4px;
+  background: linear-gradient(90deg, #01234c, #00ff88, #01234c);
+  border-radius: 2px;
+  animation: titleUnderline 2s ease-in-out infinite alternate;
+}
+
+@keyframes titleUnderline {
+  0% { width: 80px; opacity: 0.7; }
+  100% { width: 120px; opacity: 1; }
+}
+
+/* Matchday Section */
+.matchday-section {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 8px 32px rgba(1, 35, 76, 0.1);
+  border: 1px solid rgba(1, 35, 76, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+/* Segmented Control */
+.segmented-control {
+  background: rgba(1, 35, 76, 0.1);
+  border-radius: 25px;
+  padding: 6px;
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  scroll-behavior: smooth;
+}
+
+.segmented-control::-webkit-scrollbar {
+  display: none;
+}
+
+.segment-item {
+  background: transparent;
+  border: none;
+  color: #01234c;
+  padding: 12px 20px;
+  border-radius: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+  font-size: 0.9rem;
+  position: relative;
+}
+
+.segment-item:hover:not(.active) {
+  background: rgba(255, 255, 255, 0.5);
+  transform: translateY(-1px);
+}
+
+.segment-item.active {
+  background: linear-gradient(135deg, #01234c 0%, #0a3d6b 100%);
+  color: white;
+  box-shadow: 0 4px 12px rgba(1, 35, 76, 0.3);
+  transform: translateY(-2px);
+}
+
+.segment-item.finished:not(.active) {
+  background: rgba(0, 255, 136, 0.1);
+  color: #01234c;
+  border: 1px solid rgba(0, 255, 136, 0.3);
+}
+
+.segment-item.finished:not(.active)::after {
+  content: '✓';
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: #00ff88;
+  color: #01234c;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  font-size: 0.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+/* Loading Container */
+.loading-container {
+  text-align: center;
+  padding: 3rem 1rem;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 15px;
+  margin: 2rem 0;
+  box-shadow: 0 4px 15px rgba(1, 35, 76, 0.1);
+}
+
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
+  border: 3px solid rgba(1, 35, 76, 0.1);
+  border-top: 3px solid #01234c;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-text {
+  color: #01234c;
+  font-weight: 600;
+  margin-top: 1rem;
+  font-size: 1.1rem;
+}
+
+/* Fixtures Section */
+.fixtures-section {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 8px 32px rgba(1, 35, 76, 0.1);
+  border: 1px solid rgba(1, 35, 76, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+/* Fixtures Grid */
+.fixtures-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Fixture Card - Similar to carousel but without animation */
+.fixture-card {
+  background: linear-gradient(145deg, #01234c 0%, #0a3d6b 50%, #01234c 100%);
+  border-radius: 15px;
+  padding: 20px;
+  color: white;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 10px 30px rgba(1, 35, 76, 0.4),
+    0 1px 8px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+}
+
+/* Animated background pattern */
+.fixture-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: 
+    radial-gradient(circle at 30% 30%, rgba(0, 255, 136, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 70% 70%, rgba(0, 204, 255, 0.1) 0%, transparent 50%);
+  animation: patternRotate 15s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes patternRotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.fixture-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.fixture-card:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 
+    0 20px 40px rgba(1, 35, 76, 0.5),
+    0 8px 16px rgba(0, 255, 136, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  border-color: rgba(0, 255, 136, 0.3);
+}
+
+/* Round Badge */
+.round-badge {
+  font-size: 0.85rem;
+  color: #00ff88;
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 255, 136, 0.1);
+  padding: 8px 12px;
+  border-radius: 20px;
+  font-weight: 600;
+  border: 1px solid rgba(0, 255, 136, 0.3);
+  backdrop-filter: blur(5px);
+}
+
+.round-icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+  filter: brightness(0) saturate(100%) invert(84%) sepia(29%) saturate(7485%) hue-rotate(104deg) brightness(104%) contrast(101%);
+}
+
+/* Teams Container */
+.teams-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 15px 0;
+  padding: 12px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Team Styling */
+.team {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  transition: all 0.3s ease;
+}
+
+.team:hover {
+  transform: scale(1.05);
+}
+
+.team-name {
+  font-weight: bold;
+  font-size: 0.9rem;
+  color: #ffffff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  transition: color 0.3s ease;
+}
+
+.team:hover .team-name {
+  color: #00ff88;
+}
+
+/* Team Logo */
+.team-logo {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  padding: 2px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  transition: all 0.3s ease;
+  object-fit: cover;
+}
+
+.team-logo:hover {
+  border-color: #00ff88;
+  background: rgba(0, 255, 136, 0.1);
+  transform: scale(1.1);
+  box-shadow: 0 0 15px rgba(0, 255, 136, 0.4);
+}
+
+/* Score Section */
+.score-section {
+  flex: 0 0 auto;
+  margin: 0 1rem;
+}
+
+.score {
+  font-size: 1.6rem;
+  font-weight: normal;
+  color: #ffd700;
+  text-shadow: 0 2px 8px rgba(255, 215, 0, 0.5);
+  background: rgba(255, 215, 0, 0.1);
+  padding: 10px 15px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  backdrop-filter: blur(5px);
+  min-width: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.score:hover {
+  background: rgba(255, 215, 0, 0.2);
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+}
+
+.score-separator {
+  margin: 0 8px;
+  color: #ffd700;
+}
+
+/* Score States */
+.winning-score {
+  font-weight: bold;
+  color: #00ff88;
+  text-shadow: 0 2px 8px rgba(0, 255, 136, 0.5);
+}
+
+.losing-score {
+  font-weight: normal;
+  color: #cccccc;
+  opacity: 0.8;
+}
+
+/* Date and Time Container */
+.datetime-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+  padding: 10px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.fixture-datetime {
+  text-align: center;
+  font-size: 0.8rem;
+  color: #b0c4de;
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 8px 16px;
+  border-radius: 8px;
+  backdrop-filter: blur(3px);
+  transition: all 0.3s ease;
+}
+
+.fixture-datetime:hover {
+  color: #00ccff;
+  background: rgba(0, 204, 255, 0.1);
+  transform: scale(1.05);
+}
+
+/* No Fixtures Container */
+.no-fixtures-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+  padding: 2rem;
+  text-align: center;
+}
+
+.no-fixtures-content h3 {
+  color: #01234c;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 1rem 0;
+}
+
+.no-fixtures-content p {
+  color: #6c757d;
+  font-size: 1rem;
+  margin: 0;
+}
+
+.no-fixtures-icon {
+  color: #6c757d;
+  opacity: 0.6;
+  margin-bottom: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .fixture-list-container {
+    padding: 0 0.5rem;
+  }
+
+  .highlight-blue-color {
+    font-size: 2rem;
+  }
+  
+  .fixtures-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .fixture-card {
+    padding: 15px;
+  }
+  
+  .team-name {
+    font-size: 0.8rem;
+  }
+  
+  .score {
+    font-size: 1.4rem;
+    padding: 8px 12px;
+  }
+  
+  .team-logo {
+    height: 35px;
+    width: 35px;
+  }
+
+  .segmented-control {
+    padding: 4px;
+    gap: 2px;
+  }
+
+  .segment-item {
+    padding: 10px 16px;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .highlight-blue-color {
+    font-size: 1.6rem;
+    margin: 20px 0;
+  }
+  
+  .fixture-card {
+    padding: 12px;
+  }
+  
+  .teams-container {
+    margin: 10px 0;
+    padding: 8px 0;
+  }
+  
+  .round-badge {
+    font-size: 0.75rem;
+    padding: 6px 10px;
+  }
+
+  .segment-item {
+    padding: 8px 12px;
+    font-size: 0.8rem;
+  }
+
+  .matchday-section,
+  .fixtures-section {
+    padding: 1rem;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .fixture-card::before {
+    animation: none;
+  }
+  
+  .titleUnderline {
+    animation: none;
+  }
+}
+
+/* Focus states for accessibility */
+.fixture-card:focus-within,
+.segment-item:focus {
+  outline: 2px solid #00ff88;
+  outline-offset: 2px;
+}

@@ -3,9 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environment';
 import { Player } from '../models/player'
-import { ApiListResponse } from '../../../shared/api-list-response';
-import { ApiResponse } from '../../../shared/api-response';
 import { CommandResult } from '../models/command-result';
+import { AvailablePlayer } from '../models/ApiResponse/Player/available-players-response';
+import { ApiResponse } from '../../../shared/api-response';
 
 
 @Injectable({ providedIn: 'root' })
@@ -48,5 +48,29 @@ export class PlayerService {
   }
   updatePlayingStatus(playerTeamId: number, newStatus: boolean): Observable<any>{
     return this.http.get<any>(`${this.apiUrl}/playerteam/${playerTeamId}/${newStatus}`);
+  }
+  listPlayerTeamByTeamId(teamId: number): Observable<any>{
+    return this.http.get<any>(`${this.adminApiUrl}/teams/${teamId}/list`);
+  }
+  listAvailablePlayers(): Observable<ApiResponse<AvailablePlayer[]>> {
+    return this.http.get<ApiResponse<AvailablePlayer[]>>(`${this.adminApiUrl}/listavailableplayers`);
+  }
+
+  postPlayerTeam(playerId: number, teamId: number, position: string, addPlayer: boolean): Observable<any> {
+    return this.http.post(`${this.adminApiUrl}/postplayerteam`, {
+      playerId: playerId,
+      teamId: teamId,
+      position: position,
+      addPlayer: addPlayer
+    });
+  }
+
+  // Update player position
+  updatePlayerPosition(playerId: number, teamId: number, position: string): Observable<any> {
+    return this.http.put(`${this.apiUrl}/updateposition`, {
+      playerId: playerId,
+      teamId: teamId,
+      position: position
+    });
   }
 }

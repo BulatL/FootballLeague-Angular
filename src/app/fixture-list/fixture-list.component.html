@@ -1,0 +1,129 @@
+<!-- user-fixture-list.component.html -->
+<div class="fixture-list-container">
+  
+  <!-- Page Title -->
+  <h1 class="highlight-blue-color">
+    Rezultati
+  </h1>
+
+  <!-- Matchday Selector - Segmented Control -->
+  <div class="matchday-section" *ngIf="!isLoadingMatchDays">
+    <div class="segmented-control">
+      <button 
+        *ngFor="let matchDay of matchDays" 
+        class="segment-item"
+        [class.active]="isMatchDaySelected(matchDay.id)"
+        [class.finished]="matchDay.isFinished"
+        (click)="selectMatchDay(matchDay.id)">
+        Kolo {{ matchDay.roundNumber }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Loading Matchdays -->
+  <div *ngIf="isLoadingMatchDays" class="loading-container">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading rounds...</span>
+    </div>
+    <p class="loading-text">Učitavanje kola...</p>
+  </div>
+
+  <!-- Fixtures Section -->
+  <div class="fixtures-section" *ngIf="selectedMatchDayId && !isLoadingMatchDays">
+    
+    <!-- Loading Fixtures -->
+    <div *ngIf="isLoadingFixtures" class="loading-container">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading fixtures...</span>
+      </div>
+      <p class="loading-text">Učitavanje utakmica...</p>
+    </div>
+
+    <!-- Fixtures Grid -->
+    <div *ngIf="!isLoadingFixtures && hasFixtures()" class="fixtures-grid">
+      <div 
+        *ngFor="let fixture of fixtures" 
+        class="fixture-card"
+        (click)="onFixtureClick(fixture.id)">
+        
+        <!-- Round Badge -->
+        <div class="round-badge">
+          <img src="soccer-ball-16.png" alt="Round" class="round-icon" />
+          <span class="round-text">Kolo: {{ fixture.roundNumber }}</span>
+        </div>
+        
+        <!-- Teams Container -->
+        <div class="teams-container">
+          <!-- Home Team -->
+          <div class="team home-team">
+            <img 
+              class="team-logo" 
+              [src]="getTeamLogo(fixture.homeTeamLogo)" 
+              [alt]="fixture.homeTeamName" />
+            <div class="team-name">{{ fixture.homeTeamName }}</div>
+          </div>
+
+          <!-- Score Section -->
+          <div class="score-section">
+            <div class="score">
+              <span [class.winning-score]="isWinningTeam(fixture.homeTeamScore!, fixture.awayTeamScore!, true)" 
+                    [class.losing-score]="isLosingTeam(fixture.homeTeamScore!, fixture.awayTeamScore!, true)">
+                {{ fixture.homeTeamScore ?? '-' }}
+              </span> 
+              <span class="score-separator">-</span>
+              <span [class.winning-score]="isWinningTeam(fixture.homeTeamScore!, fixture.awayTeamScore!, false)" 
+                    [class.losing-score]="isLosingTeam(fixture.homeTeamScore!, fixture.awayTeamScore!, false)">
+                {{ fixture.awayTeamScore ?? '-' }}
+              </span>
+            </div>
+          </div>
+
+          <!-- Away Team -->
+          <div class="team away-team">
+            <img 
+              class="team-logo" 
+              [src]="getTeamLogo(fixture.awayTeamLogo)" 
+              [alt]="fixture.awayTeamName" />
+            <div class="team-name">{{ fixture.awayTeamName }}</div>
+          </div>
+        </div>
+        
+        <!-- Date and Time -->
+        <div class="datetime-container">
+          <div class="fixture-datetime">
+            <span>{{ fixture.date | date:'EEE, MMM d • HH:mm' }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- No Fixtures -->
+    <div *ngIf="!isLoadingFixtures && !hasFixtures()" class="no-fixtures-container">
+      <div class="no-fixtures-content">
+        <div class="no-fixtures-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M8 12h8"></path>
+          </svg>
+        </div>
+        <h3>Nema utakmica</h3>
+        <p>Nema zakazanih utakmica za ovo kolo.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- No Matchdays Available -->
+  <div *ngIf="!isLoadingMatchDays && matchDays.length === 0" class="no-fixtures-container">
+    <div class="no-fixtures-content">
+      <div class="no-fixtures-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M8 12h8"></path>
+        </svg>
+      </div>
+      <h3>Nema kola</h3>
+      <p>Trenutno nema dostupnih kola za prikaz.</p>
+    </div>
+  </div>
+
+</div>

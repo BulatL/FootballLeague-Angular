@@ -4,10 +4,12 @@ import { Fixture } from '../core/models/fixture.model';
 import { FixtureService } from '../core/services/fixture.service';
 import { ApiListResponse } from '../shared/api-list-response';
 import { SeasonService } from '../core/services/season.service';
+import { ImageService } from '../core/services/image.service';
+import { RouterModule  } from '@angular/router';
 
 @Component({
   selector: 'app-fixture-carousel',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './fixture-carousel.component.html',
   styleUrl: './fixture-carousel.component.css'
 })
@@ -23,7 +25,8 @@ export class FixtureCarouselComponent {
   }
 
   constructor(private fixtureService: FixtureService,
-              private seasonService: SeasonService ){}
+              private seasonService: SeasonService,
+              private imageService: ImageService ){}
 
   ngOnInit(): void {
     this.loadFixtures();
@@ -62,6 +65,11 @@ export class FixtureCarouselComponent {
     }, 4000);
   }
 
+  getLogo(fileName: string): string {
+      var imageUrl = this.imageService.getImageUrl("Teams", fileName);
+      return imageUrl;
+  }
+  
   trackByFixtureId(index: number, fixture: Fixture): number {
     return fixture.id;
   }

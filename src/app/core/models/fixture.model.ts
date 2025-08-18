@@ -1,6 +1,7 @@
 export interface Fixture {
     id: number;
     matchDay: number;
+    matchDayId: number;
     homeTeamLogo: string;
     homeTeamName: string;
     homeTeamShortName: string;
@@ -12,4 +13,5 @@ export interface Fixture {
     competition: string;    // "Premier League 2024"
     status: 'pending' | 'live' | 'completed';
     date: Date;
+    roundNumber: number;
   }

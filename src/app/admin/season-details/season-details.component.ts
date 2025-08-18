@@ -69,10 +69,11 @@ export class SeasonDetailsComponent implements OnInit {
       recentMatches: this.fixtureService.getRecentBySeason(this.seasonId, 5)
     }).subscribe({
       next: (data) => {
+        console.log(data);
         this.season = data.season;
         this.statistics = data.statistics;
         this.recentMatches = data.recentMatches || [];
-        this.fixturesGenerated = data.statistics.fixturesTotal > 0;
+        this.fixturesGenerated = data.statistics?.fixturesTotal > 0;
         this.isStandingGenerated = data.season.isStandingGenerated!;
         this.loading = false;
       },

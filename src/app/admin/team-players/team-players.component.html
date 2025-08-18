@@ -1,0 +1,176 @@
+<!-- team-players.component.html -->
+<div class="container-fluid margin-8-auto">
+  <div class="row">
+    <div class="col-12">
+      <!-- Header -->
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+          <h2>Upravljaj igracima - {{ teamName }}</h2>
+        </div>
+        <button type="button" class="btn btn-secondary" (click)="goBack()">
+          ← Nazad na Tim
+        </button>
+      </div>
+
+      <!-- Loading State -->
+      <div *ngIf="isLoading" class="text-center py-4">
+        <div class="spinner-border" role="status">
+          <span class="visually-hidden">Ucitavanje...</span>
+        </div>
+        <p class="mt-2">Ucitavanja igraca...</p>
+      </div>
+
+      <!-- Main Content -->
+      <div *ngIf="!isLoading" class="row">
+        
+        <!-- Current Team Players -->
+        <div class="col-lg-8">
+          <div class="card">
+            <div class="card-header">
+              <h5 class="mb-0">
+                Trenutni igraci tima ({{ teamPlayers.length }})
+              </h5>
+            </div>
+            <div class="card-body">
+              
+              <!-- No Players Message -->
+              <div *ngIf="teamPlayers.length === 0" class="text-center py-4">
+                <h5 class="text-muted mt-3">Nema dodatih igraca</h5>
+                <p class="text-muted">Dodaj igrace iz liste slobodnih igraca</p>
+              </div>
+
+              <!-- Goalkeepers Section -->
+              <div *ngIf="getGoalkeepers().length > 0" class="mb-4">
+                <h6 class="text-primary mb-3">
+                  🥅 Golman
+                </h6>
+                <div class="row">
+                  <div *ngFor="let player of getGoalkeepers()" class="col-md-6 col-lg-4 mb-3">
+                    <div class="card border-primary">
+                      <div class="card-body text-center">
+                        <img [src]="getPlayerImage(player.image)" 
+                             class="rounded-circle mb-3" 
+                             width="60" 
+                             height="60" 
+                             [alt]="player.playerName"
+                             style="object-fit: cover;">
+                        <h6 class="card-title">{{ player.playerName }}</h6>
+                        
+                        <!-- Position Selector -->
+                        <div class="mb-3">
+                          <select class="form-select form-select-sm" 
+                                  [value]="player.position"
+                                  #goaliePositionSelect
+                                  (change)="onPositionChange(player, goaliePositionSelect.value)">
+                            <option value="Goalkeeper">Golman</option>
+                            <option value="Player">Igrac</option>
+                          </select>
+                        </div>
+                        
+                        <!-- Remove Button -->
+                        <button type="button" 
+                                class="btn btn-outline-danger btn-sm"
+                                (click)="removePlayerFromTeam(player)"
+                                [disabled]="isRemovingPlayer">
+                          Izbaci
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Outfield Players Section -->
+              <div *ngIf="getOutfieldPlayers().length > 0">
+                <h6 class="text-success mb-3">
+                  ⚽ Igraci
+                </h6>
+                <div class="row">
+                  <div *ngFor="let player of getOutfieldPlayers()" class="col-md-6 col-lg-4 mb-3">
+                    <div class="card border-success">
+                      <div class="card-body text-center">
+                        <img [src]="getPlayerImage(player.image)" 
+                             class="rounded-circle mb-3" 
+                             width="60" 
+                             height="60" 
+                             [alt]="player.playerName"
+                             style="object-fit: cover;">
+                        <h6 class="card-title">{{ player.playerName }}</h6>
+                        
+                        <!-- Position Selector -->
+                        <div class="mb-3">
+                          <select class="form-select form-select-sm" 
+                                  [value]="player.position"
+                                  #playerPositionSelect
+                                  (change)="onPositionChange(player, playerPositionSelect.value)">
+                            <option value="Player">Igrac</option>
+                            <option value="Goalkeeper">Golman</option>
+                          </select>
+                        </div>
+                        
+                        <!-- Remove Button -->
+                        <button type="button" 
+                                class="btn btn-outline-danger btn-sm"
+                                (click)="removePlayerFromTeam(player)"
+                                [disabled]="isRemovingPlayer">
+                          Izbaci
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Available Players -->
+        <div class="col-lg-4">
+          <div class="card">
+            <div class="card-header">
+              <h5 class="mb-0">
+                Slobodni igraci ({{ availablePlayers.length }})
+              </h5>
+            </div>
+            <div class="card-body">
+              
+              <!-- No Available Players -->
+              <div *ngIf="availablePlayers.length === 0" class="text-center py-4">
+                <p class="text-muted mt-2 mb-0">Trenutno nema slobodnih igraca</p>
+              </div>
+
+              <!-- Available Players List -->
+              <div *ngFor="let player of availablePlayers" class="d-flex align-items-center mb-3 p-2 border rounded">
+                <img [src]="getPlayerImage(player.image)" 
+                     class="rounded-circle me-3" 
+                     width="50" 
+                     height="50" 
+                     [alt]="player.playerName"
+                     style="object-fit: cover;">
+                
+                <div class="flex-grow-1">
+                  <h6 class="mb-1">{{ player.playerName }}</h6>
+                  
+                  <!-- Position Selector and Add Button -->
+                  <div class="d-flex gap-2">
+                    <select class="form-select form-select-sm" #availablePositionSelect>
+                      <option value="Player">Igrac</option>
+                      <option value="Goalkeeper">Golman</option>
+                    </select>
+                    
+                    <button type="button" 
+                            class="btn btn-primary btn-sm"
+                            (click)="addPlayerToTeam(player, availablePositionSelect.value)"
+                            [disabled]="isAddingPlayer">
+                      Dodaj
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
