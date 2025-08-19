@@ -4,6 +4,9 @@ import { CommonModule } from '@angular/common';
 import { PlayerService } from '../admin/core/services/player.service';
 import { ImageService } from '../core/services/image.service';
 import { SeasonLeaderCategoryData } from '../admin/core/models/season-leader-model';
+import { ApiResponse } from '../shared/api-response';
+import { AvailablePlayer } from '../admin/core/models/ApiResponse/Player/available-players-response';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-season-leaders',
@@ -14,7 +17,8 @@ import { SeasonLeaderCategoryData } from '../admin/core/models/season-leader-mod
 export class SeasonLeadersComponent implements OnInit {
 
   constructor(private playerService: PlayerService,
-              private imageService: ImageService)
+              private imageService: ImageService,
+              private cdr: ChangeDetectorRef)
               {}
 
   category: string = 'goal';
@@ -28,23 +32,27 @@ export class SeasonLeadersComponent implements OnInit {
   }
 
   selectCategory(category: string): void {
+    console.log(category);
     this.category = category;
     this.loadCategoryData();
   }
 
   loadCategoryData(): void {
-    // if(this.category == null)
-    //   this.category = 'goal';
-    // this.playerService.getTopPlayers(this.category).subscribe({
-    //   next: (response: SeasonLeaderCategoryData) => {
-    //     this.topPlayer = response.topPlayer;
-    //     this.players = response.players;
-    //   },
-    //   error: (error) => {
-    //     this.error = 'Failed to load season leaders';
-    //     console.error('Error loading season leaders:', error);
-    //   }
-    // });
+    if(this.category == null)
+      this.category = 'goal';
+    this.playerService.getTopPlayers(this.category).subscribe({
+      next: (response: any) => {
+console.log(response);
+        this.topPlayer = response.topPlayer;
+        this.players = response.players.$values;
+        this.cdr.detectChanges(); // Force change detection
+
+      },
+      error: (error) => {
+        this.error = 'Failed to load season leaders';
+        console.error('Error loading season leaders:', error);
+      }
+    });
   }
 
   hasLeaderData(): boolean {

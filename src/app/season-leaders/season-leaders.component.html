@@ -20,17 +20,17 @@
           <h3 class="lastname">{{ topPlayer.lastName }}</h3>
           <p class="score highlight-gold-color">{{ getTopPlayerScore() }}</p>
         </div>
-        <img [src]="topPlayer.image" alt="{{ topPlayer.lastName }}" class="top-player-img" />
+        <img [src]="getPlayerImage(topPlayer.image)" alt="{{ topPlayer.lastName }}" class="top-player-img" />
       </div>
 
       <ul class="players-list">
         <li *ngFor="let player of players; index as i" class="player-item">
           <div class="left">
             <span class="rank">{{ i + 2 }}</span>
-            <img [src]="getPlayerImage(player.image)" alt="{{ player.name }}" />
+            <img [src]="getPlayerImage(player.image)" alt="{{ player.playerName }}" />
             <div>
-              <p class="name highlight-blue-color">{{ player.name }}</p>
-              <p class="team">{{ player.team }}</p>
+              <p class="name highlight-blue-color">{{ player.playerName }}</p>
+              <p class="team">{{ player.teamName }}</p>
             </div>
           </div>
           <span class="goals highlight-gold-color">{{ getPlayerScore(player) }}</span>
