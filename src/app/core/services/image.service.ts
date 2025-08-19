@@ -8,6 +8,12 @@ import { environment } from './../../../environment';
     constructor() {}
   
     getImageUrl(subfolder: string, fileName: string): string {
-        return `${environment.apiUrl}/images/${encodeURIComponent(subfolder)}/${encodeURIComponent(fileName)}`;             
+      if(fileName == "" && subfolder == "Teams")
+        return "default-team.png";
+
+      else if(fileName == "" && subfolder == "Players")
+        return "default-player.png";
+
+      return `${environment.apiUrl}/images/${encodeURIComponent(subfolder)}/${encodeURIComponent(fileName)}`;             
     }
 }

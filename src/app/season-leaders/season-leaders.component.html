@@ -2,7 +2,7 @@
   <div class="tabs">
     <div (click)="selectCategory('goal')" [class.active]="category === 'goal'">Strelci</div>
     <div (click)="selectCategory('assist')" [class.active]="category === 'assist'">Asistencije</div>
-    <div (click)="selectCategory('points')" [class.active]="category === 'points'">Odbrane</div>
+    <div (click)="selectCategory('saves')" [class.active]="category === 'saves'">Odbrane</div>
   </div>
 
   <div class="">
@@ -27,7 +27,7 @@
         <li *ngFor="let player of players; index as i" class="player-item">
           <div class="left">
             <span class="rank">{{ i + 2 }}</span>
-            <img [src]="player.image" alt="{{ player.name }}" />
+            <img [src]="getPlayerImage(player.image)" alt="{{ player.name }}" />
             <div>
               <p class="name highlight-blue-color">{{ player.name }}</p>
               <p class="team">{{ player.team }}</p>

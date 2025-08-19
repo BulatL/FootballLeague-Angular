@@ -5,4 +5,6 @@ export interface Player {
   birthDate: string;
   cellNo: string;
   image: string;
+  teamLogo: string | null;
+  teamName: string | null
 }

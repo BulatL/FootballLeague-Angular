@@ -26,7 +26,8 @@ export class PlayerListComponent implements OnInit {
     this.loading = true;
     this.playerService.getAll().subscribe({
       next: (res) => {
-        this.players = res;
+          if(res.$values.length > 0)
+          this.players = res.$values;
         this.loading = false;
       },
       error: (err) => {
@@ -45,7 +46,10 @@ export class PlayerListComponent implements OnInit {
   }
   
   getImage(fileName: string): string {
-      var someting = this.imageService.getImageUrl("Players", fileName)  
-      return someting;
+      return this.imageService.getImageUrl("Players", fileName);
+  }
+
+  getTeamLogo(fileName: string): string {
+      return this.imageService.getImageUrl("Teams", fileName);
   }
 }

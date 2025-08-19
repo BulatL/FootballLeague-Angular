@@ -5,7 +5,7 @@ import { FixtureService } from '../core/services/fixture.service';
 import { ApiListResponse } from '../shared/api-list-response';
 import { SeasonService } from '../core/services/season.service';
 import { ImageService } from '../core/services/image.service';
-import { RouterModule  } from '@angular/router';
+import { Router, RouterModule  } from '@angular/router';
 
 @Component({
   selector: 'app-fixture-carousel',
@@ -26,7 +26,8 @@ export class FixtureCarouselComponent {
 
   constructor(private fixtureService: FixtureService,
               private seasonService: SeasonService,
-              private imageService: ImageService ){}
+              private imageService: ImageService,
+              private router: Router ){}
 
   ngOnInit(): void {
     this.loadFixtures();
@@ -82,5 +83,10 @@ export class FixtureCarouselComponent {
   isLosingTeam(homeScore: number | null, awayScore: number | null, isHome: boolean): boolean {
     if (homeScore == null || awayScore == null) return false;
     return isHome ? homeScore < awayScore : awayScore < homeScore;
+  }
+  
+  onFixtureClick(fixture: Fixture): void {
+    if(fixture.date < new Date())
+      this.router.navigate([`/fixtures/${fixture.id}`]);
   }
 }

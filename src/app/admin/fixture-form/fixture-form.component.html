@@ -1,0 +1,280 @@
+<!-- Main content -->
+<div  class="fixture-container">
+  <!-- Header with teams and score -->
+    <div class="card">
+        <div class="fixture-info">
+            <!-- Home Team -->
+            <div>
+                <img [src]="getTeamLogo(fixtureModel.homeTeamLogo)" alt="Home Team">
+                <p class="team-name">{{ fixtureModel.homeTeamName }}</p>
+            </div>
+            <!-- Middle column: score + time -->
+            <div>
+            <!-- Score -->
+                <p class="time">{{ fixtureModel.fixtureDateTime | date:'HH:mm' }}</p>
+                <div class="score-section">
+                    <div class="score" id="homeScore">{{ fixtureModel.homeScore }}</div>
+                    <div class="vs">VS</div>
+                    <div class="score" id="awayScore">{{ fixtureModel.awayScore }}</div>
+                 </div>
+                <!-- Match start -->
+                <p>{{ fixtureModel.fixtureDateTime | date:'dd MMM yyyy' }}</p>
+            </div>
+            <!-- Away Team -->
+            <div>
+                <img [src]="getTeamLogo(fixtureModel.awayTeamLogo)" alt="Away Team">
+                <p class="team-name">{{ fixtureModel.awayTeamName }}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="fixture-content">
+    <!-- Player Selection Grid -->
+    <!-- Players Section -->
+        <div class="teams-container">
+            <!-- Home Team -->
+            <div class="card team-players">
+                <h3>Igraci tima: {{ fixtureModel.homeTeamName }}</h3>
+                <div class="players-list">
+                <div *ngFor="let player of homePlayers"
+                    class="player-card"
+                    [class.selected]="player.isSelected"
+                    (click)="togglePlayer(player, $event)">
+
+                    <div class="player-info">
+                    <img [src]="getPlayerImage(player.image)" alt="Player">
+                    <div>
+                        <p class="name">{{ player.playerName }}</p>
+                        <p class="position">Standardna pozicija: {{ player.position }}</p>
+                    </div>
+                    </div>
+
+                    <div class="player-actions">
+                    <select [value]="player.selectedPosition"
+                            (change)="updatePosition(player, $any($event.target).value)">
+                        <option value="Goalkeeper">Golman</option>
+                        <option value="Player">Igrac</option>
+                    </select>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+            <!-- Away Team -->
+            <div class="card team-players">
+                <h3>Igraci tima: {{ fixtureModel.awayTeamName }}</h3>
+                <div class="players-list">
+                <div *ngFor="let player of awayPlayers"
+                    class="player-card"
+                    [class.selected]="player.isSelected"
+                    (click)="togglePlayer(player, $event)">
+
+                    <div class="player-info">
+                    <img [src]="getPlayerImage(player.image)" alt="Player">
+                    <div>
+                        <p class="name">{{ player.playerName }}</p>
+                        <p class="position">Standardna pozicija: {{ player.position }}</p>
+                    </div>
+                    </div>
+
+                    <div class="player-actions">
+                    <select [value]="player.selectedPosition"
+                            (change)="updatePosition(player, $any($event.target).value)">
+                        <option value="Goalkeeper">Golman</option>
+                        <option value="Player">Igrac</option>
+                    </select>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Goals & Penalties -->
+        <div class="card goals-section">
+            <h2>Golovi i Penali</h2>
+
+            <!-- Add goal buttons -->
+            <div class="goal-buttons">
+                <button class="btn-primary" (click)="addGoal('home', fixtureModel.homeTeamId)">+ Dodaj gol ({{ fixtureModel.homeTeamName }})</button>
+                <button class="btn-primary" (click)="addGoal('away', fixtureModel.awayTeamId)">+ Dodaj gol ({{ fixtureModel.awayTeamName }})</button>
+            </div>
+
+            <!-- List of goals -->
+            <div class="goals-list">
+                <div *ngFor="let goal of goals; let i = index" class="goal-item">
+                    <span class="team-label">
+                        {{ goal.team === 'home' ? fixtureModel.homeTeamName : fixtureModel.awayTeamName }}
+                    </span>
+
+                    <!-- Goal minute -->
+                    <div class="goal-field">
+                        <label>⏱</label>
+                        <input type="number" min="1" max="120" [(ngModel)]="goal.minuteScored" placeholder="min">
+                    </div>
+
+                    <!-- Scorer -->
+                    <div class="goal-field scorer">
+                        <label style="margin: 10px;">⚽ Strelac</label>
+                        <select [(ngModel)]="goal.playerTeamId" (ngModelChange)="updateScore()">
+                            <option *ngFor="let p of goal.team === 'home' ? getPlayingPlayers(true) : getPlayingPlayers(false)" [value]="p.playerTeamId">
+                                {{ p.playerName }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <!-- Assist -->
+                    <div class="goal-field assist">
+                        <label style="margin: 10px;">🎯 Asistent</label>
+                        <select [(ngModel)]="goal.assistPlayerTeamId" (ngModelChange)="updateScore()">
+                            <option value="">Nema Asistenta</option>
+                            <option *ngFor="let p of goal.team === 'home' ? getPlayingPlayers(true) : getPlayingPlayers(false)" [value]="p.playerTeamId">
+                                {{ p.playerName }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <!-- Goal type -->
+                    <div class="goal-field">
+                        <label style="margin: 10px;">Tip gola</label>
+                        <select [(ngModel)]="goal.type" (ngModelChange)="updateScore()">
+                            <option value="goal">Gol iz igre</option>
+                            <option value="free_kick">Gol iz slobodnog udarca</option>
+                            <option value="own_goal">Auto Gol</option>
+                            <option value="penalty_scored">Penal (Pogodjen)</option>
+                            <option value="penalty_missed">Penal (Promasen)</option>
+                        </select>
+                    </div>
+
+                    <!-- Only if penalty missed -->
+                    <div *ngIf="goal.type === 'penalty_scored'" class="penalty-saved">
+                        Primio:
+                        <span class="gk-name">
+                        {{ goal.team === 'home' ? getAwayGoalkeeper()?.playerName : getHomeGoalkeeper()?.playerName }}
+                        </span>
+                    </div>
+                    <!-- Only if penalty missed -->
+                    <div *ngIf="goal.type === 'penalty_missed'" class="penalty-saved">
+                        Odbranio:
+                        <span class="gk-name">
+                        {{ goal.team === 'home' ? getAwayGoalkeeper()?.playerName : getHomeGoalkeeper()?.playerName }}
+                        </span>
+                    </div>
+
+                    <button class="remove-btn" (click)="removeGoal(i)">✖</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Goalkeeper Saves -->
+        <div class="card gk-stats">
+            <h2>Odbrane golmana</h2>
+
+            <div class="gk-container">
+                <div class="gk-box">
+                    <h3>{{ fixtureModel.homeTeamName }}</h3>
+                    <span class="gk-name">{{ getHomeGoalkeeper()?.playerName }}</span>
+                    <input type="number" min="0" [(ngModel)]="homeSaves" placeholder="Saves">
+                </div>
+
+                <div class="gk-box">
+                    <h3>{{ fixtureModel.awayTeamName }}</h3>
+                    <span class="gk-name">{{ getAwayGoalkeeper()?.playerName }}</span>
+                    <input type="number" min="0" [(ngModel)]="awaySaves" placeholder="Saves">
+                </div>
+            </div>
+        </div>
+
+        <!-- Cards section-->
+        <div class="card cards-section">
+            <h2>Kartoni</h2>
+
+            <div class="card-buttons">
+                <button class="btn-primary" (click)="addCard('home')">+ Dodaj karton ({{ fixtureModel.homeTeamName }})</button>
+                <button class="btn-primary" (click)="addCard('away')">+ Dodaj karton ({{ fixtureModel.awayTeamName }})</button>
+            </div>
+
+            <div class="cards-list">
+                <div *ngFor="let card of cards; let i = index" class="card-item">
+                <span class="team-label">{{ card.team === 'home' ? fixtureModel.homeTeamName : fixtureModel.awayTeamName }}</span>
+
+                <!-- Minute -->
+                <input type="number" min="1" max="120" [(ngModel)]="card.minuteGiven" placeholder="Min">
+
+                <!-- Player -->
+                <select [(ngModel)]="card.playerTeamId">
+                    <option *ngFor="let p of card.team === 'home' ? getPlayingPlayers(true) : getPlayingPlayers(false)" [value]="p.playerTeamId">
+                    {{ p.playerName }}
+                    </option>
+                </select>
+
+                <!-- Card Type -->
+                <select [(ngModel)]="card.cardType">
+                    <option value="yellow">🟨 Zuti </option>
+                    <option value="red">🟥 Crveni </option>
+                    <option value="second_yellow">🟥 Drugi zuti → Crveni </option>
+                    <option value="dangerous_red">🟥 Crveni - Opasan start</option>
+                </select>
+
+                <button class="remove-btn" (click)="removeCard(i)">✖</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistic -->
+        <div class="card statistic-section">
+            <h2 class="section-title">
+                Statistike Utakmice
+            </h2>
+
+            <div class="statistics-grid">
+                <div class="stat-row">
+                    <input type="number" [(ngModel)]="fixtureStatistic.homeShots" class="stat-home-input">
+                    <span class="stat-name">Ukupno Šuteva</span>
+                    <input type="number" [(ngModel)]="fixtureStatistic.awayShots" class="stat-away-input">
+                </div>
+
+                <div class="stat-row">
+                    <input type="number" [(ngModel)]="fixtureStatistic.homeShotsOnTarget" class="stat-home-input">
+                    <span class="stat-name">Šutevi u Okvir</span>
+                    <input type="number" [(ngModel)]="fixtureStatistic.awayShotsOnTarget" class="stat-away-input">
+                </div>
+
+                <div class="stat-row">
+                    <input type="number" [value]="homeSaves" readonly class="stat-home-input readonly">
+                    <span class="stat-name">Odbrane</span>
+                    <input type="number" [value]="awaySaves" readonly class="stat-away-input readonly">
+                </div>
+
+                <div class="stat-row">
+                    <input type="number" [(ngModel)]="fixtureStatistic.homeCorners" class="stat-home-input">
+                    <span class="stat-name">Korneri</span>
+                    <input type="number" [(ngModel)]="fixtureStatistic.awayCorners" class="stat-away-input">
+                </div>
+
+                <div class="stat-row">
+                    <input type="number" [(ngModel)]="fixtureStatistic.homeFouls" class="stat-home-input">
+                    <span class="stat-name">Prekršaji</span>
+                    <input type="number" [(ngModel)]="fixtureStatistic.awayFouls" class="stat-away-input">
+                </div>
+
+                <div class="stat-row">
+                    <input type="number" [value]="yellowCardsHome" readonly class="stat-home-input readonly">
+                    <span class="stat-name">Žuti Kartoni</span>
+                    <input type="number" [value]="yellowCardsAway" readonly class="stat-away-input readonly">
+                </div>
+
+                <div class="stat-row">
+                <input type="number" [value]="redCardsHome" readonly class="stat-home-input readonly">
+                    <span class="stat-name">Crveni Kartoni</span>
+                    <input type="number" [value]="redCardsAway" readonly class="stat-away-input readonly">
+                </div>
+            </div>
+        </div>
+
+    
+        <!-- Save Button -->
+        <div class="fixture-actions">
+            <button class="save-btn" (click)="saveFixture()">Sacuvaj</button>
+        </div>
+</div>

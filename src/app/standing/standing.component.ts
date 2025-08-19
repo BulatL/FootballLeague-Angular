@@ -34,8 +34,6 @@ export class StandingComponent implements OnInit {
   }
   
   getImage(fileName: string): string {
-      if(fileName == "")
-        fileName = "default.png";
       var imageUrl = this.imageService.getImageUrl("Teams", fileName)  
       return imageUrl;
   }

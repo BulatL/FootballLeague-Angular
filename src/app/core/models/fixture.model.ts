@@ -14,4 +14,14 @@ export interface Fixture {
     status: 'pending' | 'live' | 'completed';
     date: Date;
     roundNumber: number;
+    homeShootsOnTarget: number;
+    awayShootsOnTarget: number;
+    homeTotalShoots: number;
+    awayTotalShoots: number;
+    savesByHomeTeam: number;
+    savesByAwayTeam: number;
+    homeTeamCorners: number;
+    awayTeamCorners: number;
+    homeTeamFouls: number;
+    awayTeamFouls: number;
   }

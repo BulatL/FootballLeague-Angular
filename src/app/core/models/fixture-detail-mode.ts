@@ -1,0 +1,34 @@
+export interface FixtureDetailModel{
+    id: number;
+    dateTime: Date;
+    roundNumber: number;
+    homeTeamId: number;
+    homeTeamName: string;
+    homeTeamLogo: string;
+    homeTeamScore: number | null;
+    homeShootsOnTarget: number;
+    homeTotalShoots: number;
+    savesByHomeTeam: number;
+    homeTeamCorners: number;
+    homeTeamFouls: number;
+    awayTeamId: number;
+    awayTeamName: string;
+    awayTeamLogo: string;
+    awayTeamScore: number | null;
+    awayShootsOnTarget: number;
+    awayTotalShoots: number;
+    awayTeamCorners: number;
+    awayTeamFouls: number;
+    savesByAwayTeam: number;
+    mvpPlayerName: string;
+    mvpPlayerLogo: string;
+    mvpPlayerTeamId: number;
+    mvpPlayerTeamLogo: string;
+    mvpTotalDreamTeamPoints: number;
+    mvpPlayerTeamName: string;
+    mvpFixtureDreamTeamPoints: number;
+    mvpFixtureGoals: number;
+    mvpFixtureAssists: number;
+    mvpFixtureSaves: number;
+    mvpFixturePosition: string;
+}

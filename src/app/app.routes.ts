@@ -23,6 +23,7 @@ import { LoginComponent } from './login/login.component';
 import { TeamPlayersComponent } from './admin/team-players/team-players.component';
 import { AdminFixtureListComponent } from './admin/fixture-list/fixture-list.component';
 import { FixtureListComponent } from './fixture-list/fixture-list.component';
+import { FixtureFormComponent } from './admin/fixture-form/fixture-form.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'league-home', pathMatch: 'full' },
@@ -61,7 +62,8 @@ export const routes: Routes = [
       { path: 'players/create', component: PlayerFormComponent },
       { path: 'players/edit/:id', component: PlayerFormComponent },
       // Fixtures
-      { path: "seasons/:seasonId/fixtures", component: AdminFixtureListComponent}
+      { path: "seasons/:seasonId/fixtures", component: AdminFixtureListComponent},
+      { path: "fixtures/:id", component: FixtureFormComponent}
     ],
     canActivate: [AdminGuard]
   }

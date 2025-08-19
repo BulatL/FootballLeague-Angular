@@ -2,7 +2,7 @@
 
 .fixture-details-container {
     max-width: 1200px;
-    margin: 6rem auto;
+    margin: 8rem auto;
     padding: 20px;
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     min-height: 100vh;
@@ -433,7 +433,7 @@
 }
 
 .breakdown-points {
-  color: #00ff88;
+  color: #2eab81;
   font-weight: bold;
   font-size: 1rem;
 }

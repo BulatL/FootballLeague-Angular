@@ -5,6 +5,7 @@ import { FixtureService } from '../core/services/fixture.service';
 import { ImageService } from '../core/services/image.service';
 import { MatchDay } from '../core/models/match-day';
 import { Fixture } from '../core/models/fixture.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-fixture-list',
@@ -23,7 +24,8 @@ export class FixtureListComponent implements OnInit {
 
   constructor(
     private fixtureService: FixtureService,
-    private imageService: ImageService
+    private imageService: ImageService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -134,9 +136,9 @@ selectMatchDay(matchDayId: number): void {
     return awayScore < homeScore;
   }
 
-  onFixtureClick(fixtureId: number): void {
-    // Navigate to fixture detail (implement route as needed)
-    console.log('Navigate to fixture:', fixtureId);
+  onFixtureClick(fixture: Fixture): void {
+    if(fixture.date < new Date())
+      this.router.navigate([`/fixtures/${fixture.id}`]);
   }
 
   hasFixtures(): boolean {

@@ -73,4 +73,8 @@ export class PlayerService {
       position: position
     });
   }
+
+  getTopPlayers(category: string): Observable<ApiResponse<AvailablePlayer[]>> {
+    return this.http.get<ApiResponse<AvailablePlayer[]>>(`${this.apiUrl}/listtopplayers/${category}`);
+  }
 }

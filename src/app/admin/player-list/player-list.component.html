@@ -17,6 +17,7 @@
           <th>Ime</th>
           <th>Datum rodjenja</th>
           <th>Broj telefona</th>
+          <th>Tim</th>
           <th>Akcije</th>
         </tr>
       </thead>
@@ -26,6 +27,7 @@
           <td>{{ player.firstName }} {{ player.lastName }}</td>
           <td>{{ player.birthDate | date: 'mediumDate' }}</td>
           <td>{{ player.cellNo }}</td>
+        <td><img *ngIf="player.teamName != null" [src]="getTeamLogo(player.teamLogo!)" width="40" height="40" class="player-img" /> {{ player.teamName != null ? player.teamName : ""}}</td>
           <td>
             <button class="btn-secondary" (click)="editPlayer(player.id)">Edit</button>
           </td>

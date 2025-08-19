@@ -23,7 +23,7 @@
   <!-- Loading Matchdays -->
   <div *ngIf="isLoadingMatchDays" class="loading-container">
     <div class="spinner-border" role="status">
-      <span class="visually-hidden">Loading rounds...</span>
+      <span class="visually-hidden">Učitavanje kola...</span>
     </div>
     <p class="loading-text">Učitavanje kola...</p>
   </div>
@@ -34,7 +34,7 @@
     <!-- Loading Fixtures -->
     <div *ngIf="isLoadingFixtures" class="loading-container">
       <div class="spinner-border" role="status">
-        <span class="visually-hidden">Loading fixtures...</span>
+        <span class="visually-hidden">Učitavanje utakmica...</span>
       </div>
       <p class="loading-text">Učitavanje utakmica...</p>
     </div>
@@ -44,7 +44,7 @@
       <div 
         *ngFor="let fixture of fixtures" 
         class="fixture-card"
-        (click)="onFixtureClick(fixture.id)">
+        (click)="onFixtureClick(fixture)">
         
         <!-- Round Badge -->
         <div class="round-badge">

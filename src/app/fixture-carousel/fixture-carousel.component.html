@@ -5,12 +5,14 @@
 <!-- Show fixtures when available -->
 <div class="fixture-marquee" *ngIf="fixtures && fixtures.length > 0; else noFixturesTemplate">
   <div class="fixture-track" *ngFor="let duplicate of [1, 2]" [attr.aria-hidden]="duplicate === 2">
-    <div class="fixture-card" *ngFor="let fixture of fixtures; trackBy: trackByFixtureId" [routerLink]="['/fixtures', fixture.id]">
+    <div class="fixture-card"
+         *ngFor="let fixture of fixtures; trackBy: trackByFixtureId"
+         (click)="onFixtureClick(fixture)">
       <div class="round">
         <img src="soccer-ball-16.png" alt="Round" />
         <span class="margin-left-5">Kolo: {{ fixture.roundNumber }}</span>
       </div>
-      <div class="teams-container">
+      <div class="teams-container" >
         <div class="team">
           <img class="fixture-card-team-logo" [src]="getLogo(fixture.homeTeamLogo)" />
           <div class="team-name margin-left-5">{{ fixture.homeTeamShortName }}</div>

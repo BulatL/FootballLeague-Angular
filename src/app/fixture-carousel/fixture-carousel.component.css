@@ -504,3 +504,12 @@
     height: 48px;
   }
 }
+
+.teams-container * {
+  pointer-events: none;
+}
+
+.teams-container {
+  cursor: pointer;
+  pointer-events: auto;
+}

@@ -8,6 +8,8 @@ import { CommandResult } from '../models/command-result';
 import { GenerateFixturesResponse } from '../models/ApiResponse/Fixture/generate-fixtures-response';
 import { GenerateFixturesRequest } from '../models/ApiRequest/generate-fixtures-request';
 import { MatchDay } from '../../../core/models/match-day';
+import { FixtureFormModel } from '../models/fixture-form';
+import { PostFixtureRequestModel } from '../models/ApiRequest/post-fixture-details-request';
 
 
 @Injectable({ providedIn: 'root' })
@@ -21,10 +23,8 @@ export class FixtureService {
     return this.http.get<ApiListResponse<Fixture>>(`${this.apiAdminUrl}/list`);
   }
 
-  getById(id: number): Observable<Fixture> {
-    return this.http.get<Fixture>(`${this.apiUrl}/get`, {
-      params: { id: id.toString() }
-    });
+  getById(id: number): Observable<FixtureFormModel> {
+    return this.http.get<FixtureFormModel>(`${this.apiAdminUrl}/${id}`);
   }
 
   create(formData: FormData): Observable<CommandResult<Fixture>> {
@@ -64,5 +64,7 @@ export class FixtureService {
     return this.http.get<ApiListResponse<Fixture>>(`${this.apiUrl}/ListByMatchDay/${matchDayId}`);
   }
 
-
+  postFixtureDetails(request: PostFixtureRequestModel): Observable<CommandResult<any>> {
+    return this.http.post<CommandResult<any>>(`${this.apiAdminUrl}/postfixturedetails/`, request);
+  }
 }
