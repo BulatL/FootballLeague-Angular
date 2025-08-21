@@ -122,6 +122,18 @@
             color: #00ff88;
             border-bottom-color: #00ff88;
         }
+        
+        .footer-section ul li a.footer-link {
+            display: block;            /* Make the whole li clickable */
+            color: inherit;            /* Inherit text color from li */
+            text-decoration: none;     /* Remove default blue underline */
+            width: 100%;
+            height: 100%;
+        }
+
+        .footer-section ul li a.footer-link:hover {
+            color: #00ff88;            /* Keep the hover effect consistent */
+        }
 
         .social-icons {
             display: flex;

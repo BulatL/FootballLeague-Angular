@@ -78,7 +78,7 @@
 
   <div *ngIf="isFixtureFinished == true">
     <!-- MVP Section -->
-    <div class="section">
+    <div class="section" *ngIf="isOfficialResul == false">
       <h2 class="section-title">
         <span class="title-icon">🏆</span>
         Igrač Utakmice (MVP)
@@ -346,7 +346,7 @@
     </div>
 
     <!-- Timeline -->
-    <div class="section">
+    <div class="section" *ngIf="isOfficialResul == false">
       <h2 class="section-title">
         <span class="title-icon">⏱️</span>
         Tok Utakmice

@@ -10,4 +10,8 @@ import { SharedModule } from '../shared/shared.module';
 })
 export class FooterComponent {
 
+  openInstagram(){
+    window.open('https://www.instagram.com/inliga_indjija/', '_blank'); // '_blank' opens in new tab
+  }
+
 }

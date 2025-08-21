@@ -9,10 +9,10 @@ import { environment } from './../../../environment';
   
     getImageUrl(subfolder: string, fileName: string): string {
       if(fileName == "" && subfolder == "Teams")
-        return "default-team.png";
+        fileName = "default-team.png";
 
       else if(fileName == "" && subfolder == "Players")
-        return "default-player.png";
+        fileName = "default-player.png";
 
       return `${environment.apiUrl}/images/${encodeURIComponent(subfolder)}/${encodeURIComponent(fileName)}`;             
     }

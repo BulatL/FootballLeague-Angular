@@ -26,6 +26,7 @@ export class FixtureDetailComponent implements OnInit {
   loadingFixtureTimeline = true;
   error: string | null = null;
   isFixtureFinished: boolean = false;
+  isOfficialResul: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -58,6 +59,11 @@ export class FixtureDetailComponent implements OnInit {
         this.fixture = response;
         this.loading = false;
         if(this.fixture.isFinished){
+          if((this.fixture.homeShootsOnTarget === 0 && this.fixture.homeTeamScore === 3) ||
+             (this.fixture.awayShootsOnTarget === 0 && this.fixture.awayTeamScore === 3)){
+              this.isOfficialResul = true;
+             }
+
           this.isFixtureFinished = true;
           this.getFixtureLineup(fixtureId)
           this.getFixtureTimeline(fixtureId);

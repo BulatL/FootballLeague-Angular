@@ -7,6 +7,9 @@
             <div>
                 <img [src]="getTeamLogo(fixtureModel.homeTeamLogo)" alt="Home Team">
                 <p class="team-name">{{ fixtureModel.homeTeamName }}</p>
+                <div class="result-header">
+                    <button class="btn-result" (click)="submitOfficialResult(fixtureModel.homeTeamId, fixtureModel.homeTeamName)">Službeni Rezultat</button>
+                </div>
             </div>
             <!-- Middle column: score + time -->
             <div>
@@ -24,6 +27,9 @@
             <div>
                 <img [src]="getTeamLogo(fixtureModel.awayTeamLogo)" alt="Away Team">
                 <p class="team-name">{{ fixtureModel.awayTeamName }}</p>
+                <div class="result-header">
+                    <button class="btn-result" (click)="submitOfficialResult(fixtureModel.awayTeamId, fixtureModel.awayTeamName)">Službeni Rezultat</button>
+                </div>
             </div>
         </div>
     </div>

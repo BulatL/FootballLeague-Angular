@@ -67,4 +67,13 @@ export class FixtureService {
   postFixtureDetails(request: PostFixtureRequestModel): Observable<CommandResult<any>> {
     return this.http.post<CommandResult<any>>(`${this.apiAdminUrl}/postfixturedetails/`, request);
   }
+
+  patchTime(id: number, dateTime: Date): Observable<CommandResult<any>> {
+    const request = {Id: id, DateTime: dateTime};
+    return this.http.patch<CommandResult<any>>(`${this.apiAdminUrl}/PatchTime/`, request);
+  }
+
+  postOfficialResult(winningTeamId: number, fixtureId: number): Observable<CommandResult<any>> {
+    return this.http.post<CommandResult<any>>(`${this.apiAdminUrl}/postOfficialResult/`, {Id: fixtureId, winningTeamId: winningTeamId});
+  }
 }

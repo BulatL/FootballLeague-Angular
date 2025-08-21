@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FixtureFormModel } from '../core/models/fixture-form';
 import { ImageService } from '../../core/services/image.service';
 import { FixtureService } from '../core/services/fixture.service';
@@ -43,12 +43,14 @@ export class FixtureFormComponent implements OnInit {
   awayGKId: number | null = null;
   homeSaves: number = 0;
   awaySaves: number = 0;
+  showOfficialResult: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
     private imageService: ImageService,
     private fixtureService: FixtureService,
     private playerService: PlayerService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -331,4 +333,51 @@ export class FixtureFormComponent implements OnInit {
     player.isSelected = !player.isSelected;
   }
 
+  toggleOfficialResult(): void {
+    this.showOfficialResult = !this.showOfficialResult;
+  }
+
+  getMatchResult(): string {
+    const homeScore = this.fixtureModel.homeScore || 0;
+    const awayScore = this.fixtureModel.awayScore || 0;
+    
+    if (homeScore > awayScore) {
+      return `Pobedio je ${this.fixtureModel.homeTeamName}`;
+    } else if (awayScore > homeScore) {
+      return `Pobedio je ${this.fixtureModel.awayTeamName}`;
+    } else {
+      return 'Nerešeno';
+    }
+  }
+
+  getResultClass(): string {
+    const homeScore = this.fixtureModel.homeScore || 0;
+    const awayScore = this.fixtureModel.awayScore || 0;
+    
+    if (homeScore > awayScore) {
+      return 'home-win';
+    } else if (awayScore > homeScore) {
+      return 'away-win';
+    } else {
+      return 'draw';
+    }
+  }
+  submitOfficialResult(winingTeamId: number, teamName: string){
+    if (confirm('Da li ste sigurni da želite da dodelite službeni rezultat timu: ' + teamName)){
+      this.fixtureService.postOfficialResult(winingTeamId, this.fixtureId!).subscribe({
+        next: (response: any) => {
+            if(response.isValid){
+              alert("Sluzbeni rezultat uspesno sacuvan");
+              this.router.navigate([`/admin/seasons/${response.data}/fixtures`]); 
+            }
+            else
+              alert("Doslo je do greske prilikom cuvanja sluzbenog rezultata: " + response.errors.$values[0])
+        },
+        error: (error) => {
+          console.error('Error saving official result:', error);
+        }
+      });
+    }
+    
+  }
 }

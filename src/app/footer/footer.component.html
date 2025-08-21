@@ -7,7 +7,7 @@
                 <div class="social-icons">
                     <!-- <div class="social-icon">📘</div> -->
                     <div class="social-icon">📷</div>
-                    <div class="social-icon"><fa-icon style="color:pink" [icon]="['fab', 'instagram']"></fa-icon></div>
+                    <div class="social-icon" (click)="openInstagram()"><fa-icon style="color:pink" [icon]="['fab', 'instagram']"></fa-icon></div>
                     <!-- <div class="social-icon">📺</div> -->
                     
                 </div>
@@ -16,9 +16,17 @@
             <div class="footer-section">
                 <h3>Korisni linkovi</h3>
                 <ul>
-                    <li>Slike sa utakmice</li>
+                    <li>
+                    <a class="footer-link" 
+                        href="https://drive.google.com/drive/folders/14QgV-fxiSZMgtIswm9__OHl6Mqnf-8VY" 
+                        target="_blank" 
+                        rel="noopener noreferrer">
+                        Slike sa utakmice
+                    </a>
+                    </li>
                 </ul>
             </div>
+
             
             <div class="footer-section">
                 <h3>Kontakt</h3>
