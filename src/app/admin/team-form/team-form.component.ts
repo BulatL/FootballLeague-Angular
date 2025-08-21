@@ -129,7 +129,6 @@ export class TeamFormComponent implements OnInit {
     // Load team data first
     this.teamService.getById(id).subscribe({
       next: (team: any) => {
-        console.log(team);
         this.form.patchValue({
           name: team.fullName,
           shortName: team.shortName,

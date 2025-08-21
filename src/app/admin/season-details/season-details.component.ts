@@ -69,7 +69,6 @@ export class SeasonDetailsComponent implements OnInit {
       recentMatches: this.fixtureService.getRecentBySeason(this.seasonId, 5)
     }).subscribe({
       next: (data) => {
-        console.log(data);
         this.season = data.season;
         this.statistics = data.statistics;
         this.recentMatches = data.recentMatches || [];
@@ -164,7 +163,6 @@ Prva utakmica: ${this.formatDate(response.data?.firstMatchDate!)}`;
       if (response.isValid) {
         this.isStandingGenerated = true;
         this.loadSeasonDetails(); // Refresh data
-        console.log(response);
         alert('Tabela je uspešno generisana! Dodato ' + response.data + ' timova.');
       } else {
         this.error = response.erros.$values[0].message || 'Failed to generate standings.';

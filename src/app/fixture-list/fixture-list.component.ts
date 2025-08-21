@@ -97,12 +97,6 @@ selectMatchDay(matchDayId: number): void {
     
     // Ensure the scroll position is not negative
     const finalScrollLeft = Math.max(0, scrollLeft);
-
-    console.log("containerWidth: ", containerWidth);
-    console.log("buttonLeft: ", buttonLeft);
-    console.log("buttonWidth ", buttonWidth);
-    console.log("scrollLeft: ", scrollLeft);
-    console.log("finalScrollLeft: ", finalScrollLeft);
     
     segmentedControl.scrollTo({
       left: finalScrollLeft,
@@ -136,8 +130,13 @@ selectMatchDay(matchDayId: number): void {
     return awayScore < homeScore;
   }
 
+
+  
   onFixtureClick(fixture: Fixture): void {
-    if(fixture.date < new Date())
+    const fixtureDate = new Date(fixture.date); // convert string -> Date
+    const now = new Date();
+
+    if (fixtureDate < now) 
       this.router.navigate([`/fixtures/${fixture.id}`]);
   }
 

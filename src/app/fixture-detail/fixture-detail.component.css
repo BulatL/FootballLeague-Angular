@@ -314,21 +314,42 @@
 }
 
 .player-info {
-  display: flex;
+  display: contents;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 1rem;
 }
+
+.player-image-container {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.player-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #01234c;
+  box-shadow: 0 3px 12px rgba(1, 35, 76, 0.2);
+  transition: all 0.3s ease;
+}
+
+.player-image:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(1, 35, 76, 0.3);
+}
+
 
 .player-name {
   color: #01234c;
   font-weight: bold;
   font-size: 1rem;
+  line-height: 1.2;
 }
 
 .player-position {
   color: #666;
   font-size: 0.85rem;
-  text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
@@ -358,6 +379,36 @@
   font-size: 0.7rem;
   opacity: 0.8;
 }
+
+.player-details {
+  color: #666;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.player-position-badge {
+  color: #01234c;
+  font-size: 12px;
+  font-weight: bold;
+  /* background: linear-gradient(135deg, #00ff88 0%, #00ccff 100%);
+  padding: 2px 6px;
+  border-radius: 8px;
+  border: 1px solid white;
+  box-shadow: 0 2px 6px rgba(0, 255, 136, 0.3);
+  letter-spacing: 0.3px; 
+  width: 60px;
+  text-align: center;
+  margin-top: 12px; */
+}
+
+.player-text-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+  margin-left: 15px;
+}
+
 
 /* Expand icon */
 .expand-icon {
@@ -549,7 +600,7 @@
   }
   
   .event-assist {
-    color: #00ff88;
+    color: #03a85b;
     font-size: 0.8rem;
     font-weight: 600;
   }
@@ -676,6 +727,7 @@
     font-size: 0.8rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    font-weight: bold;
   }
   
   .mvp-stat .stat-value {
@@ -790,3 +842,258 @@
       grid-template-columns: 1fr;
     }
   }
+
+  /* Fixture Not Finished Styles */
+.fixture-not-finished-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+  padding: 2rem;
+}
+
+.not-finished-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 249, 250, 0.9) 100%);
+  border-radius: 20px;
+  padding: 3rem 2rem;
+  text-align: center;
+  max-width: 600px;
+  width: 100%;
+  box-shadow: 
+    0 20px 60px rgba(1, 35, 76, 0.15),
+    0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 2px solid rgba(1, 35, 76, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.not-finished-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #01234c, #00ff88, #00ccff, #01234c);
+  background-size: 300% 100%;
+  animation: borderFlow 4s linear infinite;
+  border-radius: 20px 20px 0 0;
+}
+
+.not-finished-icon {
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.clock-icon {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #01234c 0%, #0a3d6b 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 25px rgba(1, 35, 76, 0.3);
+  animation: clockPulse 2s ease-in-out infinite;
+}
+
+@keyframes clockPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.clock-face {
+  width: 40px;
+  height: 40px;
+  background: white;
+  border-radius: 50%;
+  position: relative;
+  border: 2px solid #01234c;
+}
+
+.clock-hand {
+  position: absolute;
+  background: #01234c;
+  border-radius: 2px;
+  transform-origin: bottom center;
+  left: 50%;
+}
+
+.hour-hand {
+  width: 2px;
+  height: 12px;
+  top: 8px;
+  margin-left: -1px;
+  animation: hourRotate 12s linear infinite;
+}
+
+.minute-hand {
+  width: 1px;
+  height: 16px;
+  top: 4px;
+  margin-left: -0.5px;
+  animation: minuteRotate 2s linear infinite;
+}
+
+@keyframes hourRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes minuteRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.not-finished-content {
+  color: #01234c;
+}
+
+.not-finished-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 0 0 1rem 0;
+  background: linear-gradient(135deg, #01234c 0%, #0a3d6b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.not-finished-description {
+  font-size: 1.1rem;
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.status-indicators {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: rgba(1, 35, 76, 0.05);
+  border-radius: 15px;
+  border: 1px solid rgba(1, 35, 76, 0.1);
+}
+
+.status-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(1, 35, 76, 0.05);
+  transition: transform 0.3s ease;
+}
+
+.status-item:hover {
+  transform: translateY(-2px);
+}
+
+.status-icon {
+  font-size: 1.5rem;
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #00ff88 0%, #00ccff 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(0, 255, 136, 0.3);
+}
+
+.status-text {
+  color: #01234c;
+  font-weight: 600;
+  flex: 1;
+  text-align: left;
+}
+
+.refresh-hint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  background: rgba(0, 255, 136, 0.1);
+  border-radius: 15px;
+  border: 1px solid rgba(0, 255, 136, 0.3);
+  color: #01234c;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.refresh-icon {
+  font-size: 1.2rem;
+  animation: refreshSpin 2s linear infinite;
+}
+
+@keyframes refreshSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .not-finished-card {
+    padding: 2rem 1.5rem;
+    margin: 1rem;
+  }
+  
+  .not-finished-title {
+    font-size: 1.5rem;
+  }
+  
+  .not-finished-description {
+    font-size: 1rem;
+  }
+  
+  .status-indicators {
+    padding: 1rem;
+  }
+  
+  .status-item {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+  }
+  
+  .status-text {
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .clock-icon {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .clock-face {
+    width: 30px;
+    height: 30px;
+  }
+  
+  .hour-hand {
+    height: 9px;
+    top: 6px;
+  }
+  
+  .minute-hand {
+    height: 12px;
+    top: 3px;
+  }
+  
+  .not-finished-title {
+    font-size: 1.3rem;
+  }
+  
+  .refresh-hint {
+    flex-direction: column;
+    gap: 0.25rem;
+    text-align: center;
+  }
+}

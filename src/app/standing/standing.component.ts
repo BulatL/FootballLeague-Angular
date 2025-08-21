@@ -25,9 +25,7 @@ export class StandingComponent implements OnInit {
     this.seasonId = this.seasonService.getSeasonId();
     this.standingService.getStandings(this.seasonId!).subscribe({
       next: (data) => {
-        console.log(data);
         this.seasonStanding = (data as any)['$values'];
-        console.log(this.seasonStanding);
       },
       error: (err) => console.error(err)
     });

@@ -32,7 +32,6 @@ export class SeasonLeadersComponent implements OnInit {
   }
 
   selectCategory(category: string): void {
-    console.log(category);
     this.category = category;
     this.loadCategoryData();
   }
@@ -42,7 +41,6 @@ export class SeasonLeadersComponent implements OnInit {
       this.category = 'goal';
     this.playerService.getTopPlayers(this.category).subscribe({
       next: (response: any) => {
-console.log(response);
         this.topPlayer = response.topPlayer;
         this.players = response.players.$values;
         this.cdr.detectChanges(); // Force change detection

@@ -75,6 +75,6 @@ export class PlayerService {
   }
 
   getTopPlayers(category: string): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/GetSeasonLeaders?category=${category}'`);
+    return this.http.get<any>(`${this.apiUrl}/GetSeasonLeaders?category=${category}`);
   }
 }

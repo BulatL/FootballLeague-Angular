@@ -101,7 +101,6 @@ export class TeamPlayersComponent implements OnInit {
   addPlayerToTeam(player: AvailablePlayer, position: string = 'Player'): void {
     this.isAddingPlayer = true;
     
-    console.log(player);
     this.playerService.postPlayerTeam(player.playerId, this.teamId, position, true).subscribe({
       next: () => {
         // Remove from available players

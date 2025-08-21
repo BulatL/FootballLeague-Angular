@@ -86,7 +86,10 @@ export class FixtureCarouselComponent {
   }
   
   onFixtureClick(fixture: Fixture): void {
-    if(fixture.date < new Date())
+    const fixtureDate = new Date(fixture.date); // convert string -> Date
+    const now = new Date();
+
+    if (fixtureDate < now) 
       this.router.navigate([`/fixtures/${fixture.id}`]);
   }
 }

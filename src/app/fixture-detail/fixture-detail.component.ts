@@ -3,13 +3,10 @@ import { Component, OnInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { FixtureService } from '../core/services/fixture.service';
-import { Fixture } from '../core/models/fixture.model';
 import { ImageService } from '../core/services/image.service';
-import { ApiResponse } from '../shared/api-response';
 import { FixtureDetailModel } from '../core/models/fixture-detail-mode';
 import { GetFixtureLineupResponse } from '../core/models/fixture-lineup-response.mode';
 import { FixtureTimelineModel } from '../core/models/fixture-timeline-model';
-import { ApiListResponse } from '../shared/api-list-response';
 
 @Component({
   selector: 'app-fixture-detail',
@@ -28,12 +25,12 @@ export class FixtureDetailComponent implements OnInit {
   loadingFixtureLineupResponse = true;
   loadingFixtureTimeline = true;
   error: string | null = null;
+  isFixtureFinished: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
     private fixtureService: FixtureService,
     private imageService: ImageService
-    // Inject your fixture service here: private fixtureService: FixtureService
   ) {}
 
   ngOnInit() {
@@ -60,8 +57,11 @@ export class FixtureDetailComponent implements OnInit {
       next: (response: FixtureDetailModel) => {
         this.fixture = response;
         this.loading = false;
-        this.getFixtureLineup(fixtureId)
-        this.getFixtureTimeline(fixtureId);
+        if(this.fixture.isFinished){
+          this.isFixtureFinished = true;
+          this.getFixtureLineup(fixtureId)
+          this.getFixtureTimeline(fixtureId);
+        }
       },
       error: (error) => {
         this.error = 'Failed to load fixture data';
@@ -74,7 +74,6 @@ export class FixtureDetailComponent implements OnInit {
   getFixtureLineup(fixtureId: number){
     this.fixtureService.getFixtureLineup(fixtureId).subscribe({
     next: (response: any) => {
-      console.log(response);
         this.fixtureLineupResponse = response;
         this.loadingFixtureLineupResponse = false;
       },
@@ -140,4 +139,15 @@ export class FixtureDetailComponent implements OnInit {
   getPlayerLogo(fileName: string): string {
     return this.imageService.getImageUrl('Players', fileName);
   }
+
+  getPositionInSerbian(position: string): string {
+  switch (position) {
+    case 'Goalkeeper':
+      return 'Golman';
+    case 'Player':
+      return 'Igrač';
+    default:
+      return position; 
+  }
+}
 }

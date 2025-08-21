@@ -137,13 +137,6 @@ export class FixtureFormComponent implements OnInit {
     }
     var allPlayers = [...this.homePlayers, ...this.awayPlayers];
 
-    // Build the request objectconsole.log('fixtureStatistic:', this.fixtureStatistic);
-console.log('homeShots:', this.fixtureStatistic?.homeShots);
-console.log('awayShots:', this.fixtureStatistic?.awayShots);
-console.log('homeShotsOnTarget:', this.fixtureStatistic?.homeShotsOnTarget);
-console.log('awayShotsOnTarget:', this.fixtureStatistic?.awayShotsOnTarget);
-
-console.log(this.fixtureStatistic);
     const request: PostFixtureRequestModel = {
       fixtureId: this.fixtureModel.id,
       homeTeamId: this.fixtureModel.homeTeamId,
@@ -187,11 +180,9 @@ console.log(this.fixtureStatistic);
       })),
     };
 
-console.log(request);
     this.fixtureService.postFixtureDetails(request).subscribe({
       next: (res) => {
         alert('Fixture saved successfully!');
-        console.log('Fixture saved:', res);
       },
       error: (err) => {
         alert('Error while saving fixture!');

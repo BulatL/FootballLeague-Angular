@@ -31,4 +31,5 @@ export interface FixtureDetailModel{
     mvpFixtureAssists: number;
     mvpFixtureSaves: number;
     mvpFixturePosition: string;
+    isFinished: boolean;
 }

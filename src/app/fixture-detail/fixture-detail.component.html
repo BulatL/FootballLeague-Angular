@@ -35,285 +35,342 @@
     </div>
   </div>
 
-  <!-- MVP Section -->
-  <div class="section">
-    <h2 class="section-title">
-      <span class="title-icon">🏆</span>
-      Igrač Utakmice (MVP)
-    </h2>
-    
-    <div class="mvp-card">
-      <div class="mvp-image-container">
-        <img [src]="getPlayerLogo(fixture.mvpPlayerLogo)" [alt]="fixture.mvpPlayerName" class="mvp-image">
-        <div class="mvp-rating">{{ fixture.mvpFixtureDreamTeamPoints }}</div>
+  <div *ngIf="isFixtureFinished == false" class="fixture-not-finished-container">
+    <div class="not-finished-card">
+      <div class="not-finished-icon">
+        <div class="clock-icon">
+          <div class="clock-face">
+            <div class="clock-hand hour-hand"></div>
+            <div class="clock-hand minute-hand"></div>
+          </div>
+        </div>
       </div>
       
-      <div class="mvp-info">
-        <h3 class="mvp-name">{{ fixture.mvpPlayerName }}</h3>
-        <div class="mvp-team">
-          <img [src]="getTeamLogo(fixture.mvpPlayerTeamLogo)" [alt]="fixture.mvpPlayerTeamName" class="mvp-team-logo">
-          <span>{{ fixture.mvpPlayerTeamName }}</span>
+      <div class="not-finished-content">
+        <h2 class="not-finished-title">Utakmica još uvek nije završena ili podaci nisu ažurirani.</h2>
+        <!-- <p class="not-finished-description">
+          Podaci o utakmici još uvek nisu ažurirani od strane administratora. 
+          Molimo vas da se vratite kasnije za kompletne statistike i rezultate.
+        </p> -->
+        
+        <div class="status-indicators">
+          <div class="status-item">
+            <span class="status-icon">⚽</span>
+            <span class="status-text">Čeka se završetak utakmice</span>
+          </div>
+          <div class="status-item">
+            <span class="status-icon">📊</span>
+            <span class="status-text">Statistike se ažuriraju</span>
+          </div>
+          <div class="status-item">
+            <span class="status-icon">🏆</span>
+            <span class="status-text">MVP se određuje</span>
+          </div>
         </div>
         
-        <div class="mvp-stats">
-          <div class="mvp-stat">
-            <span class="stat-label">Ukupni Dream team poeni</span>
-            <span class="stat-value dream-points">{{ fixture.mvpTotalDreamTeamPoints }}</span>
-          </div>
-          <div class="mvp-stat">
-            <span class="stat-label">Golovi</span>
-            <span class="stat-value">{{ fixture.mvpFixtureGoals }}</span>
-          </div>
-          <div class="mvp-stat">
-            <span class="stat-label">Asistencije</span>
-            <span class="stat-value">{{ fixture.mvpFixtureAssists }}</span>
-          </div>
-          <div class="mvp-stat" *ngIf="fixture.mvpFixturePosition == 'Goalkeeper'">
-            <span class="stat-label">Odbrane</span>
-            <span class="stat-value">{{ fixture.mvpFixtureSaves }}</span>
-          </div>
+        <div class="refresh-hint">
+          <span class="refresh-icon">🔄</span>
+          <span>Osvežite stranicu da proverite najnoviji status</span>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Match Statistics -->
-  <div class="section">
-    <h2 class="section-title">
-      <span class="title-icon">📊</span>
-      Statistike Utakmice
-    </h2>
-
-    <div class="statistics-grid">
-      <div class="stat-row">
-        <span class="stat-home">{{ fixture.homeTotalShoots }}</span>
-        <span class="stat-name">Ukupno Šuteva</span>
-        <span class="stat-away">{{ fixture.awayTotalShoots }}</span>
-        <div class="stat-bar">
-          <div class="stat-bar-fill home" [style.width.%]="getStatPercentage(fixture.homeTotalShoots, fixture.awayTotalShoots)"></div>
-        </div>
-      </div>
+  <div *ngIf="isFixtureFinished == true">
+    <!-- MVP Section -->
+    <div class="section">
+      <h2 class="section-title">
+        <span class="title-icon">🏆</span>
+        Igrač Utakmice (MVP)
+      </h2>
       
-      <div class="stat-row">
-        <span class="stat-home">{{ fixture.homeShootsOnTarget }}</span>
-        <span class="stat-name">Šutevi u Okvir</span>
-        <span class="stat-away">{{ fixture.awayShootsOnTarget }}</span>
-        <div class="stat-bar">
-          <div class="stat-bar-fill home" [style.width.%]="getStatPercentage(fixture.homeShootsOnTarget, fixture.awayShootsOnTarget)"></div>
+      <div class="mvp-card">
+        <div class="mvp-image-container">
+          <img [src]="getPlayerLogo(fixture.mvpPlayerLogo)" [alt]="fixture.mvpPlayerName" class="mvp-image">
+          <div class="mvp-rating">{{ fixture.mvpFixtureDreamTeamPoints }}</div>
         </div>
-      </div>
-      
-      <div class="stat-row">
-        <span class="stat-home">{{ fixture.savesByHomeTeam }}</span>
-        <span class="stat-name">Odbrane</span>
-        <span class="stat-away">{{ fixture.savesByAwayTeam }}</span>
-        <div class="stat-bar">
-          <div class="stat-bar-fill home" [style.width.%]="getStatPercentage(fixture.savesByHomeTeam, fixture.savesByAwayTeam)"></div>
-        </div>
-      </div>
-      
-      <div class="stat-row">
-        <span class="stat-home">{{ fixture.homeTeamCorners }}</span>
-        <span class="stat-name">Korneri</span>
-        <span class="stat-away">{{ fixture.awayTeamCorners }}</span>
-        <div class="stat-bar">
-          <div class="stat-bar-fill home" [style.width.%]="getStatPercentage(fixture.homeTeamCorners, fixture.awayTeamCorners)"></div>
-        </div>
-      </div>
-      
-      <div class="stat-row">
-        <span class="stat-home">{{ fixture.homeTeamFouls }}</span>
-        <span class="stat-name">Prekršaji</span>
-        <span class="stat-away">{{ fixture.awayTeamFouls }}</span>
-        <div class="stat-bar">
-          <div class="stat-bar-fill home" [style.width.%]="getStatPercentage(fixture.homeTeamFouls, fixture.awayTeamFouls)"></div>
+        
+        <div class="mvp-info">
+          <h3 class="mvp-name">{{ fixture.mvpPlayerName }}</h3>
+          <div class="mvp-team">
+            <img [src]="getTeamLogo(fixture.mvpPlayerTeamLogo)" [alt]="fixture.mvpPlayerTeamName" class="mvp-team-logo">
+            <span>{{ fixture.mvpPlayerTeamName }}</span>
+          </div>
+          
+          <div class="mvp-stats">
+            <div class="mvp-stat">
+              <span class="stat-label">Ukupni Dream Team poeni</span>
+              <span class="stat-value dream-points">{{ fixture.mvpTotalDreamTeamPoints }}</span>
+            </div>
+            <div class="mvp-stat">
+              <span class="stat-label">Golovi</span>
+              <span class="stat-value">{{ fixture.mvpFixtureGoals }}</span>
+            </div>
+            <div class="mvp-stat">
+              <span class="stat-label">Asistencije</span>
+              <span class="stat-value">{{ fixture.mvpFixtureAssists }}</span>
+            </div>
+            <div class="mvp-stat" *ngIf="fixture.mvpFixturePosition == 'Goalkeeper'">
+              <span class="stat-label">Odbrane</span>
+              <span class="stat-value">{{ fixture.mvpFixtureSaves }}</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Lineups -->
-  <div class="section" *ngIf="!loadingFixtureLineupResponse && fixtureLineupResponse">
-    <h2 class="section-title">
-      <span class="title-icon">👥</span>
-      Postave
-    </h2>
-    
-    <div class="lineups-container">
-      <div class="lineup-section">
-        <h3 class="lineup-title">
-          <img [src]="getTeamLogo(fixture.homeTeamLogo)" [alt]="fixture.homeTeamName" class="lineup-team-logo">
-          {{ fixture.homeTeamName }}
-        </h3>
-        <div class="players-list">
-          <div class="player-card" *ngFor="let player of fixtureLineupResponse.homeTeamLineup.$values">
-            <div class="player-main-info" (click)="togglePlayerExpansion(player.playerTeamId)">
-              <div class="player-info">
-                <span class="player-name">{{ player.playerName }}</span>
-                <span class="player-position">{{ player.position }}</span>
-              </div>
-              <div class="player-stats">
-                <div class="dream-points">
-                  <span class="points">{{ player.dreamPoints }}</span>
-                  <span class="points-label">pts</span>
+    <!-- Match Statistics -->
+    <div class="section">
+      <h2 class="section-title">
+        <span class="title-icon">📊</span>
+        Statistike Utakmice
+      </h2>
+
+      <div class="statistics-grid">
+        <div class="stat-row">
+          <span class="stat-home">{{ fixture.homeTotalShoots }}</span>
+          <span class="stat-name">Ukupno Šuteva</span>
+          <span class="stat-away">{{ fixture.awayTotalShoots }}</span>
+          <div class="stat-bar">
+            <div class="stat-bar-fill home" [style.width.%]="getStatPercentage(fixture.homeTotalShoots, fixture.awayTotalShoots)"></div>
+          </div>
+        </div>
+        
+        <div class="stat-row">
+          <span class="stat-home">{{ fixture.homeShootsOnTarget }}</span>
+          <span class="stat-name">Šutevi u Okvir</span>
+          <span class="stat-away">{{ fixture.awayShootsOnTarget }}</span>
+          <div class="stat-bar">
+            <div class="stat-bar-fill home" [style.width.%]="getStatPercentage(fixture.homeShootsOnTarget, fixture.awayShootsOnTarget)"></div>
+          </div>
+        </div>
+        
+        <div class="stat-row">
+          <span class="stat-home">{{ fixture.savesByHomeTeam }}</span>
+          <span class="stat-name">Odbrane</span>
+          <span class="stat-away">{{ fixture.savesByAwayTeam }}</span>
+          <div class="stat-bar">
+            <div class="stat-bar-fill home" [style.width.%]="getStatPercentage(fixture.savesByHomeTeam, fixture.savesByAwayTeam)"></div>
+          </div>
+        </div>
+        
+        <div class="stat-row">
+          <span class="stat-home">{{ fixture.homeTeamCorners }}</span>
+          <span class="stat-name">Korneri</span>
+          <span class="stat-away">{{ fixture.awayTeamCorners }}</span>
+          <div class="stat-bar">
+            <div class="stat-bar-fill home" [style.width.%]="getStatPercentage(fixture.homeTeamCorners, fixture.awayTeamCorners)"></div>
+          </div>
+        </div>
+        
+        <div class="stat-row">
+          <span class="stat-home">{{ fixture.homeTeamFouls }}</span>
+          <span class="stat-name">Prekršaji</span>
+          <span class="stat-away">{{ fixture.awayTeamFouls }}</span>
+          <div class="stat-bar">
+            <div class="stat-bar-fill home" [style.width.%]="getStatPercentage(fixture.homeTeamFouls, fixture.awayTeamFouls)"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lineups -->
+    <div class="section" *ngIf="!loadingFixtureLineupResponse && fixtureLineupResponse">
+      <h2 class="section-title">
+        <span class="title-icon">👥</span>
+        Postave
+      </h2>
+      
+      <div class="lineups-container">
+        <div class="lineup-section">
+          <h3 class="lineup-title">
+            <img [src]="getTeamLogo(fixture.homeTeamLogo)" [alt]="fixture.homeTeamName" class="lineup-team-logo">
+            {{ fixture.homeTeamName }}
+          </h3>
+          <div class="players-list">
+            <div class="player-card" *ngFor="let player of fixtureLineupResponse.homeTeamLineup.$values">
+              <div class="player-main-info" (click)="togglePlayerExpansion(player.playerTeamId)">
+                <div class="player-info">
+                  <div class="player-image-container">
+                    <img [src]="getPlayerLogo(player.playerImage)" [alt]="player.playerName" class="player-image">
+                  </div>
+                  <div class="player-text-info">
+                    <span class="player-name">{{ player.playerName }}</span>
+                    <div class="player-position-badge">
+                      {{ getPositionInSerbian(player.position) }}
+                    </div>
+                  </div>
                 </div>
-                <div class="expand-icon" [class.expanded]="expandedPlayerId === player.playerTeamId">▼</div>
+                <div class="player-stats">
+                  <div class="dream-points">
+                    <span class="points">{{ player.dreamPoints }}</span>
+                    <span class="points-label">pts</span>
+                  </div>
+                  <div class="expand-icon" [class.expanded]="expandedPlayerId === player.playerTeamId">▼</div>
+                </div>  
+              </div>
+              <div class="player-breakdown" *ngIf="expandedPlayerId === player.playerTeamId && player.dreamPointsBreakdown">
+                <h4>Dream Team poeni kalkulacija:</h4>
+                <div class="breakdown-items">
+                  <div class="breakdown-item" *ngIf="player.dreamPointsBreakdown.basePoints.count > 0">
+                    <span class="breakdown-desc">Igranje utakmice</span>
+                    <span class="breakdown-points">+{{ player.dreamPointsBreakdown.basePoints.points }}</span>
+                  </div>
+                  <div class="breakdown-item" *ngIf="player.dreamPointsBreakdown.goals.count > 0">
+                    <span class="breakdown-desc">Golovi ({{ player.dreamPointsBreakdown.goals.count }})</span>
+                    <span class="breakdown-points">+{{ player.dreamPointsBreakdown.goals.points }}</span>
+                  </div>
+                  <div class="breakdown-item" *ngIf="player.dreamPointsBreakdown.assists.count > 0">
+                    <span class="breakdown-desc">Asistencije ({{ player.dreamPointsBreakdown.assists.count }})</span>
+                    <span class="breakdown-points">+{{ player.dreamPointsBreakdown.assists.points }}</span>
+                  </div>
+                  <div class="breakdown-item" *ngIf="player.dreamPointsBreakdown.saves.count > 0">
+                    <span class="breakdown-desc">Odbrane ({{ player.dreamPointsBreakdown.saves.count }})</span>
+                    <span class="breakdown-points">+{{ player.dreamPointsBreakdown.saves.points }}</span>
+                  </div>
+                  <div class="breakdown-item" *ngIf="player.dreamPointsBreakdown.cleanSheets.count > 0">
+                    <span class="breakdown-desc">Clean Sheet</span>
+                    <span class="breakdown-points">+{{ player.dreamPointsBreakdown.cleanSheets.points }}</span>
+                  </div>
+                  <div class="breakdown-item" *ngIf="player.dreamPointsBreakdown.winBonus.count > 0">
+                    <span class="breakdown-desc">Bonus za pobedu</span>
+                    <span class="breakdown-points">+{{ player.dreamPointsBreakdown.winBonus.points }}</span>
+                  </div>
+                  <div class="breakdown-item" *ngIf="player.dreamPointsBreakdown.yellowCards.count > 0">
+                    <span class="breakdown-desc">Žuti kartoni ({{ player.dreamPointsBreakdown.yellowCards.count }})</span>
+                    <span class="breakdown-points negative">{{ player.dreamPointsBreakdown.yellowCards.points }}</span>
+                  </div>
+                  <div class="breakdown-item" *ngIf="player.dreamPointsBreakdown.redCards.count > 0">
+                    <span class="breakdown-desc">Crveni kartoni ({{ player.dreamPointsBreakdown.redCards.count }})</span>
+                    <span class="breakdown-points negative">{{ player.dreamPointsBreakdown.redCards.points }}</span>
+                  </div>
+                  <div class="breakdown-item" *ngIf="player.dreamPointsBreakdown.ownGoalsPenalty < 0">
+                    <span class="breakdown-desc">Autopogodci</span>
+                    <span class="breakdown-points negative">{{ player.dreamPointsBreakdown.ownGoalsPenalty }}</span>
+                  </div>
+                  <div class="breakdown-item" *ngIf="player.dreamPointsBreakdown.goalsConcededPenalty < 0">
+                    <span class="breakdown-desc">Primljeni golovi</span>
+                    <span class="breakdown-points negative">{{ player.dreamPointsBreakdown.goalsConcededPenalty }}</span>
+                  </div>
+                  <div class="breakdown-item total">
+                    <span class="breakdown-desc">Ukupno</span>
+                    <span class="breakdown-points">{{ player.dreamPointsBreakdown.total }}</span>
+                  </div>
+                </div>
               </div>
             </div>
-            
-            <div class="player-breakdown" *ngIf="expandedPlayerId === player.playerTeamId && player.dreamPointsBreakdown">
-              <h4>Dream Points Kalkulacija:</h4>
-              <div class="breakdown-items">
-                <div class="breakdown-item" *ngIf="player.dreamPointsBreakdown.basePoints.count > 0">
-                  <span class="breakdown-desc">Igranje utakmice</span>
-                  <span class="breakdown-points">+{{ player.dreamPointsBreakdown.basePoints.points }}</span>
+          </div>
+        </div>
+        
+        <div class="lineup-section">
+          <h3 class="lineup-title">
+            <img [src]="getTeamLogo(fixture.awayTeamLogo)" [alt]="fixture.awayTeamName" class="lineup-team-logo">
+            {{ fixture.awayTeamName }}
+          </h3>
+          <div class="players-list">
+            <div class="player-card" *ngFor="let player of fixtureLineupResponse.awayTeamLineup.$values">
+              <div class="player-main-info" (click)="togglePlayerExpansion(player.playerTeamId)">
+                <div class="player-info">
+                  <div class="player-image-container">
+                    <img [src]="getPlayerLogo(player.playerImage)" [alt]="player.playerName" class="player-image">
+                  </div>
+                  <div class="player-text-info">
+                    <span class="player-name">{{ player.playerName }}</span>
+                    <div class="player-position-badge">
+                      {{ getPositionInSerbian(player.position) }}
+                    </div>
+                  </div>
                 </div>
-                <div class="breakdown-item" *ngIf="player.dreamPointsBreakdown.goals.count > 0">
-                  <span class="breakdown-desc">Golovi ({{ player.dreamPointsBreakdown.goals.count }})</span>
-                  <span class="breakdown-points">+{{ player.dreamPointsBreakdown.goals.points }}</span>
-                </div>
-                <div class="breakdown-item" *ngIf="player.dreamPointsBreakdown.assists.count > 0">
-                  <span class="breakdown-desc">Asistencije ({{ player.dreamPointsBreakdown.assists.count }})</span>
-                  <span class="breakdown-points">+{{ player.dreamPointsBreakdown.assists.points }}</span>
-                </div>
-                <div class="breakdown-item" *ngIf="player.dreamPointsBreakdown.saves.count > 0">
-                  <span class="breakdown-desc">Odbrane ({{ player.dreamPointsBreakdown.saves.count }})</span>
-                  <span class="breakdown-points">+{{ player.dreamPointsBreakdown.saves.points }}</span>
-                </div>
-                <div class="breakdown-item" *ngIf="player.dreamPointsBreakdown.cleanSheets.count > 0">
-                  <span class="breakdown-desc">Clean Sheet</span>
-                  <span class="breakdown-points">+{{ player.dreamPointsBreakdown.cleanSheets.points }}</span>
-                </div>
-                <div class="breakdown-item" *ngIf="player.dreamPointsBreakdown.winBonus.count > 0">
-                  <span class="breakdown-desc">Bonus za pobedu</span>
-                  <span class="breakdown-points">+{{ player.dreamPointsBreakdown.winBonus.points }}</span>
-                </div>
-                <div class="breakdown-item" *ngIf="player.dreamPointsBreakdown.yellowCards.count > 0">
-                  <span class="breakdown-desc">Žuti kartoni ({{ player.dreamPointsBreakdown.yellowCards.count }})</span>
-                  <span class="breakdown-points negative">{{ player.dreamPointsBreakdown.yellowCards.points }}</span>
-                </div>
-                <div class="breakdown-item" *ngIf="player.dreamPointsBreakdown.redCards.count > 0">
-                  <span class="breakdown-desc">Crveni kartoni ({{ player.dreamPointsBreakdown.redCards.count }})</span>
-                  <span class="breakdown-points negative">{{ player.dreamPointsBreakdown.redCards.points }}</span>
-                </div>
-                <div class="breakdown-item" *ngIf="player.dreamPointsBreakdown.ownGoalsPenalty < 0">
-                  <span class="breakdown-desc">Autopogodci</span>
-                  <span class="breakdown-points negative">{{ player.dreamPointsBreakdown.ownGoalsPenalty }}</span>
-                </div>
-                <div class="breakdown-item" *ngIf="player.dreamPointsBreakdown.goalsConcededPenalty < 0">
-                  <span class="breakdown-desc">Primljeni golovi</span>
-                  <span class="breakdown-points negative">{{ player.dreamPointsBreakdown.goalsConcededPenalty }}</span>
-                </div>
-                <div class="breakdown-item total">
-                  <span class="breakdown-desc">Ukupno</span>
-                  <span class="breakdown-points">{{ player.dreamPointsBreakdown.total }}</span>
+                <div class="player-stats">
+                  <div class="dream-points">
+                    <span class="points">{{ player.dreamPoints }}</span>
+                    <span class="points-label">pts</span>
+                  </div>
+                  <div class="expand-icon" [class.expanded]="expandedPlayerId === player.playerTeamId">▼</div>
+                </div>  
+              </div>
+              
+              <div class="player-breakdown" *ngIf="expandedPlayerId === player.playerTeamId && player.dreamPointsBreakdown">
+                <h4>Dream Team poeni kalkulacija:</h4>
+                <div class="breakdown-items">
+                  <div class="breakdown-item" *ngIf="player.dreamPointsBreakdown.basePoints.count > 0">
+                    <span class="breakdown-desc">Igranje utakmice</span>
+                    <span class="breakdown-points">+{{ player.dreamPointsBreakdown.basePoints.points }}</span>
+                  </div>
+                  <div class="breakdown-item" *ngIf="player.dreamPointsBreakdown.goals.count > 0">
+                    <span class="breakdown-desc">Golovi ({{ player.dreamPointsBreakdown.goals.count }})</span>
+                    <span class="breakdown-points">+{{ player.dreamPointsBreakdown.goals.points }}</span>
+                  </div>
+                  <div class="breakdown-item" *ngIf="player.dreamPointsBreakdown.assists.count > 0">
+                    <span class="breakdown-desc">Asistencije ({{ player.dreamPointsBreakdown.assists.count }})</span>
+                    <span class="breakdown-points">+{{ player.dreamPointsBreakdown.assists.points }}</span>
+                  </div>
+                  <div class="breakdown-item" *ngIf="player.dreamPointsBreakdown.saves.count > 0">
+                    <span class="breakdown-desc">Odbrane ({{ player.dreamPointsBreakdown.saves.count }})</span>
+                    <span class="breakdown-points">+{{ player.dreamPointsBreakdown.saves.points }}</span>
+                  </div>
+                  <div class="breakdown-item" *ngIf="player.dreamPointsBreakdown.cleanSheets.count > 0">
+                    <span class="breakdown-desc">Clean Sheet</span>
+                    <span class="breakdown-points">+{{ player.dreamPointsBreakdown.cleanSheets.points }}</span>
+                  </div>
+                  <div class="breakdown-item" *ngIf="player.dreamPointsBreakdown.winBonus.count > 0">
+                    <span class="breakdown-desc">Bonus za pobedu</span>
+                    <span class="breakdown-points">+{{ player.dreamPointsBreakdown.winBonus.points }}</span>
+                  </div>
+                  <div class="breakdown-item" *ngIf="player.dreamPointsBreakdown.yellowCards.count > 0">
+                    <span class="breakdown-desc">Žuti kartoni ({{ player.dreamPointsBreakdown.yellowCards.count }})</span>
+                    <span class="breakdown-points negative">{{ player.dreamPointsBreakdown.yellowCards.points }}</span>
+                  </div>
+                  <div class="breakdown-item" *ngIf="player.dreamPointsBreakdown.redCards.count > 0">
+                    <span class="breakdown-desc">Crveni kartoni ({{ player.dreamPointsBreakdown.redCards.count }})</span>
+                    <span class="breakdown-points negative">{{ player.dreamPointsBreakdown.redCards.points }}</span>
+                  </div>
+                  <div class="breakdown-item" *ngIf="player.dreamPointsBreakdown.ownGoalsPenalty < 0">
+                    <span class="breakdown-desc">Autopogodci</span>
+                    <span class="breakdown-points negative">{{ player.dreamPointsBreakdown.ownGoalsPenalty }}</span>
+                  </div>
+                  <div class="breakdown-item" *ngIf="player.dreamPointsBreakdown.goalsConcededPenalty < 0">
+                    <span class="breakdown-desc">Primljeni golovi</span>
+                    <span class="breakdown-points negative">{{ player.dreamPointsBreakdown.goalsConcededPenalty }}</span>
+                  </div>
+                  <div class="breakdown-item total">
+                    <span class="breakdown-desc">Ukupno</span>
+                    <span class="breakdown-points">{{ player.dreamPointsBreakdown.total }}</span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
+
+    <!-- Timeline -->
+    <div class="section">
+      <h2 class="section-title">
+        <span class="title-icon">⏱️</span>
+        Tok Utakmice
+      </h2>
       
-      <div class="lineup-section">
-        <h3 class="lineup-title">
-          <img [src]="getTeamLogo(fixture.awayTeamLogo)" [alt]="fixture.awayTeamName" class="lineup-team-logo">
-          {{ fixture.awayTeamName }}
-        </h3>
-        <div class="players-list">
-          <div class="player-card" *ngFor="let player of fixtureLineupResponse.awayTeamLineup.$values">
-            <div class="player-main-info" (click)="togglePlayerExpansion(player.playerTeamId)">
-              <div class="player-info">
-                <span class="player-name">{{ player.playerName }}</span>
-                <span class="player-position">{{ player.position }}</span>
-              </div>
-              <div class="player-stats">
-                <div class="dream-points">
-                  <span class="points">{{ player.dreamPoints }}</span>
-                  <span class="points-label">pts</span>
-                </div>
-                <div class="expand-icon" [class.expanded]="expandedPlayerId === player.playerTeamId">▼</div>
-              </div>
-            </div>
-            
-            <div class="player-breakdown" *ngIf="expandedPlayerId === player.playerTeamId && player.dreamPointsBreakdown">
-              <h4>Dream Points Kalkulacija:</h4>
-              <div class="breakdown-items">
-                <div class="breakdown-item" *ngIf="player.dreamPointsBreakdown.basePoints.count > 0">
-                  <span class="breakdown-desc">Igranje utakmice</span>
-                  <span class="breakdown-points">+{{ player.dreamPointsBreakdown.basePoints.points }}</span>
-                </div>
-                <div class="breakdown-item" *ngIf="player.dreamPointsBreakdown.goals.count > 0">
-                  <span class="breakdown-desc">Golovi ({{ player.dreamPointsBreakdown.goals.count }})</span>
-                  <span class="breakdown-points">+{{ player.dreamPointsBreakdown.goals.points }}</span>
-                </div>
-                <div class="breakdown-item" *ngIf="player.dreamPointsBreakdown.assists.count > 0">
-                  <span class="breakdown-desc">Asistencije ({{ player.dreamPointsBreakdown.assists.count }})</span>
-                  <span class="breakdown-points">+{{ player.dreamPointsBreakdown.assists.points }}</span>
-                </div>
-                <div class="breakdown-item" *ngIf="player.dreamPointsBreakdown.saves.count > 0">
-                  <span class="breakdown-desc">Odbrane ({{ player.dreamPointsBreakdown.saves.count }})</span>
-                  <span class="breakdown-points">+{{ player.dreamPointsBreakdown.saves.points }}</span>
-                </div>
-                <div class="breakdown-item" *ngIf="player.dreamPointsBreakdown.cleanSheets.count > 0">
-                  <span class="breakdown-desc">Clean Sheet</span>
-                  <span class="breakdown-points">+{{ player.dreamPointsBreakdown.cleanSheets.points }}</span>
-                </div>
-                <div class="breakdown-item" *ngIf="player.dreamPointsBreakdown.winBonus.count > 0">
-                  <span class="breakdown-desc">Bonus za pobedu</span>
-                  <span class="breakdown-points">+{{ player.dreamPointsBreakdown.winBonus.points }}</span>
-                </div>
-                <div class="breakdown-item" *ngIf="player.dreamPointsBreakdown.yellowCards.count > 0">
-                  <span class="breakdown-desc">Žuti kartoni ({{ player.dreamPointsBreakdown.yellowCards.count }})</span>
-                  <span class="breakdown-points negative">{{ player.dreamPointsBreakdown.yellowCards.points }}</span>
-                </div>
-                <div class="breakdown-item" *ngIf="player.dreamPointsBreakdown.redCards.count > 0">
-                  <span class="breakdown-desc">Crveni kartoni ({{ player.dreamPointsBreakdown.redCards.count }})</span>
-                  <span class="breakdown-points negative">{{ player.dreamPointsBreakdown.redCards.points }}</span>
-                </div>
-                <div class="breakdown-item" *ngIf="player.dreamPointsBreakdown.ownGoalsPenalty < 0">
-                  <span class="breakdown-desc">Autopogodci</span>
-                  <span class="breakdown-points negative">{{ player.dreamPointsBreakdown.ownGoalsPenalty }}</span>
-                </div>
-                <div class="breakdown-item" *ngIf="player.dreamPointsBreakdown.goalsConcededPenalty < 0">
-                  <span class="breakdown-desc">Primljeni golovi</span>
-                  <span class="breakdown-points negative">{{ player.dreamPointsBreakdown.goalsConcededPenalty }}</span>
-                </div>
-                <div class="breakdown-item total">
-                  <span class="breakdown-desc">Ukupno</span>
-                  <span class="breakdown-points">{{ player.dreamPointsBreakdown.total }}</span>
-                </div>
-              </div>
-            </div>
+      <div class="timeline-container">
+        <div class="timeline-event" *ngFor="let event of fixtureTimeline" [class]="'event-' + event.type">
+          <div class="event-minute">{{ event.minute }}'</div>
+          <div class="event-icon" [class]="event.type">
+            {{ getEventIcon(event.type) }}
+          </div>
+          <div class="event-details">
+            <div class="event-player">{{ event.player }}</div>
+            <div class="event-description">{{ event.description }}</div>
+            <div class="event-assist" *ngIf="event.assistPlayer">Asistencija: {{ event.assistPlayer }}</div>
+          </div>
+          <div class="event-team" [class]="event.team">
+            <img [src]="event.team === 'home' ? getTeamLogo(fixture.homeTeamLogo) : getTeamLogo(fixture.awayTeamLogo)" 
+                [alt]="event.team === 'home' ? fixture.homeTeamName : fixture.awayTeamName" 
+                class="event-team-logo">
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Timeline -->
-  <div class="section">
-    <h2 class="section-title">
-      <span class="title-icon">⏱️</span>
-      Tok Utakmice
-    </h2>
-    
-    <div class="timeline-container">
-      <div class="timeline-event" *ngFor="let event of fixtureTimeline" [class]="'event-' + event.type">
-        <div class="event-minute">{{ event.minute }}'</div>
-        <div class="event-icon" [class]="event.type">
-          {{ getEventIcon(event.type) }}
-        </div>
-        <div class="event-details">
-          <div class="event-player">{{ event.player }}</div>
-          <div class="event-description">{{ event.description }}</div>
-          <div class="event-assist" *ngIf="event.assistPlayer">Asistencija: {{ event.assistPlayer }}</div>
-        </div>
-        <div class="event-team" [class]="event.team">
-          <img [src]="event.team === 'home' ? getTeamLogo(fixture.homeTeamLogo) : getTeamLogo(fixture.awayTeamLogo)" 
-               [alt]="event.team === 'home' ? fixture.homeTeamName : fixture.awayTeamName" 
-               class="event-team-logo">
-        </div>
-      </div>
-    </div>
   </div>
 </div>

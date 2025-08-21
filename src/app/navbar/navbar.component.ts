@@ -34,25 +34,4 @@ export class NavbarComponent {
   displayAdmin(){
     return this.authService.isAuthenticated();
   }
-
-  // @HostListener('window:scroll', [])
-  // onWindowScroll() {
-  //   // console.log("onWindowScroll");
-  //   const navbar = this.el.nativeElement.querySelector('#navbar');
-
-  //   if (window.scrollY > 50) {
-  //     this.renderer.addClass(navbar, 'navbar-scrolled');
-  //   } else {
-  //     this.renderer.removeClass(navbar, 'navbar-scrolled');
-  //   }
-  // }
-
-  // @HostListener('window:resize', [])
-  // onWindowResize() {
-  //   // console.log("onWindowResize");
-  //   // Close mobile menu if window is resized to desktop
-  //   if (window.innerWidth >= 768 && this.isMenuOpen) {
-  //     this.closeMenu();
-  //   }
-  // }
 }
