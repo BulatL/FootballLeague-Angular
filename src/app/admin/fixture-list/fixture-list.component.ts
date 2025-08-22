@@ -6,13 +6,14 @@ import { FixtureService } from '../core/services/fixture.service';
 import { ImageService } from '../../core/services/image.service';
 import { Fixture } from '../../core/models/fixture.model';
 import { MatchDay } from '../../core/models/match-day';
-
+import { FixtureTimeModalComponent } from "../fixture-time-modal/fixture-time-modal.component";
+import { UpdateFixtureDateTimeRequest } from '../core/models/ApiRequest/update-fixture-datetime-request';
 
 @Component({
   selector: 'app-fixture-list',
   templateUrl: './fixture-list.component.html',
   styleUrls: ['./fixture-list.component.css'],
-  imports: [CommonModule]
+  imports: [CommonModule, FixtureTimeModalComponent]
 })
 export class AdminFixtureListComponent implements OnInit {
   matchDays: MatchDay[] = [];
@@ -22,6 +23,12 @@ export class AdminFixtureListComponent implements OnInit {
   // Loading states
   isLoadingMatchDays = false;
   isLoadingFixtures = false;
+
+  // Edit fixture time
+  showFixtureTimeModal = false;
+  selectedFixtureId = 0;
+  selectedFixtureDate = new Date();
+  modalLoading = false;
 
   constructor(
     private router: Router,
@@ -65,6 +72,7 @@ export class AdminFixtureListComponent implements OnInit {
           if(fixtures.$values.length > 0)
             this.fixtures = fixtures.$values;
         this.isLoadingFixtures = false;
+        this.selectedMatchDayId = matchDayId;
       },
       error: (error) => {
         console.error('Error loading fixtures:', error);
@@ -97,5 +105,46 @@ export class AdminFixtureListComponent implements OnInit {
   getSelectedRoundNumber(): number {
     const selectedMatchDay = this.matchDays.find(md => md.id === this.selectedMatchDayId);
     return selectedMatchDay ? selectedMatchDay.roundNumber : 0;
+  }
+
+  openFixtureTimeModal(fixtureId: number, currentDateTime: Date, event?: Event): void {
+     if (event) {
+      event.stopPropagation();
+      event.preventDefault();
+    }
+    
+    this.selectedFixtureId = fixtureId;
+    this.selectedFixtureDate = currentDateTime;
+    this.showFixtureTimeModal = true;
+  }
+  
+    // Handle the actual fixture generation from modal
+  onUpdateFixtureDateTime(request: UpdateFixtureDateTimeRequest): void {
+    this.modalLoading = true;
+    
+    this.fixtureService.patchTime(request.fixtureId, request.dateTime).subscribe({
+      next: (response: any) => {
+        if (response.isValid) {
+          this.showFixtureTimeModal = false;
+          this.loadFixtures(this.selectedMatchDayId!);
+          alert('Vreme utakmice je uspešno ažurirano!');
+        } else {
+          // Handle API error
+          console.error('API Error:', response.errors);
+        }
+        this.modalLoading = false;
+      },
+      error: (err) => {
+        console.error('Error generating fixtures:', err);
+        let msg = 'Failed to update date.';
+        alert(msg);
+        this.modalLoading = false;
+      }
+    });
+  }
+  
+  onCloseModal(): void {
+    this.showFixtureTimeModal = false;
+    this.modalLoading = false;
   }
 }

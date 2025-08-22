@@ -74,12 +74,12 @@
             <div *ngIf="!isLoadingFixtures && hasFixtures()" class="fixtures-container">
               <div 
                 *ngFor="let fixture of fixtures" 
-                class="fixture-row"
-                (click)="onFixtureClick(fixture.id)">
+                class="fixture-row">
+                <!-- (click)="onFixtureClick(fixture.id)"> -->
                 
                 <div class="fixture-content">
                   <!-- Home Team -->
-                  <div class="team home-team">
+                  <div class="team home-team" (click)="onFixtureClick(fixture.id)">
                     <img 
                       [src]="getTeamLogo(fixture.homeTeamLogo)" 
                       [alt]="fixture.homeTeamName"
@@ -92,6 +92,7 @@
                     <div class="match-time">
                       {{ fixture.date | date:'EEE, MMM d • HH:mm' }}
                     </div>
+                    <button class="btn-primary-admin" (click)="openFixtureTimeModal(fixture.id, fixture.date, $event)"> Izmeni vreme</button>
                     <div class="score">
                       <span class="home-score">{{ fixture.homeTeamScore }}</span>
                       <span class="score-separator">-</span>
@@ -100,7 +101,7 @@
                   </div>
 
                   <!-- Away Team -->
-                  <div class="team away-team">
+                  <div class="team away-team" (click)="onFixtureClick(fixture.id)">
                     <span class="team-name">{{ fixture.awayTeamName }}</span>
                     <img 
                       [src]="getTeamLogo(fixture.awayTeamLogo)" 
@@ -131,4 +132,13 @@
     </div>
 
   </div>
+  
+  <app-fixture-time-modal
+    [isVisible]="showFixtureTimeModal"
+    [fixtureId]="selectedFixtureId"
+    [date]="selectedFixtureDate"
+    [loading]="modalLoading"
+    (closeModal)="onCloseModal()"
+    (updateFixture)="onUpdateFixtureDateTime($event)">
+  </app-fixture-time-modal>
 </div>

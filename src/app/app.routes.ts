@@ -24,6 +24,7 @@ import { TeamPlayersComponent } from './admin/team-players/team-players.componen
 import { AdminFixtureListComponent } from './admin/fixture-list/fixture-list.component';
 import { FixtureListComponent } from './fixture-list/fixture-list.component';
 import { FixtureFormComponent } from './admin/fixture-form/fixture-form.component';
+import { FixtureTimeModalComponent } from './admin/fixture-time-modal/fixture-time-modal.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'league-home', pathMatch: 'full' },

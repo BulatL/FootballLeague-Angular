@@ -1,0 +1,83 @@
+<div class="modal-overlay" [class.active]="isVisible" (click)="onOverlayClick($event)">
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <h3>Promeni datum i vreme utakmice</h3>
+      <button type="button" class="close-btn" (click)="close()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <form (ngSubmit)="onSubmit()" #fixtureForm="ngForm">
+        <!-- Current Date and Time Display -->
+        <div class="current-info" *ngIf="date">
+          <p><strong>Trenutno vreme:</strong> {{ date | date:'dd.MM.yyyy HH:mm' }}</p>
+        </div>
+
+        <!-- Start Date Selection -->
+        <div class="form-group">
+          <label for="startDate">Novi datum *</label>
+          <input
+            type="date"
+            id="startDate"
+            [(ngModel)]="startDate"
+            name="startDate"
+            class="form-control"
+            required
+            [min]="minDate"
+            [class.error]="!isValid && !startDate"
+          />
+        </div>
+
+        <!-- Time Selection -->
+        <div class="form-group">
+          <label for="timeSlot">Novo vreme *</label>
+          <input
+            type="time"
+            id="timeSlot"
+            [(ngModel)]="timeSlot"
+            name="timeSlot"
+            class="form-control time-input"
+            required
+            [class.error]="!isValid && !timeSlot"
+            step="60"
+          />
+          <small class="form-text">Format: 24-časovni (npr. 19:00)</small>
+        </div>
+
+        <!-- Preview of Combined DateTime -->
+        <div class="preview-section" *ngIf="startDate && timeSlot">
+          <div class="form-group">
+            <label>Pregled novog vremena:</label>
+            <div class="preview-datetime">
+              {{ startDate | date:'dd.MM.yyyy' }} u {{ timeSlot }}
+            </div>
+          </div>
+        </div>
+
+        <!-- Error Messages -->
+        <div class="alert alert-danger" *ngIf="!isValid && error">
+          <p>{{ error }}</p>
+        </div>
+      </form>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="close()" [disabled]="loading">
+        Otkaži
+      </button>
+      <button 
+        type="button" 
+        class="btn btn-primary"
+        (click)="onSubmit()"
+        [disabled]="loading || !startDate || !timeSlot"
+      >
+        <span *ngIf="loading" class="spinner"></span>
+        {{ loading ? 'Čuva...' : 'Sačuvaj izmene' }}
+      </button>
+    </div>
+  </div>
+</div>

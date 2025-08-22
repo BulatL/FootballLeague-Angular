@@ -68,7 +68,7 @@ export class FixtureService {
     return this.http.post<CommandResult<any>>(`${this.apiAdminUrl}/postfixturedetails/`, request);
   }
 
-  patchTime(id: number, dateTime: Date): Observable<CommandResult<any>> {
+  patchTime(id: number, dateTime: string): Observable<CommandResult<any>> {
     const request = {Id: id, DateTime: dateTime};
     return this.http.patch<CommandResult<any>>(`${this.apiAdminUrl}/PatchTime/`, request);
   }

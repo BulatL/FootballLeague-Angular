@@ -32,8 +32,7 @@ export class StandingComponent implements OnInit {
   }
   
   getImage(fileName: string): string {
-    return "https://www.inliga.rs/api/images/Teams/" + fileName;
-      // var imageUrl = this.imageService.getImageUrl("Teams", fileName)  
-      // return imageUrl;
+      var imageUrl = this.imageService.getImageUrl("Teams", fileName)  
+      return imageUrl;
   }
 }
