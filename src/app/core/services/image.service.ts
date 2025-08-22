@@ -14,6 +14,7 @@ import { environment } from './../../../environment';
       else if(fileName == "" && subfolder == "Players")
         fileName = "default-player.png";
 
-      return `${environment.apiUrl}/images/${encodeURIComponent(subfolder)}/${encodeURIComponent(fileName)}`;             
+      // return `${environment.apiUrl}/images/${encodeURIComponent(subfolder)}/${encodeURIComponent(fileName)}`;     
+      return `uploads/${subfolder}/${encodeURIComponent(fileName)}`;             
     }
 }
