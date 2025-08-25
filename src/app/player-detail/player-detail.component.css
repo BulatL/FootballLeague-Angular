@@ -14,12 +14,12 @@
   padding: 2rem;
   margin-bottom: 2rem;
   box-shadow: 
-    0 20px 60px rgba(1, 35, 76, 0.15),
-    0 8px 32px rgba(0, 0, 0, 0.1);
+      0 20px 60px rgba(1, 35, 76, 0.15),
+      0 8px 32px rgba(0, 0, 0, 0.1);
   border: 2px solid rgba(1, 35, 76, 0.1);
   display: flex;
   gap: 2rem;
-  align-items: flex-start;
+  align-items: center;
   position: relative;
   overflow: hidden;
 }
@@ -83,71 +83,45 @@
   font-weight: bold;
 }
 
-.player-basic-info {
+.player-info {
   flex: 1;
+  text-align: center;
 }
 
 .player-name {
   color: #01234c;
   font-size: 2.5rem;
-  font-weight: bold;
-  margin: 0 0 1.5rem 0;
+  font-weight: 700;
+  margin-bottom: 2rem;
   background: linear-gradient(135deg, #01234c 0%, #0a3d6b 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* Statistics Grid */
+/* Stats Grid - Single Definition */
 .stats-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 1rem;
-  margin-top: 1.5rem;
-}
-
-.stat-card {
-  background: rgba(1, 35, 76, 0.05);
-  border: 1px solid rgba(1, 35, 76, 0.1);
-  border-radius: 12px;
-  padding: 1rem;
   display: flex;
-  align-items: center;
-  gap: 0.8rem;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(10px);
-}
-
-.stat-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(1, 35, 76, 0.15);
-  border-color: #00ff88;
-}
-
-.stat-icon {
-  font-size: 1.5rem;
-  width: 40px;
-  height: 40px;
-  background: linear-gradient(135deg, #01234c 0%, #0a3d6b 100%);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
   justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
 }
 
-.stat-content {
-  display: flex;
-  flex-direction: column;
+.stat-item {
+  text-align: center;
+  min-width: 100px;
 }
 
 .stat-value {
-  font-size: 1.4rem;
+  font-size: 2rem;
   font-weight: bold;
   color: #01234c;
+  display: block;
+  margin-bottom: 0.3rem;
 }
 
 .stat-label {
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   color: #666;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -169,14 +143,463 @@
   font-size: 1.8rem;
   font-weight: bold;
   margin: 0 0 1.5rem 0;
+}
+
+/* Current Season Statistics */
+.current-stats-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.stats-category {
+  background: rgba(1, 35, 76, 0.03);
+  border: 1px solid rgba(1, 35, 76, 0.1);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+}
+
+.stats-category:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(1, 35, 76, 0.1);
+  border-color: rgba(1, 35, 76, 0.2);
+}
+
+.category-title {
+  color: #01234c;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 0 0 1rem 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid rgba(1, 35, 76, 0.1);
+}
+
+.stats-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid rgba(1, 35, 76, 0.05);
+  transition: all 0.3s ease;
+}
+
+.stat-row:hover {
+  background: rgba(1, 35, 76, 0.02);
+  padding-left: 0.5rem;
+  border-radius: 6px;
+}
+
+.stat-row:last-child {
+  border-bottom: none;
+}
+
+.stat-name {
+  color: #333;
+  font-size: 0.9rem;
+  font-weight: 500;
+  flex: 1;
+}
+
+.stat-row .stat-value {
+  color: #01234c;
+  font-weight: bold;
+  font-size: 1rem;
+  text-align: right;
+  min-width: 50px;
+  margin-bottom: 0; /* Override the header stat-value margin */
+}
+
+/* Special styling for different stat types */
+.stat-value.highlighted {
+  background: linear-gradient(135deg, #00ff88 0%, #00ccff 100%);
+  color: #01234c;
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  box-shadow: 0 2px 8px rgba(0, 255, 136, 0.2);
+}
+
+.stat-value.trophy-count {
+  background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+  color: #01234c;
+  padding: 4px 8px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(255, 215, 0, 0.3);
+}
+
+.stat-value.performance-stat {
+  background: rgba(1, 35, 76, 0.1);
+  color: #01234c;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+.stat-value.percentage {
+  color: #00ff88;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.stat-value.yellow-card {
+  background: #ffd700;
+  color: #01234c;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  box-shadow: 0 2px 4px rgba(255, 215, 0, 0.3);
+}
+
+.stat-value.red-card {
+  background: #ff6b6b;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  box-shadow: 0 2px 4px rgba(255, 107, 107, 0.3);
+}
+
+.stat-value small {
+  font-size: 0.7rem;
+  opacity: 0.8;
+}
+
+/* Animation for stats on hover */
+.stats-category:hover .stat-row {
+  animation: statsHighlight 0.5s ease-in-out;
+}
+
+@keyframes statsHighlight {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(2px); }
+  100% { transform: translateX(0); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .player-info-container {
+    padding: 15px;
+  }
+
+  .player-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 1.5rem;
+    padding: 1.5rem;
+  }
+  
+  .player-image {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .player-name {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .stats-grid {
+    gap: 1.5rem;
+  }
+  
+  .stat-value {
+    font-size: 1.6rem;
+  }
+  
+  .stat-label {
+    font-size: 0.8rem;
+  }
+
+  .current-stats-container {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .stats-category {
+    padding: 1rem;
+  }
+  
+  .category-title {
+    font-size: 1.1rem;
+  }
+  
+  .stat-name {
+    font-size: 0.85rem;
+  }
+  
+  .stat-row .stat-value {
+    font-size: 0.9rem;
+  }
+
+  .section {
+    padding: 1rem;
+  }
+
+  .section-title {
+    font-size: 1.4rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  
+  .stat-item {
+    min-width: auto;
+  }
+  
+  .stat-value {
+    font-size: 1.4rem;
+  }
+
+  .stat-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.3rem;
+    text-align: left;
+  }
+  
+  .stat-row .stat-value {
+    align-self: flex-end;
+  }
+}
+
+.not-found {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
+  padding: 4rem 2rem;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(1, 35, 76, 0.1);
+  border: 1px solid rgba(1, 35, 76, 0.1);
+  backdrop-filter: blur(10px);
+  margin-bottom: 2rem;
+}
+
+.not-found .icon {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 2rem;
+  background: rgba(1, 35, 76, 0.05);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid rgba(1, 35, 76, 0.1);
+}
+
+.not-found .icon svg {
+  width: 60px;
+  height: 60px;
+  color: rgba(1, 35, 76, 0.4);
+}
+
+.not-found h2 {
+  color: #01234c;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.not-found p {
+  color: #666;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.not-found .btn {
+  background: linear-gradient(135deg, #01234c 0%, #0a3d6b 100%);
+  color: white;
+  padding: 12px 30px;
+  border: none;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.not-found .btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(1, 35, 76, 0.3);
+}
+ @media (max-width: 768px) {
+  .not-found{
+      padding: 2rem 1.5rem;
+  }
+
+  .not-found h2 {
+      font-size: 1.6rem;
+  }
+}
+
+/* === TROPHIES SECTION === */
+
+/* Trophies Grid */
+.trophies-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.trophy-card {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 193, 7, 0.05) 100%);
+  border: 2px solid rgba(255, 215, 0, 0.3);
+  border-radius: 15px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  flex: 0 0 calc(100% - 1.5rem);
+  max-width: calc(100% - 1.5rem);
+}
+
+.trophy-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(255, 215, 0, 0.2);
+  border-color: #ffd700;
+}
+
+.trophy-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
+  animation: trophyGlow 3s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes trophyGlow {
+  0% { transform: rotate(0deg) scale(1); }
+  100% { transform: rotate(360deg) scale(1.1); }
+}
+
+.trophy-image-container {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 1rem;
+}
+
+.trophy-image {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #ffd700;
+  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+}
+
+.trophy-info {
+  position: relative;
+  z-index: 1;
+}
+
+.trophy-name {
+  color: #01234c;
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin: 0 0 0.5rem 0;
+}
+
+.trophy-season {
+  color: #666;
+  font-weight: 600;
+  font-size: 0.9rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.trophy-description {
+  color: #555;
+  font-size: 0.8rem;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* === SEASON STATISTICS TABLE === */
+
+/* Season Statistics Table */
+.table-container {
+  overflow-x: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(1, 35, 76, 0.1);
+}
+
+.season-stats-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.season-stats-table th {
+  background: linear-gradient(135deg, #01234c 0%, #0a3d6b 100%);
+  color: white;
+  padding: 1rem;
+  text-align: left;
+  font-weight: bold;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.season-stats-table td {
+  padding: 0.8rem 1rem;
+  border-bottom: 1px solid #e9ecef;
+  color: #01234c;
+  font-weight: 500;
+}
+
+.season-stats-table tbody tr:hover {
+  background: rgba(0, 255, 136, 0.05);
+}
+
+.season-stats-table tbody tr:nth-child(even) {
+  background: #f8f9fa;
+}
+
+.season-cell {
+  font-weight: bold;
+  color: #01234c;
+}
+
+.team-cell {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  font-weight: 600;
 }
 
-.title-icon {
-  font-size: 1.5rem;
+.table-team-logo {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  object-fit: cover;
 }
+
+/* === RECENT FIXTURES SECTION === */
 
 /* Fixtures Container */
 .fixtures-container {
@@ -269,182 +692,16 @@
   color: #ffd700;
 }
 
-/* Trophies Grid */
-.trophies-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
-}
+/* === RESPONSIVE DESIGN === */
 
-.trophy-card {
-  background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 193, 7, 0.05) 100%);
-  border: 2px solid rgba(255, 215, 0, 0.3);
-  border-radius: 15px;
-  padding: 1.5rem;
-  text-align: center;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-  flex: 0 0 calc(100% - 1.5rem);
-  max-width: calc(100% - 1.5rem);
-}
-
-.trophy-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 40px rgba(255, 215, 0, 0.2);
-  border-color: #ffd700;
-}
-
-.trophy-card::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
-  animation: trophyGlow 3s ease-in-out infinite alternate;
-  pointer-events: none;
-}
-
-@keyframes trophyGlow {
-  0% { transform: rotate(0deg) scale(1); }
-  100% { transform: rotate(360deg) scale(1.1); }
-}
-
-.trophy-image-container {
-  position: relative;
-  z-index: 1;
-  margin-bottom: 1rem;
-}
-
-.trophy-image {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 3px solid #ffd700;
-  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
-}
-
-.trophy-info {
-  position: relative;
-  z-index: 1;
-}
-
-.trophy-name {
-  color: #01234c;
-  font-size: 1.1rem;
-  font-weight: bold;
-  margin: 0 0 0.5rem 0;
-}
-
-.trophy-season {
-  color: #666;
-  font-weight: 600;
-  font-size: 0.9rem;
-  display: block;
-  margin-bottom: 0.5rem;
-}
-
-.trophy-description {
-  color: #555;
-  font-size: 0.8rem;
-  margin: 0;
-  line-height: 1.4;
-}
-
-/* Season Statistics Table */
-.table-container {
-  overflow-x: auto;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(1, 35, 76, 0.1);
-}
-
-.season-stats-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: white;
-  border-radius: 12px;
-  overflow: hidden;
-}
-
-.season-stats-table th {
-  background: linear-gradient(135deg, #01234c 0%, #0a3d6b 100%);
-  color: white;
-  padding: 1rem;
-  text-align: left;
-  font-weight: bold;
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.season-stats-table td {
-  padding: 0.8rem 1rem;
-  border-bottom: 1px solid #e9ecef;
-  color: #01234c;
-  font-weight: 500;
-}
-
-.season-stats-table tbody tr:hover {
-  background: rgba(0, 255, 136, 0.05);
-}
-
-.season-stats-table tbody tr:nth-child(even) {
-  background: #f8f9fa;
-}
-
-.season-cell {
-  font-weight: bold;
-  color: #01234c;
-}
-
-.team-cell {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-weight: 600;
-}
-
-.table-team-logo {
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-/* Responsive Design */
 @media (max-width: 768px) {
-  .player-info-container {
-    padding: 15px;
-  }
-
-  .player-header {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    padding: 1.5rem;
-  }
-
-  .player-image {
-    width: 150px;
-    height: 150px;
-  }
-
-  .player-name {
-    font-size: 2rem;
-  }
-
-  .stats-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .fixtures-container {
+  /* Trophies Responsive */
+  .trophies-grid {
     grid-template-columns: 1fr;
   }
 
-  .trophies-grid {
+  /* Fixtures Responsive */
+  .fixtures-container {
     grid-template-columns: 1fr;
   }
 
@@ -456,25 +713,8 @@
   .fixture-score {
     margin: 0;
   }
-}
 
-@media (max-width: 480px) {
-  .stats-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .stat-card {
-    justify-content: center;
-  }
-
-  .section {
-    padding: 1rem;
-  }
-
-  .section-title {
-    font-size: 1.4rem;
-  }
-
+  /* Season Stats Responsive */
   .season-stats-table th,
   .season-stats-table td {
     padding: 0.5rem;
@@ -487,235 +727,15 @@
     text-align: center;
   }
 }
-
-.stat-number-circle {
-  font-size: 1.5rem;
-  font-size: 1rem;
-  font-weight: bold;
-  width: 40px;
-  width: 40px;
-  height: 40px;
-  height: 40px;
-  background: linear-gradient(135deg, #01234c 0%, #0a3d6b 100%);
-  background: linear-gradient(135deg, #01234c 0%, #0a3d6b 100%);
-  color: white;
-  border-radius: 50%;
-  border-radius: 50%;
-  display: flex;
-  display: flex;
-  align-items: center;
-  align-items: center;
-  justify-content: center;
-  justify-content: center;
+.trophy-card.clickable {
+  cursor: pointer;
 }
 
-/* Alternative Option 2: Colored Dots */
-.stat-color-dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  flex-shrink: 0;
+.trophy-card.clickable:hover {
+  transform: translateY(-8px); /* More pronounced hover for clickable items */
+  box-shadow: 0 20px 50px rgba(255, 215, 0, 0.3);
 }
-.stat-color-dot.games { background: #01234c; }
-.stat-color-dot.wins { background: #00ff88; }
-.stat-color-dot.goals { background: #ff6b6b; }
-.stat-color-dot.assists { background: #ffd700; }
-.stat-color-dot.trophies { background: #9b59b6; }
-/* Alternative Option 3: Letter Badges */
-.stat-letter-badge {
-  font-size: 1.2rem;
-  font-weight: bold;
-  width: 40px;
-  height: 40px;
-  background: linear-gradient(135deg, #01234c 0%, #0a3d6b 100%);
-  color: white;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-/* Alternative Option 4: No Visual Element */
-.stat-card.no-visual .stat-content {
-  margin-left: 0;
-}
-/* Alternative Option 5: Vertical Lines */
-.stat-vertical-line {
-  width: 4px;
-  height: 40px;
-  border-radius: 2px;
-  flex-shrink: 0;
-}
-.stat-vertical-line.games { background: #01234c; }
-.stat-vertical-line.wins { background: #00ff88; }
-.stat-vertical-line.goals { background: #ff6b6b; }
-.stat-vertical-line.assists { background: #ffd700; }
-.stat-vertical-line.trophies { background: #9b59b6; }
 
-
-/* Current Season Statistics */
-.current-stats-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
-  margin-top: 1rem;
-}
-.stats-category {
-  background: rgba(1, 35, 76, 0.03);
-  border: 1px solid rgba(1, 35, 76, 0.1);
-  border-radius: 12px;
-  padding: 1.5rem;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(5px);
-}
-.stats-category:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(1, 35, 76, 0.1);
-  border-color: rgba(1, 35, 76, 0.2);
-}
-.category-title {
-  color: #01234c;
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin: 0 0 1rem 0;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 2px solid rgba(1, 35, 76, 0.1);
-}
-.category-icon {
-  font-size: 1.1rem;
-  width: 30px;
-  height: 30px;
-  background: linear-gradient(135deg, #01234c 0%, #0a3d6b 100%);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.stats-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-}
-.stat-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.6rem 0;
-  border-bottom: 1px solid rgba(1, 35, 76, 0.05);
-  transition: all 0.3s ease;
-}
-.stat-row:hover {
-  background: rgba(1, 35, 76, 0.02);
-  padding-left: 0.5rem;
-  border-radius: 6px;
-}
-.stat-row:last-child {
-  border-bottom: none;
-}
-.stat-name {
-  color: #333;
-  font-size: 0.9rem;
-  font-weight: 500;
-  flex: 1;
-}
-.stat-value {
-  color: #01234c;
-  font-weight: bold;
-  font-size: 1rem;
-  text-align: right;
-  min-width: 50px;
-}
-/* Special styling for different stat types */
-.stat-value.highlighted {
-  background: linear-gradient(135deg, #00ff88 0%, #00ccff 100%);
-  color: #01234c;
-  padding: 4px 8px;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  box-shadow: 0 2px 8px rgba(0, 255, 136, 0.2);
-}
-.stat-value.trophy-count {
-  background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
-  color: #01234c;
-  padding: 4px 8px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(255, 215, 0, 0.3);
-}
-.stat-value.performance-stat {
-  background: rgba(1, 35, 76, 0.1);
-  color: #01234c;
-  padding: 4px 8px;
-  border-radius: 6px;
-  font-weight: bold;
-}
-.stat-value.percentage {
-  color: #00ff88;
-  font-weight: bold;
-  font-size: 1.1rem;
-}
-.stat-value.yellow-card {
-  background: #ffd700;
-  color: #01234c;
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-size: 0.9rem;
-  box-shadow: 0 2px 4px rgba(255, 215, 0, 0.3);
-}
-.stat-value.red-card {
-  background: #ff6b6b;
-  color: white;
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-size: 0.9rem;
-  box-shadow: 0 2px 4px rgba(255, 107, 107, 0.3);
-}
-.stat-value small {
-  font-size: 0.7rem;
-  opacity: 0.8;
-}
-/* Animation for stats on hover */
-.stats-category:hover .stat-row {
-  animation: statsHighlight 0.5s ease-in-out;
-}
-@keyframes statsHighlight {
-  0% { transform: translateX(0); }
-  50% { transform: translateX(2px); }
-  100% { transform: translateX(0); }
-}
-/* Responsive design for current season stats */
-@media (max-width: 768px) {
-  .current-stats-container {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-  
-  .stats-category {
-    padding: 1rem;
-  }
-  
-  .category-title {
-    font-size: 1.1rem;
-  }
-  
-  .stat-name {
-    font-size: 0.85rem;
-  }
-  
-  .stat-value {
-    font-size: 0.9rem;
-  }
-}
-@media (max-width: 480px) {
-  .stat-row {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.3rem;
-    text-align: left;
-  }
-  
-  .stat-value {
-    align-self: flex-end;
-  }
+.trophy-card:not(.clickable) {
+  cursor: default;
 }

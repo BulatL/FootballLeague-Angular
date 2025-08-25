@@ -8,4 +8,5 @@ export interface SeasonStanding {
   losses: number;
   goalsDifference: string;
   points: number;
+  goalDiffSort: number;
 }

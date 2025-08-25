@@ -1,7 +1,7 @@
 // fixture-details.component.ts
 import { Component, OnInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FixtureService } from '../core/services/fixture.service';
 import { ImageService } from '../core/services/image.service';
 import { FixtureDetailModel } from '../core/models/fixture-detail-mode';
@@ -31,7 +31,8 @@ export class FixtureDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private fixtureService: FixtureService,
-    private imageService: ImageService
+    private imageService: ImageService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -139,11 +140,17 @@ export class FixtureDetailComponent implements OnInit {
   }
   
   getTeamLogo(fileName: string): string {
-    return this.imageService.getImageUrl('Teams', fileName);
+    if(fileName == "")
+        return "default-team.png";
+    return fileName;
+    // return this.imageService.getImageUrl('Teams', fileName);
   }
   
   getPlayerLogo(fileName: string): string {
-    return this.imageService.getImageUrl('Players', fileName);
+    if(fileName == "")
+        return "default-player.png";
+    return fileName;
+    // return this.imageService.getImageUrl('Players', fileName);
   }
 
   getPositionInSerbian(position: string): string {
@@ -154,6 +161,10 @@ export class FixtureDetailComponent implements OnInit {
       return 'Igrač';
     default:
       return position; 
+    }
   }
-}
+
+  onPlayerClick(playerId: number){
+    this.router.navigate(['/players/', playerId]);
+  }
 }

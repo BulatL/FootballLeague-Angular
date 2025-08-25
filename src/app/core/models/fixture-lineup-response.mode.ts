@@ -7,6 +7,7 @@ export interface GetFixtureLineupResponse {
 
 
 export interface PlayerLineup {
+  playerId: number;
   playerTeamId: number;
   playerName: string;
   playerImage: string;
@@ -45,6 +46,7 @@ export class FixtureLineupMapper {
 
   private static mapPlayerLineup(player: any): PlayerLineup {
     return {
+      playerId: player.playerId,
       playerTeamId: player.playerTeamId,
       playerName: player.playerName,
       playerImage: player.playerImage,

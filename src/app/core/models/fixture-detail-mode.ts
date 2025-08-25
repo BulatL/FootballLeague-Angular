@@ -20,6 +20,7 @@ export interface FixtureDetailModel{
     awayTeamCorners: number;
     awayTeamFouls: number;
     savesByAwayTeam: number;
+    mvpPlayerId: number;
     mvpPlayerName: string;
     mvpPlayerLogo: string;
     mvpPlayerTeamId: number;

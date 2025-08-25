@@ -3,10 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PlayerService } from '../admin/core/services/player.service';
 import { ImageService } from '../core/services/image.service';
-import { SeasonLeaderCategoryData } from '../admin/core/models/season-leader-model';
-import { ApiResponse } from '../shared/api-response';
-import { AvailablePlayer } from '../admin/core/models/ApiResponse/Player/available-players-response';
 import { ChangeDetectorRef } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-season-leaders',
@@ -18,7 +16,8 @@ export class SeasonLeadersComponent implements OnInit {
 
   constructor(private playerService: PlayerService,
               private imageService: ImageService,
-              private cdr: ChangeDetectorRef)
+              private cdr: ChangeDetectorRef,
+              private router: Router)
               {}
 
   category: string = 'goal';
@@ -95,6 +94,13 @@ export class SeasonLeadersComponent implements OnInit {
   }
 
   getPlayerImage(fileName: string): string {
-      return this.imageService.getImageUrl("Players", fileName);
+    if(fileName == "")
+        return "default-player.png";
+    return fileName;
+      // return this.imageService.getImageUrl("Players", fileName);
+  }
+
+  onPlayerClick(playerId: number){
+    this.router.navigate(['/players/', playerId]);
   }
 }

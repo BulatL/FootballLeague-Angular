@@ -84,7 +84,7 @@
         Igrač Utakmice (MVP)
       </h2>
       
-      <div class="mvp-card">
+      <div class="mvp-card" (click)="onPlayerClick(fixture.mvpPlayerId)">
         <div class="mvp-image-container">
           <img [src]="getPlayerLogo(fixture.mvpPlayerLogo)" [alt]="fixture.mvpPlayerName" class="mvp-image">
           <div class="mvp-rating">{{ fixture.mvpFixtureDreamTeamPoints }}</div>
@@ -189,19 +189,19 @@
           </h3>
           <div class="players-list">
             <div class="player-card" *ngFor="let player of fixtureLineupResponse.homeTeamLineup.$values">
-              <div class="player-main-info" (click)="togglePlayerExpansion(player.playerTeamId)">
+              <div class="player-main-info">
                 <div class="player-info">
-                  <div class="player-image-container">
+                  <div class="player-image-container" (click)="onPlayerClick(player.playerId)">
                     <img [src]="getPlayerLogo(player.playerImage)" [alt]="player.playerName" class="player-image">
                   </div>
-                  <div class="player-text-info">
+                  <div class="player-text-info" (click)="togglePlayerExpansion(player.playerTeamId)">
                     <span class="player-name">{{ player.playerName }}</span>
                     <div class="player-position-badge">
                       {{ getPositionInSerbian(player.position) }}
                     </div>
                   </div>
                 </div>
-                <div class="player-stats">
+                <div class="player-stats" (click)="togglePlayerExpansion(player.playerTeamId)">
                   <div class="dream-points">
                     <span class="points">{{ player.dreamPoints }}</span>
                     <span class="points-label">pts</span>
@@ -269,19 +269,19 @@
           </h3>
           <div class="players-list">
             <div class="player-card" *ngFor="let player of fixtureLineupResponse.awayTeamLineup.$values">
-              <div class="player-main-info" (click)="togglePlayerExpansion(player.playerTeamId)">
+              <div class="player-main-info">
                 <div class="player-info">
-                  <div class="player-image-container">
+                  <div class="player-image-container" (click)="onPlayerClick(player.playerId)">
                     <img [src]="getPlayerLogo(player.playerImage)" [alt]="player.playerName" class="player-image">
                   </div>
-                  <div class="player-text-info">
+                  <div class="player-text-info" (click)="togglePlayerExpansion(player.playerTeamId)">
                     <span class="player-name">{{ player.playerName }}</span>
                     <div class="player-position-badge">
                       {{ getPositionInSerbian(player.position) }}
                     </div>
                   </div>
                 </div>
-                <div class="player-stats">
+                <div class="player-stats" (click)="togglePlayerExpansion(player.playerTeamId)">
                   <div class="dream-points">
                     <span class="points">{{ player.dreamPoints }}</span>
                     <span class="points-label">pts</span>

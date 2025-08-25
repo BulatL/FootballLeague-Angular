@@ -1,0 +1,80 @@
+<div class="dream-team-container" *ngIf="!loading && players != null">
+    
+    <!-- Header -->
+    <div class="dream-team-header">
+       <h1 class="header-highlight-blue-color">
+            Dream Team
+        </h1>
+    </div>
+
+    <!-- Football Pitch with Players -->
+    <div class="pitch-container">
+        <!-- Goalkeeper -->
+        <div class="player-card goalkeeper" (click)="onPlayerClick(players.goalkeeper.playerId)">
+            <img [src]="getPlayerImage(players.goalkeeper.image)" class="player-image">
+            <div class="player-info">
+                <div class="player-name">{{ players.goalkeeper.firstName + ' ' + players.goalkeeper.lastName }}</div>
+                <div class="player-points">★ {{ players.goalkeeper.dreamTeamPoints }}</div>
+            </div>
+        </div>
+
+        <!-- Defender -->
+        <div class="player-card player-1" (click)="onPlayerClick(players.player1.playerId)">
+            <img [src]="getPlayerImage(players.player1.image)" class="player-image">
+            <div class="player-info">
+                <div class="player-name">{{ players.player1.firstName + ' ' + players.player1.lastName }}</div>
+                <div class="player-points">★ {{ players.player1.dreamTeamPoints }}</div>
+            </div>
+        </div>
+
+        <!-- Midfielder -->
+        <div class="player-card player-2" (click)="onPlayerClick(players.player2.playerId)">
+            <img [src]="getPlayerImage(players.player2.image)" class="player-image">
+            <div class="player-info">
+                <div class="player-name">{{ players.player2.firstName + ' ' + players.player2.lastName }}</div>
+                <div class="player-points">★ {{ players.player2.dreamTeamPoints }}</div>
+            </div>
+        </div>
+
+        <!-- Forward 1 -->
+        <div class="player-card player-3" (click)="onPlayerClick(players.player3.playerId)">
+            <img [src]="getPlayerImage(players.player3.image)" class="player-image">
+            <div class="player-info">
+                <div class="player-name">{{ players.player3.firstName + ' ' + players.player3.lastName }}</div>
+                <div class="player-points">★ {{ players.player3.dreamTeamPoints }}</div>
+            </div>
+        </div>
+
+        <!-- Forward 2 -->
+        <div class="player-card player-4" (click)="onPlayerClick(players.player4.playerId)">
+            <img [src]="getPlayerImage(players.player4.image)" class="player-image">
+            <div class="player-info">
+                <div class="player-name">{{ players.player4.firstName + ' ' + players.player4.lastName }}</div>
+                <div class="player-points">★ {{ players.player4.dreamTeamPoints }}</div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Team Summary Stats -->
+    <div class="team-summary">
+        <div class="summary-stats">
+            <div class="summary-stat">
+                <div class="value">{{ players.totalPoints }}</div>
+                <div class="label">Ukupno poena</div>
+            </div>
+            <div class="summary-stat">
+                <div class="value">{{ players.avgPoints }}</div>
+                <div class="label">Prosecni poeni</div>
+            </div>
+            <div class="summary-stat">
+                <div class="value">{{ players.playedGames }}</div>
+                <div class="label">Odigranih utakmica</div>
+            </div>
+            <div class="summary-stat">
+                <div class="value">{{ players.totalGoals }}</div>
+                <div class="label">Golova</div>
+            </div>
+        </div>
+    </div>
+</div>

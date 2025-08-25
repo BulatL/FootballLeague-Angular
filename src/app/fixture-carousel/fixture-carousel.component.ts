@@ -67,8 +67,11 @@ export class FixtureCarouselComponent {
   }
 
   getLogo(fileName: string): string {
-      var imageUrl = this.imageService.getImageUrl("Teams", fileName);
-      return imageUrl;
+    if(fileName == "")
+        return "default-team.png";
+    return fileName;
+      // var imageUrl = this.imageService.getImageUrl("Teams", fileName);
+      // return imageUrl;
   }
   
   trackByFixtureId(index: number, fixture: Fixture): number {

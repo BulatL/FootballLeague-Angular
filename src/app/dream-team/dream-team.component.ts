@@ -1,22 +1,22 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule  } from '@angular/router';
-import { PlayerDetailModel } from '../core/models/player-detail-mode';
 import { PlayerService } from '../core/services/player.service';
 import { ImageService } from '../core/services/image.service';
+import { DreamTeamModel } from '../core/models/dream-team-model';
 
 
 @Component({
-  selector: 'app-player-detail',
+  selector: 'app-dream-team',
   imports: [CommonModule, RouterModule ],
-  templateUrl: './player-detail.component.html',
-  styleUrl: './player-detail.component.css'
+  templateUrl: './dream-team.component.html',
+  styleUrl: './dream-team.component.css'
 })
-export class PlayerDetailComponent {
+export class DreamTeamComponent {
   loading = true;
   error: string | null = null;
   @Input() playerId!: number;
-  player!: PlayerDetailModel;
+  players!: DreamTeamModel;
 
   constructor(private playerService: PlayerService,
               private route: ActivatedRoute,
@@ -25,28 +25,12 @@ export class PlayerDetailComponent {
 
 
   ngOnInit() {
-    if (!this.playerId) {
-      const id = this.route.snapshot.paramMap.get('id');
-      if (id) {
-        this.playerId = +id;
-      }
-    }
-    
-    if (this.playerId) {
-      this.loadPlayerData(this.playerId);
-    } else {
-      this.error = 'No player id provided';
-      this.loading = false;
-    }
-  }
-
-  private loadPlayerData(playerId: number) {
     this.loading = true;
     this.error = null;
     
-    this.playerService.getInfo(playerId).subscribe({
-      next: (response: PlayerDetailModel) => {
-        this.player = response;
+    this.playerService.getDreamTeamPlayers().subscribe({
+      next: (response: DreamTeamModel) => {
+        this.players = response;
         this.loading = false;
       },
       error: (error) => {
@@ -56,13 +40,6 @@ export class PlayerDetailComponent {
       }
     });
   }
-
-  getTeamLogo(fileName: string): string {
-    if(fileName == "")
-        return "default-team.png";
-    return fileName;
-    // return this.imageService.getImageUrl('Teams', fileName);
-  }
   
   getPlayerImage(fileName: string): string {
     if(fileName == "")
@@ -70,10 +47,8 @@ export class PlayerDetailComponent {
     return fileName;
     // return this.imageService.getImageUrl('Players', fileName);
   }
-  
-  onTrophyClick(trophy: any): void {
-  if (trophy.fixtureId !== null) {
-    this.router.navigate(['/fixtures/', trophy.fixtureId]);
-    }
+
+  onPlayerClick(playerId: number){
+    this.router.navigate(['/players/', playerId]);
   }
 }

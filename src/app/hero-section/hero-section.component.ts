@@ -21,7 +21,6 @@ export class HeroSectionComponent implements OnInit, OnDestroy {
   leagueName: string = "";
   activeTeams: number = 0; 
   activePlayers: number = 0
-  totalPlayers: number = 0;
   seasonsPlayed: number = 0;
   currentSeason: string = "";
 

@@ -14,7 +14,7 @@
 
     <!-- Show content when there's data -->
     <div *ngIf="hasLeaderData(); else noDataTemplate">
-      <div class="top-player">
+      <div class="top-player" (click)="onPlayerClick(topPlayer.playerId)">
         <div class="info">
           <p class="firstname">{{ topPlayer.firstName }}</p>
           <h3 class="lastname">{{ topPlayer.lastName }}</h3>
@@ -25,7 +25,7 @@
 
       <ul class="players-list">
         <li *ngFor="let player of players; index as i" class="player-item">
-          <div class="left">
+          <div class="left" (click)="onPlayerClick(player.playerId)">
             <span class="rank">{{ i + 2 }}</span>
             <img [src]="getPlayerImage(player.image)" alt="{{ player.playerName }}" />
             <div>

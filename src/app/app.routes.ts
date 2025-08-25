@@ -1,6 +1,4 @@
-import { RouterModule, Routes } from '@angular/router';
-import { NgModule } from '@angular/core';
-import { AuthGuard } from './core/auth/guards/auth.guard';
+import { Routes } from '@angular/router';
 import { AdminGuard } from './core/auth/guards/admin.guard';
 
 import { LeagueListComponent } from './admin/league-list/league-list.component';
@@ -24,15 +22,13 @@ import { TeamPlayersComponent } from './admin/team-players/team-players.componen
 import { AdminFixtureListComponent } from './admin/fixture-list/fixture-list.component';
 import { FixtureListComponent } from './fixture-list/fixture-list.component';
 import { FixtureFormComponent } from './admin/fixture-form/fixture-form.component';
-import { FixtureTimeModalComponent } from './admin/fixture-time-modal/fixture-time-modal.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'league-home', pathMatch: 'full' },
   { path: 'Index', redirectTo: 'league-home', pathMatch: 'full' },
   { path: 'Home', redirectTo: 'league-home', pathMatch: 'full' },
   { path: 'league-home', component: LeagueHomeComponent },
-  // { path: 'player-detail', component: PlayerDetailComponent },
-  // { path: 'players/:id', component: PlayerDetailComponent },
+  { path: 'players/:id', component: PlayerDetailComponent },
   { path: 'fixtures/:id', component: FixtureDetailComponent },
   { path: 'fixtures', component: FixtureListComponent },
   { path: 'login', component: LoginComponent },
