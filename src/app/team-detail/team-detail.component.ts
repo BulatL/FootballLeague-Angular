@@ -76,7 +76,7 @@ export class TeamDetailComponent {
     this.loadingFixtures = true;
     this.error = null;
     
-    this.fixtureService.getByPlayer(teamId).subscribe({
+    this.fixtureService.getByTeam(teamId).subscribe({
       next: (response: ApiListResponse<TeamDetailFixture>) => {
         this.team.fixtures = response.$values;
         this.loadingFixtures = false;
@@ -119,10 +119,9 @@ export class TeamDetailComponent {
   }
   
   getPlayerImage(fileName: string): string {
-    // if(fileName == "")
-    //     return "default-player.png";
-    // return fileName;
-    return this.imageService.getImageUrl('Players', fileName);
+    if(fileName == "")
+        return "default-player.png";
+     return this.imageService.getImageUrl('Players', fileName);
   }
 
   isWinningTeam(homeScore: number | null, awayScore: number | null, isHome: boolean): boolean {

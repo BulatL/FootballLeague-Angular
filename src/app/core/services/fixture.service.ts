@@ -50,4 +50,9 @@ export class FixtureService {
   getByPlayer(playerTeamId: number): Observable<ApiListResponse<PlayerDetailFixture>> {
     return this.http.get<ApiListResponse<PlayerDetailFixture>>(`${this.apiUrl}/GetByPlayer/${playerTeamId}`);
   }
+
+
+  getByTeam(teamId: number): Observable<ApiListResponse<PlayerDetailFixture>> {
+    return this.http.get<ApiListResponse<PlayerDetailFixture>>(`${this.apiUrl}/getByTeam/${teamId}`);
+  }
 }
