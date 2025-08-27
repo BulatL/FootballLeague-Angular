@@ -144,7 +144,9 @@ export class FixtureDetailComponent implements OnInit {
   }
   
   getPlayerLogo(fileName: string): string {
-    return this.imageService.getImageUrl('Players', fileName);
+    if(fileName == "")
+        return "default-player.png";
+    return this.imageService.getImageUrl("Players", fileName);
   }
 
   getPositionInSerbian(position: string): string {

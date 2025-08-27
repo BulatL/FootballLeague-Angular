@@ -96,8 +96,7 @@ export class SeasonLeadersComponent implements OnInit {
   getPlayerImage(fileName: string): string {
     if(fileName == "")
         return "default-player.png";
-    return fileName;
-      // return this.imageService.getImageUrl("Players", fileName);
+    return this.imageService.getImageUrl("Players", fileName);
   }
 
   onPlayerClick(playerId: number){
