@@ -167,4 +167,8 @@ export class FixtureDetailComponent implements OnInit {
   onPlayerClick(playerId: number){
     this.router.navigate(['/players/', playerId]);
   }
+  
+  onTeamClick(teamId: number){
+    this.router.navigate(['/teams/', teamId]);
+  }
 }

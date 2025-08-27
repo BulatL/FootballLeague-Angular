@@ -22,6 +22,7 @@ import { TeamPlayersComponent } from './admin/team-players/team-players.componen
 import { AdminFixtureListComponent } from './admin/fixture-list/fixture-list.component';
 import { FixtureListComponent } from './fixture-list/fixture-list.component';
 import { FixtureFormComponent } from './admin/fixture-form/fixture-form.component';
+import { TeamDetailComponent } from './team-detail/team-detail.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'league-home', pathMatch: 'full' },
@@ -31,6 +32,7 @@ export const routes: Routes = [
   { path: 'players/:id', component: PlayerDetailComponent },
   { path: 'fixtures/:id', component: FixtureDetailComponent },
   { path: 'fixtures', component: FixtureListComponent },
+  { path: 'teams/:id', component: TeamDetailComponent },
   { path: 'login', component: LoginComponent },
    {
     path: 'admin',

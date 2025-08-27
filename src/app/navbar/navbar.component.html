@@ -11,10 +11,7 @@
       <div class="nav-right">
         <!-- Desktop Nav Links -->
         <div class="nav-links">
-            <!-- <a href="#standing" class="nav-link highlight-blue-color">Tabela</a> -->
-            <!-- <a href="#teams" class="nav-link highlight-blue-color">Timovi</a> -->
             <a routerLink="/fixtures" routerLinkActive="active" class="nav-link highlight-blue-color">Raspored</a>
-            <!-- <a routerLink="/player-detail" routerLinkActive="active" class="nav-link highlight-blue-color">Igraci</a> -->
             <a *ngIf="displayAdmin()" routerLink="/admin" routerLinkActive="active" class="nav-link highlight-blue-color">Admin</a>
         </div>
       </div>
@@ -48,9 +45,7 @@
   <!-- Mobile Navigation Menu -->
   <div class="mobile-nav" [class.mobile-nav-open]="isMenuOpen">
     <div class="mobile-nav-content">
-      <a href="#standing" class="mobile-nav-link" (click)="closeMenu()">Tabela</a>
-      <a href="#teams" class="mobile-nav-link" (click)="closeMenu()">Timovi</a>
-      <a routerLink="/player-detail" class="mobile-nav-link" (click)="closeMenu()">Igraci</a>
+      <a routerLink="/fixtures" routerLinkActive="active" class="nav-link highlight-blue-color">Raspored</a>
       <a *ngIf="displayAdmin()" routerLink="/admin" class="mobile-nav-link" (click)="closeMenu()">Admin</a>
     </div>
   </div>

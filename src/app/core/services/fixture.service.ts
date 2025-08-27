@@ -9,6 +9,7 @@ import { FixtureDetailModel } from '../models/fixture-detail-mode';
 import { GetFixtureLineupResponse } from '../models/fixture-lineup-response.mode';
 import { ApiResponse } from '../../shared/api-response';
 import { FixtureTimelineModel } from '../models/fixture-timeline-model';
+import { PlayerDetailFixture } from '../models/player-detail-model';
 
 @Injectable({
     providedIn: 'root'
@@ -43,5 +44,10 @@ export class FixtureService {
 
   listFixturesByMatchDay(matchDayId: number): Observable<ApiListResponse<Fixture>> {
     return this.http.get<ApiListResponse<Fixture>>(`${this.apiUrl}/ListByMatchDay/${matchDayId}`);
+  }
+
+
+  getByPlayer(playerTeamId: number): Observable<ApiListResponse<PlayerDetailFixture>> {
+    return this.http.get<ApiListResponse<PlayerDetailFixture>>(`${this.apiUrl}/GetByPlayer/${playerTeamId}`);
   }
 }

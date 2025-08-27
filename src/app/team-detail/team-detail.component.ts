@@ -1,25 +1,27 @@
 import { Component, OnInit, Input, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule  } from '@angular/router';
-import { PlayerDetailFixture, PlayerDetailModel } from '../core/models/player-detail-model';
-import { PlayerService } from '../core/services/player.service';
+import { TeamDetailFixture, TeamDetailModel, TeamLineup } from '../core/models/team-detail-model';
 import { ImageService } from '../core/services/image.service';
 import { FixtureService } from '../core/services/fixture.service';
 import { ApiListResponse } from '../shared/api-list-response';
-
+import { TeamService } from '../core/services/team.service';
+import { PlayerService } from '../core/services/player.service';
 
 @Component({
-  selector: 'app-player-detail',
+  selector: 'app-team-detail',
   imports: [CommonModule, RouterModule ],
-  templateUrl: './player-detail.component.html',
-  styleUrl: './player-detail.component.css'
+  templateUrl: './team-detail.component.html',
+  styleUrl: './team-detail.component.css'
 })
-export class PlayerDetailComponent {
+export class TeamDetailComponent {
   loading = true;
   loadingFixtures = true;
+  loadingPlayers = true;
   error: string | null = null;
-  @Input() playerId!: number;
-  player!: PlayerDetailModel;
+  @Input() teamId!: number;
+  team!: TeamDetailModel;
+  expandedPlayerId: number | null = null;
 
   currentIndex = 0;
   cardWidth = 280; 
@@ -27,55 +29,56 @@ export class PlayerDetailComponent {
   maxIndex: number = 0;
   autoScrollInterval: any;
 
-  constructor(private playerService: PlayerService,
-              private route: ActivatedRoute,
-              private imageService: ImageService,
-              private fixtureService: FixtureService,
-              private router: Router){}
-
-
+  constructor(private teamService: TeamService,
+                private route: ActivatedRoute,
+                private imageService: ImageService,
+                private fixtureService: FixtureService,
+                private playerService: PlayerService,
+                private router: Router){}
+  
+  
   ngOnInit() {
-    if (!this.playerId) {
+    if (!this.teamId) {
       const id = this.route.snapshot.paramMap.get('id');
       if (id) {
-        this.playerId = +id;
+        this.teamId = +id;
       }
     }
     
-    if (this.playerId) {
-      this.loadPlayerData(this.playerId);
+    if (this.teamId) {
+      this.loadPlayerData(this.teamId);
     } else {
-      this.error = 'No player id provided';
+      this.error = 'No team id provided';
       this.loading = false;
     }
   }
 
-  private loadPlayerData(playerId: number) {
+  private loadPlayerData(teamId: number) {
     this.loading = true;
     this.error = null;
     
-    this.playerService.getInfo(playerId).subscribe({
-      next: (response: PlayerDetailModel) => {
-        this.player = response;
+    this.teamService.getInfo(teamId).subscribe({
+      next: (response: TeamDetailModel) => {
+        this.team = response;
         this.loading = false;
-        this.loadFixtures(this.player.playerTeamId)
+        this.loadFixtures(this.teamId)
+        this.loadLineup(this.teamId);
       },
       error: (error) => {
-        this.error = 'Failed to load player data';
+        this.error = 'Failed to load team data';
         this.loading = false;
-        console.error('Error loading player:', error);
+        console.error('Error loading team:', error);
       }
     });
   }
 
-  private loadFixtures(playerTeamId: number){
-     this.loadingFixtures = true;
+  private loadFixtures(teamId: number){
+    this.loadingFixtures = true;
     this.error = null;
     
-    this.fixtureService.getByPlayer(playerTeamId).subscribe({
-      next: (response: ApiListResponse<PlayerDetailFixture>) => {
-        console.log(response);
-        this.player.fixtures = response.$values;
+    this.fixtureService.getByPlayer(teamId).subscribe({
+      next: (response: ApiListResponse<TeamDetailFixture>) => {
+        this.team.fixtures = response.$values;
         this.loadingFixtures = false;
         
         this.calculateCardsPerView();
@@ -84,32 +87,44 @@ export class PlayerDetailComponent {
 
       },
       error: (error) => {
-        this.error = 'Failed to load player data';
+        this.error = 'Failed to load team data';
         this.loading = false;
-        console.error('Error loading player:', error);
+        console.error('Error loading team:', error);
+      }
+    });
+  }
+
+  private loadLineup(teamId: number){
+    this.loadingPlayers = true;
+    this.error = null;
+    
+    this.playerService.getByTeam(teamId).subscribe({
+      next: (response: ApiListResponse<TeamLineup>) => {
+        this.team.lineup = response.$values;
+        this.loadingPlayers = false;
+      },
+      error: (error) => {
+        this.error = 'Failed to load players data';
+        this.loading = false;
+        console.error('Error loading players:', error);
       }
     });
   }
 
   getTeamLogo(fileName: string): string {
-    if(fileName == "")
-        return "default-team.png";
-    return fileName;
-    // return this.imageService.getImageUrl('Teams', fileName);
+    // if(fileName == "")
+    //     return "default-team.png";
+    // return fileName;
+    return this.imageService.getImageUrl('Teams', fileName);
   }
   
   getPlayerImage(fileName: string): string {
-    if(fileName == "")
-        return "default-player.png";
-    return fileName;
-    // return this.imageService.getImageUrl('Players', fileName);
+    // if(fileName == "")
+    //     return "default-player.png";
+    // return fileName;
+    return this.imageService.getImageUrl('Players', fileName);
   }
-  
-  onTrophyClick(trophy: any): void {
-  if (trophy.fixtureId !== null) {
-    this.router.navigate(['/fixtures/', trophy.fixtureId]);
-    }
-  }
+
   isWinningTeam(homeScore: number | null, awayScore: number | null, isHome: boolean): boolean {
     if (homeScore == null || awayScore == null) return false;
     return isHome ? homeScore > awayScore : awayScore > homeScore;
@@ -123,7 +138,6 @@ export class PlayerDetailComponent {
   onFixtureClick(fixtureId: number): void {
     this.router.navigate(['/fixtures', fixtureId]);
   }
-
 
   gOnDestroy(): void {
     if (this.autoScrollInterval) {
@@ -155,7 +169,7 @@ export class PlayerDetailComponent {
   }
 
   private calculateMaxIndex(): void {
-    this.maxIndex = Math.max(0, this.player.fixtures.length - this.cardsPerView);
+    this.maxIndex = Math.max(0, this.team.fixtures.length - this.cardsPerView);
   }
 
   private updateCarousel(): void {
@@ -182,7 +196,7 @@ export class PlayerDetailComponent {
   }
 
   get showNavigation(): boolean {
-    return this.player.fixtures.length > this.cardsPerView;
+    return this.team.fixtures.length > this.cardsPerView;
   }
 
   get totalDots(): number {
@@ -209,9 +223,23 @@ export class PlayerDetailComponent {
       this.updateCarousel();
     }, 3000);
   }
-  
 
-  onTeamClick(teamId: number){
-    this.router.navigate(['/teams/', teamId]);
+  getPositionInSerbian(position: string): string {
+  switch (position) {
+    case 'Goalkeeper':
+      return 'Golman';
+    case 'Player':
+      return 'Igrač';
+    default:
+      return position; 
+    }
+  }
+
+  onPlayerClick(playerId: number){
+    this.router.navigate(['/players/', playerId]);
+  }
+  
+  togglePlayerExpansion(playerId: number): void {
+    this.expandedPlayerId = this.expandedPlayerId === playerId ? null : playerId;
   }
 }

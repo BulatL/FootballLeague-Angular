@@ -146,4 +146,10 @@ selectMatchDay(matchDayId: number): void {
   hasFixtures(): boolean {
     return this.fixtures.length > 0;
   }
+
+  onTeamClick(teamId: number, event: Event){
+    event.stopPropagation();
+    
+    this.router.navigate(['/teams/', teamId]);
+  }
 }

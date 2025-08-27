@@ -1,6 +1,7 @@
 
 export interface SeasonStanding {
   logo: string,
+  teamId: number;
   teamName: string,
   gamesPlayed: number;
   wins: number;

@@ -1,5 +1,6 @@
 export interface PlayerDetailModel {
   id: number;
+  playerTeamId: number;
   firstName: string;
   lastName: string;
   image: string;
@@ -12,6 +13,7 @@ export interface PlayerDetailModel {
   position: string;
   currentSeasonStats: CurrentSeasonStats;
   playerAwards: { $values: Award[]};
+  fixtures: PlayerDetailFixture[];
 }
 
 export interface CurrentSeasonStats {
@@ -35,4 +37,18 @@ export interface Award {
   seasonName: string;
   awardName: string;
   fixtureId?: number | null;
+}
+
+export interface PlayerDetailFixture {
+  roundNumber: string;
+  fixtureId: number;
+  homeTeamId: number;
+  homeTeamShortName: string;
+  homeTeamLogo: string;
+  homeTeamScore: number;
+  awayTeamId: number;
+  awayTeamShortName: string;
+  awayTeamLogo: string;
+  awayTeamScore: number;
+  fixtureDate: Date;
 }

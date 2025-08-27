@@ -43,11 +43,10 @@
     <div *ngIf="!isLoadingFixtures && hasFixtures()" class="fixtures-grid">
       <div 
         *ngFor="let fixture of fixtures" 
-        class="fixture-card"
-        (click)="onFixtureClick(fixture)">
+        class="fixture-card">
         
         <!-- Round Badge -->
-        <div class="round-badge">
+        <div class="round-badge" (click)="onFixtureClick(fixture)">
           <img src="soccer-ball-16.png" alt="Round" class="round-icon" />
           <span class="round-text">Kolo: {{ fixture.roundNumber }}</span>
         </div>
@@ -55,7 +54,7 @@
         <!-- Teams Container -->
         <div class="teams-container">
           <!-- Home Team -->
-          <div class="team home-team">
+          <div class="team home-team" (click)="onTeamClick(fixture.homeTeamId, $event)">
             <img 
               class="team-logo" 
               [src]="getTeamLogo(fixture.homeTeamLogo)" 
@@ -64,7 +63,7 @@
           </div>
 
           <!-- Score Section -->
-          <div class="score-section">
+          <div class="score-section" (click)="onFixtureClick(fixture)">
             <div class="score">
               <span [class.winning-score]="isWinningTeam(fixture.homeTeamScore!, fixture.awayTeamScore!, true)" 
                     [class.losing-score]="isLosingTeam(fixture.homeTeamScore!, fixture.awayTeamScore!, true)">
@@ -79,11 +78,11 @@
           </div>
 
           <!-- Away Team -->
-          <div class="team away-team">
+          <div class="team away-team" (click)="onTeamClick(fixture.awayTeamId, $event)" >
             <img 
               class="team-logo" 
               [src]="getTeamLogo(fixture.awayTeamLogo)" 
-              [alt]="fixture.awayTeamName" />
+              [alt]="fixture.awayTeamName"/>
             <div class="team-name">{{ fixture.awayTeamName }}</div>
           </div>
         </div>

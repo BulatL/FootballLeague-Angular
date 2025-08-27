@@ -12,7 +12,7 @@
     </div>
     
     <div class="match-score-section">
-      <div class="team-section">
+      <div class="team-section" (click)="onTeamClick(fixture.homeTeamId)">
         <img [src]="getTeamLogo(fixture.homeTeamLogo)" [alt]="fixture.homeTeamName" class="team-logo-large">
         <h2 class="team-name">{{ fixture.homeTeamName }}</h2>
       </div>
@@ -28,7 +28,7 @@
         </div> -->
       </div>
       
-      <div class="team-section">
+      <div class="team-section" (click)="onTeamClick(fixture.awayTeamId)">
         <img [src]="getTeamLogo(fixture.awayTeamLogo)" [alt]="fixture.awayTeamName" class="team-logo-large">
         <h2 class="team-name">{{ fixture.awayTeamName }}</h2>
       </div>

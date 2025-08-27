@@ -52,6 +52,10 @@
 @media (max-width: 768px) {
   .season-leaders-container {
     padding: 0.5rem;
+    width: 650px;
+  }
+  .leagues-section{
+    width: 600px;
   }
   
   .button-group {
@@ -89,6 +93,13 @@
 @media (max-width: 480px) {
   .season-leaders-card {
     padding: 12px;
+  }
+  .season-leaders-container{
+    margin: 5px auto;
+    width: 450px;
+  }
+  .leagues-section{
+    width: 460;
   }
 }
 

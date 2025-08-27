@@ -1,14 +1,14 @@
 /* player-info.component.css */
-.player-info-container {
+.team-info-container {
   max-width: 1200px;
-  margin: 6rem auto;
+  margin: 8rem auto;
   padding: 20px;
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
   min-height: 100vh;
 }
 
 /* Player Header Section */
-.player-header {
+.team-header {
   background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
   border-radius: 20px;
   padding: 2rem;
@@ -24,7 +24,7 @@
   overflow: hidden;
 }
 
-.player-header::before {
+.team-header::before {
   content: '';
   position: absolute;
   top: 0;
@@ -42,12 +42,12 @@
   100% { background-position: 100% 50%; }
 }
 
-.player-image-container {
+.team-image-container {
   position: relative;
   flex-shrink: 0;
 }
 
-.player-image {
+.team-image {
   width: 200px;
   height: 200px;
   border-radius: 50%;
@@ -83,12 +83,12 @@
   font-weight: bold;
 }
 
-.player-info {
+.team-info {
   flex: 1;
   text-align: center;
 }
 
-.player-name {
+.team-name {
   color: #01234c;
   font-size: 2.5rem;
   font-weight: 700;
@@ -286,23 +286,23 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .player-info-container {
+  .team-info-container {
     padding: 15px;
   }
 
-  .player-header {
+  .team-header {
     flex-direction: column;
     text-align: center;
     gap: 1.5rem;
     padding: 1.5rem;
   }
   
-  .player-image {
+  .team-image {
     width: 150px;
     height: 150px;
   }
   
-  .player-name {
+  .team-name {
     font-size: 2rem;
     margin-bottom: 1.5rem;
   }
@@ -768,7 +768,7 @@ fixtures-carousel-container {
   animation: ballSpin 4s linear infinite;
 }
 
-.teams-container {
+.fixture-teams-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -778,7 +778,7 @@ fixtures-carousel-container {
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.team {
+.fixture-team {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -787,11 +787,11 @@ fixtures-carousel-container {
   transition: all 0.3s ease;
 }
 
-.team:hover {
+.fixture-team:hover {
   transform: scale(1.1);
 }
 
-.team-name {
+.fixture-team-name {
   font-weight: bold;
   font-size: 0.9rem;
   color: #ffffff;
@@ -799,7 +799,7 @@ fixtures-carousel-container {
   transition: color 0.3s ease;
 }
 
-.team:hover .team-name {
+.fixture-team:hover .fixture-team-name {
   color: #00ff88;
 }
 
@@ -920,4 +920,348 @@ fixtures-carousel-container {
 
 .trophy-card:not(.clickable) {
   cursor: default;
+}
+/* Updated Lineups CSS - Split into rows instead of columns */
+.lineups-container {
+  display: block; /* Change from grid to block */
+  /* Remove grid-template-columns: 1fr 1fr; */
+  /* Remove gap: 2rem; */
+}
+
+.lineup-section {
+  background: rgba(1, 35, 76, 0.02);
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid rgba(1, 35, 76, 0.1);
+  /* Remove the grid-specific styles since we're not using grid anymore */
+}
+
+.players-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Split players into 2 columns */
+  gap: 0.8rem;
+  column-gap: 1.5rem; /* Add more space between columns */
+}
+
+/* Alternative approach - if you want to split specific number of players per row */
+.players-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.player-card {
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(1, 35, 76, 0.1);
+  box-shadow: 0 2px 8px rgba(1, 35, 76, 0.05);
+  flex: 0 0 calc(50% - 0.4rem); /* Each card takes roughly half the width */
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .players-list {
+    grid-template-columns: 1fr; /* Single column on mobile */
+  }
+  
+  /* Or if using flex approach: */
+  .player-card {
+    flex: 0 0 100%; /* Full width on mobile */
+  }
+}
+
+/* Rest of your existing player-card styles remain the same */
+.player-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(1, 35, 76, 0.15);
+  border-color: #00ff88;
+}
+
+.player-main-info {
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.player-main-info:hover {
+  background: rgba(1, 35, 76, 0.02);
+}
+
+.player-info {
+  display: contents;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.player-image-container {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.player-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #01234c;
+  box-shadow: 0 3px 12px rgba(1, 35, 76, 0.2);
+  transition: all 0.3s ease;
+}
+
+.player-image:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(1, 35, 76, 0.3);
+}
+
+.player-name {
+  color: #01234c;
+  font-weight: bold;
+  font-size: 1rem;
+  line-height: 1.2;
+}
+
+.player-position {
+  color: #666;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+}
+
+.player-stats {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.dream-points {
+  background: linear-gradient(135deg, #00ff88 0%, #00ccff 100%);
+  color: #01234c;
+  padding: 6px 10px;
+  border-radius: 10px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  box-shadow: 0 2px 8px rgba(0, 255, 136, 0.3);
+}
+
+.points {
+  font-size: 1rem;
+}
+
+.points-label {
+  font-size: 0.7rem;
+  opacity: 0.8;
+}
+
+.player-details {
+  color: #666;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.player-position-badge {
+  color: #01234c;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.player-text-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+  margin-left: 15px;
+}
+
+.expand-icon {
+  font-size: 0.8rem;
+  color: #666;
+  transition: transform 0.3s ease;
+  margin-left: 0.5rem;
+}
+
+.expand-icon.expanded {
+  transform: rotate(180deg);
+}
+/* Improved Player Breakdown Section */
+.player-breakdown {
+  padding: 15px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-top: 1px solid #e0e0e0;
+  animation: expandDown 0.4s ease-out;
+  overflow: hidden;
+  position: relative;
+}
+
+.player-breakdown::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #00ff88, #00ccff, #00ff88);
+  background-size: 200% 100%;
+  animation: gradientFlow 3s linear infinite;
+}
+
+@keyframes gradientFlow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+@keyframes expandDown {
+  from {
+    max-height: 0;
+    opacity: 0;
+    padding: 0;
+  }
+  to {
+    max-height: 400px;
+    opacity: 1;
+    padding: 1.5rem;
+  }
+}
+
+.player-breakdown h4 {
+  color: #01234c;
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin: 0 0 1.5rem 0;
+  padding-bottom: 0.8rem;
+  border-bottom: 2px solid rgba(1, 35, 76, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.player-breakdown h4::before {
+  content: '📈';
+  font-size: 1rem;
+}
+
+/* Grid layout for breakdown items */
+.breakdown-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.breakdown-item {
+  background: white;
+  border-radius: 10px;
+  padding: 1rem;
+  border: 1px solid rgba(1, 35, 76, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(1, 35, 76, 0.05);
+}
+
+.breakdown-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(1, 35, 76, 0.15);
+  border-color: rgba(0, 255, 136, 0.3);
+}
+
+.breakdown-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #00ff88, #00ccff);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.breakdown-item:hover::before {
+  transform: scaleX(1);
+}
+
+.breakdown-desc {
+  color: #666;
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  order: 2;
+}
+
+.breakdown-points {
+  color: #01234c;
+  font-weight: bold;
+  font-size: 1.8rem;
+  margin-bottom: 0.3rem;
+  order: 1;
+}
+
+/* Special styling for different stat types */
+.breakdown-item.goals .breakdown-points {
+  color: #00ff88;
+}
+
+.breakdown-item.assists .breakdown-points {
+  color: #00ccff;
+}
+
+.breakdown-item.saves .breakdown-points {
+  color: #ff9800;
+}
+
+.breakdown-item.games .breakdown-points {
+  color: #9c27b0;
+}
+
+.breakdown-item.goals-conceded .breakdown-points {
+  color: #ff6b6b;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .breakdown-items {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
+  }
+  
+  .breakdown-points {
+    font-size: 1.5rem;
+  }
+  
+  .breakdown-desc {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .breakdown-items {
+    grid-template-columns: 1fr;
+  }
+  
+  .breakdown-item.dream-points {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .breakdown-item.dream-points .breakdown-desc {
+    order: 1;
+    margin-bottom: 0.5rem;
+  }
+  
+  .breakdown-item.dream-points .breakdown-points {
+    order: 2;
+  }
 }

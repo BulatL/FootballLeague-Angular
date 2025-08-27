@@ -67,11 +67,7 @@ export class FixtureCarouselComponent {
   }
 
   getLogo(fileName: string): string {
-    if(fileName == "")
-        return "default-team.png";
-    return fileName;
-      // var imageUrl = this.imageService.getImageUrl("Teams", fileName);
-      // return imageUrl;
+    return this.imageService.getImageUrl("Teams", fileName);
   }
   
   trackByFixtureId(index: number, fixture: Fixture): number {
@@ -94,5 +90,9 @@ export class FixtureCarouselComponent {
 
     if (fixtureDate < now) 
       this.router.navigate([`/fixtures/${fixture.id}`]);
+  }
+
+  onTeamClick(teamId: number){
+    this.router.navigate(['/teams/', teamId]);
   }
 }

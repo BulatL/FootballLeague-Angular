@@ -4,6 +4,7 @@ import { StandingService } from "./standing.service"
 import { SeasonStanding } from '../core/models/season-standing.model';
 import { SeasonService } from '../core/services/season.service';
 import { ImageService } from '../core/services/image.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -19,7 +20,8 @@ export class StandingComponent implements OnInit {
 
   constructor(private standingService: StandingService, 
               private seasonService: SeasonService, 
-              private imageService: ImageService) {}
+              private imageService: ImageService,
+              private router: Router) {}
 
   ngOnInit(): void {
     this.seasonId = this.seasonService.getSeasonId();
@@ -32,10 +34,10 @@ export class StandingComponent implements OnInit {
   }
   
   getImage(fileName: string): string {
-    if(fileName == "")
-        return "default-team.png";
-    return fileName;
-      // var imageUrl = this.imageService.getImageUrl("Teams", fileName)  
-      // return imageUrl;
+    return this.imageService.getImageUrl("Teams", fileName);
+  }
+
+  onTeamClick(teamId: number){
+    this.router.navigate(['/teams/', teamId]);
   }
 }
