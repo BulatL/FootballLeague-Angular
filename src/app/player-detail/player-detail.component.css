@@ -58,7 +58,7 @@
 
 .dream-points-badge {
   position: absolute;
-  bottom: 10px;
+  bottom: -30px;
   right: 10px;
   background: linear-gradient(135deg, #00ff88 0%, #00ccff 100%);
   color: #01234c;
@@ -346,6 +346,10 @@
 
   .section-title {
     font-size: 1.4rem;
+  }
+  .dream-points-badge{
+    bottom: -28px;
+    right: 17px;
   }
 }
 
@@ -899,12 +903,15 @@ fixtures-carousel-container {
   }
 
   .fixture-card {
-    width: 12rem;
+    width: 16.5rem;
     padding: 12px;
   }
 
   .fixtures-track {
-    gap: 1rem;
+    gap: 1.2rem;
+  }
+  .fixtures-carousel{
+    padding-left: 10px;
   }
 }
 
