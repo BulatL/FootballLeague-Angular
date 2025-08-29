@@ -36,13 +36,18 @@ export class FixtureListComponent implements OnInit {
     this.isLoadingMatchDays = true;
     this.fixtureService.listMatchDays().subscribe({
       next: (matchDays) => {
+        var currentMatchDay;
           if(matchDays.$values.length > 0)
-          this.matchDays = matchDays.$values;
+          {
+            this.matchDays = matchDays.$values;
+            currentMatchDay = this.matchDays.find(x => x.isCurrent);
+            this.isMatchDaySelected(currentMatchDay!.id);
+          }
         this.isLoadingMatchDays = false;
         
         // Auto-select first matchday if available
         if (matchDays.$values.length > 0) {
-          this.selectMatchDay(matchDays.$values[0].id);
+          this.selectMatchDay(currentMatchDay!.id);
         }
       },
       error: (error) => {

@@ -94,15 +94,13 @@ export class PlayerDetailComponent {
   getTeamLogo(fileName: string): string {
     if(fileName == "")
         return "default-team.png";
-    return fileName;
-    // return this.imageService.getImageUrl('Teams', fileName);
+    return this.imageService.getImageUrl('Teams', fileName);
   }
   
   getPlayerImage(fileName: string): string {
     if(fileName == "")
         return "default-player.png";
-    return fileName;
-    // return this.imageService.getImageUrl('Players', fileName);
+    return this.imageService.getImageUrl('Players', fileName);
   }
   
   onTrophyClick(trophy: any): void {
