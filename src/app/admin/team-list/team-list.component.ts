@@ -13,7 +13,7 @@ import { ImageService } from '../../core/services/image.service';
   standalone: true,
   imports: [CommonModule, FormsModule, RouterModule]
 })
-export class TeamListComponent implements OnInit {
+export class AdminTeamListComponent implements OnInit {
   teams: Team[] = [];
   paginatedTeams: Team[] = [];
   

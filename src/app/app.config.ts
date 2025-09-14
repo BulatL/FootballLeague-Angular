@@ -9,7 +9,7 @@
 // };
 
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withInMemoryScrolling } from '@angular/router';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { JwtModule } from '@auth0/angular-jwt';
 
@@ -22,7 +22,13 @@ export function tokenGetter() {
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes),
+    provideRouter(
+      routes,
+      withInMemoryScrolling({
+        scrollPositionRestoration: 'enabled', // 👈 scrolls to top on route change
+        anchorScrolling: 'enabled',           // 👈 allows #hash links to scroll
+      })
+    ),
     provideHttpClient(withInterceptors([authInterceptor])),
     importProvidersFrom(
       JwtModule.forRoot({

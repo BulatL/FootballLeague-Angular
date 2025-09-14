@@ -9,6 +9,7 @@ export class FixtureFormModel {
   awayTeamLogo: string;
   awayScore: number;
   fixtureDateTime: Date;
+  isFinished: boolean;
 
   constructor(
     id: number = 0,
@@ -21,6 +22,7 @@ export class FixtureFormModel {
     awayTeamLogo: string = '',
     awayScore: number = 0,
     fixtureDateTime: Date,
+    isFinished: boolean = false
   ) {
     this.id = id;
     this.homeTeamId = homeTeamId
@@ -32,5 +34,6 @@ export class FixtureFormModel {
     this.awayTeamLogo = awayTeamLogo;
     this.awayScore = awayScore;
     this.fixtureDateTime = fixtureDateTime
+    this.isFinished = isFinished
   }
 }

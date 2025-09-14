@@ -5,7 +5,7 @@ import { LeagueListComponent } from './admin/league-list/league-list.component';
 import { LeagueHomeComponent } from './league-home/league-home.component';
 import { LeagueFormComponent } from './admin/league-form/league-form.component';
 import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
-import { TeamListComponent } from './admin/team-list/team-list.component';
+import { AdminTeamListComponent } from './admin/team-list/team-list.component';
 import { PlayerListComponent } from './admin/player-list/player-list.component';
 import { RewardListComponent } from './admin/reward-list/reward-list.component';
 import { RewardFormComponent } from './admin/reward-form/reward-form.component';
@@ -23,6 +23,7 @@ import { AdminFixtureListComponent } from './admin/fixture-list/fixture-list.com
 import { FixtureListComponent } from './fixture-list/fixture-list.component';
 import { FixtureFormComponent } from './admin/fixture-form/fixture-form.component';
 import { TeamDetailComponent } from './team-detail/team-detail.component';
+import { TeamListComponent } from './team-list/team-list.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'league-home', pathMatch: 'full' },
@@ -30,9 +31,20 @@ export const routes: Routes = [
   { path: 'Home', redirectTo: 'league-home', pathMatch: 'full' },
   { path: 'league-home', component: LeagueHomeComponent },
   { path: 'players/:id', component: PlayerDetailComponent },
-  { path: 'fixtures/:id', component: FixtureDetailComponent },
-  { path: 'fixtures', component: FixtureListComponent },
-  { path: 'teams/:id', component: TeamDetailComponent },
+  { 
+    path: 'fixtures', 
+    children: [
+      { path: ':id', component: FixtureDetailComponent },
+      { path: '', component: FixtureListComponent }
+    ]
+  },
+  { 
+    path: 'teams', 
+    children: [
+      { path: ':id', component: TeamDetailComponent },
+      { path: '', component: TeamListComponent }
+    ]
+  },
   { path: 'login', component: LoginComponent },
    {
     path: 'admin',
@@ -53,7 +65,7 @@ export const routes: Routes = [
       { path: 'seasons/:id', component: SeasonDetailsComponent },
       { path: 'seasons/:seasonId/teams', component: SeasonTeamsComponent },
       // Teams
-      { path: 'teams', component: TeamListComponent },
+      { path: 'teams', component: AdminTeamListComponent },
       { path: 'teams/edit/:id', component: TeamFormComponent },
       { path: 'teams/create', component: TeamFormComponent },
       { path: 'teams/:teamId/players', component: TeamPlayersComponent },

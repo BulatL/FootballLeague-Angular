@@ -1,0 +1,119 @@
+<div class="teams-container">
+    <!-- Filters Section -->
+    <div class="filters-section">
+        <div class="filters-grid">
+            <div class="filter-group">
+                <label class="filter-label">Sezona</label>
+                <select 
+                    class="filter-select" 
+                    [value]="filters.seasonId" 
+                    (change)="onSeasonChange($event)">
+                    <option value="0">Sve sezone</option>
+                    <option 
+                        *ngFor="let season of seasons" 
+                        [value]="season.id">
+                        {{ season.name }}
+                    </option>
+                    </select>
+            </div>
+
+            <div class="filter-group">
+                <label class="filter-label">Pretraži tim</label>
+                <input 
+                    type="text" 
+                    class="filter-input" 
+                    placeholder="Unesite ime tima..."
+                    [value]="filters.searchTerm"
+                    (input)="onSearchTermChange($event)">
+            </div>
+
+            <div class="filter-group">
+                <label class="filter-label">Sortiraj po</label>
+                <select 
+                    class="filter-select"
+                    [value]="filters.sortBy" 
+                    (change)="onSortChange($event)">
+                    <option value="name">Ime tima</option>
+                    <option value="wins">Pobede</option>
+                    <option value="goals">Golovi</option>
+                </select>
+            </div>
+
+            <div class="filter-actions">
+                <button class="btn btn-primary" (click)="onFilterClick()">Filtriraj</button>
+                <button class="btn btn-secondary" (click)="onResetClick()">Resetuj</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading State -->
+    <div class="loading" *ngIf="loading">
+        <div class="loading-spinner"></div>
+        <p>Učitavanje timova...</p>
+    </div>
+
+     <!-- Error State -->
+    <div class="empty-state" *ngIf="error && !loading">
+        <div class="empty-icon">⚠️</div>
+        <h2>Greška pri učitavanju</h2>
+        <p>{{ error }}</p>
+    </div>
+
+
+    <!-- Teams List -->
+    <div class="teams-list" *ngIf="!loading && !error">
+        <div class="team-card" *ngFor="let team of teams" (click)="onTeamClick(team.id)">
+            <div class="team-header">
+                <img [src]="getTeamLogo(team.logo)" [alt]="team.name" class="team-logo">
+                <div class="team-info">
+                    <h3>{{ team.name }}</h3>
+                    <span class="team-season">{{ team.shortName }}</span>
+                </div>
+            </div>
+
+            <!-- <div class="team-stats">
+                <div class="team-stat">
+                    <span class="team-stat-value">28</span>
+                    <span class="team-stat-label">Poeni</span>
+                </div>
+                <div class="team-stat">
+                    <span class="team-stat-value">45</span>
+                    <span class="team-stat-label">Golovi</span>
+                </div>
+                <div class="team-stat">
+                    <span class="team-stat-value">12</span>
+                    <span class="team-stat-label">Utakmice</span>
+                </div>
+            </div> -->
+
+            <div class="team-performance">
+                <div class="performance-item">
+                    <span class="performance-value">{{ team.seasonsPlayed }}</span>
+                    <span class="performance-label">Odigranih sezona</span>
+                </div>
+                <div class="performance-item">
+                    <span class="performance-value">{{ team.totalGoals }}</span>
+                    <span class="performance-label">Ukupno Golova</span>
+                </div>
+                <div class="performance-item">
+                    <span class="performance-value wins">{{ team.totalWins }}</span>
+                    <span class="performance-label">Ukupno Pobeda</span>
+                </div>
+                <div class="performance-item">
+                    <span class="performance-value draws">{{ team.totalDraws }}</span>
+                    <span class="performance-label">Ukupno Nerešenih</span>
+                </div>
+                <div class="performance-item">
+                    <span class="performance-value losses">{{ team.totalLosses }}</span>
+                    <span class="performance-label">Ukupno Poraza</span>
+                </div>
+                <div class="performance-item">
+                    <span class="performance-value">{{ team.playersCount }}</span>
+                    <span class="performance-label">Igrača</span>
+                </div>
+            </div>
+
+            <!-- <span class="team-players-count">6 igrača</span> -->
+        </div>
+    </div>
+</div>

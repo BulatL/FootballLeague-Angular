@@ -77,7 +77,8 @@ export class FixtureFormComponent implements OnInit {
                                                 fixture.awayTeamName,
                                                 fixture.awayTeamLogo,
                                                 fixture.awayScore,
-                                                fixture.fixtureDateTime
+                                                fixture.fixtureDateTime,
+                                                fixture.isFinished
         );
         this.loadPlayers();
       },
@@ -318,10 +319,14 @@ export class FixtureFormComponent implements OnInit {
 
 
   getPlayerImage(fileName: string): string {
+    if(fileName == "")
+        return "default-player.png";
       return this.imageService.getImageUrl("Players", fileName);
   }
 
   getTeamLogo(fileName: string): string {
+    if(fileName == "")
+        return "default-team.png";
       return this.imageService.getImageUrl("Teams", fileName);
   }
 

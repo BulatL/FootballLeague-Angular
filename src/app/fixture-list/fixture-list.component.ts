@@ -110,8 +110,10 @@ selectMatchDay(matchDayId: number): void {
   }
 }
 
-  getTeamLogo(logoFileName: string): string {
-    return this.imageService.getImageUrl('Teams', logoFileName);
+  getTeamLogo(fileName: string): string {
+    if(fileName == "")
+        return "default-team.png";
+    return this.imageService.getImageUrl('Teams', fileName);
   }
 
   isMatchDaySelected(matchDayId: number): boolean {
