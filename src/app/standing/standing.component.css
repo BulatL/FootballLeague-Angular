@@ -104,3 +104,13 @@ margin-right: 0.5rem;
     font-size: 0.8rem;
   }
 }
+/* Default headers */
+.header-full { display: table-cell; }
+.header-short { display: none; }
+.header-goals { width: 50px; }
+
+/* Mobile headers */
+@media (max-width: 768px) {
+  .header-full { display: none; }
+  .header-short { display: table-cell; }
+}
