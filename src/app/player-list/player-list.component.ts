@@ -170,7 +170,7 @@ export class PlayerListComponent implements OnInit {
   getPlayerImage(fileName: string): string {
     if(fileName == "")
         return "default-player.png";
-    return this.imageService.getImageUrl('Teams', fileName);
+    return this.imageService.getImageUrl('Players', fileName);
   }
 
   getTeamLogo(fileName: string | undefined){
