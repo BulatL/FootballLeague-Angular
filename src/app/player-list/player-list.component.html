@@ -1,0 +1,181 @@
+<!-- player-list.component.html -->
+<div class="players-container">
+  <!-- Filters Section -->
+  <div class="filters-section">
+    <div class="filters-grid">
+      <div class="filter-group">
+        <label class="filter-label">Tim</label>
+        <select 
+          class="filter-select" 
+          [value]="filters.teamId" 
+          (change)="onTeamChange($event)">
+          <option value="0">Svi timovi</option>
+          <option 
+            *ngFor="let team of teams" 
+            [value]="team.id">
+            {{ team.name }}
+          </option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label class="filter-label">Pozicija</label>
+        <select 
+          class="filter-select" 
+          [value]="filters.position" 
+          (change)="onPositionChange($event)">
+          <option value="all">Sve pozicije</option>
+          <option value="player">Igrač</option>
+          <option value="goalkeeper">Golman</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label class="filter-label">Pretraži igrača</label>
+        <input 
+          type="text" 
+          class="filter-input" 
+          placeholder="Unesite ime igrača..."
+          [value]="filters.searchTerm"
+          (input)="onSearchTermChange($event)">
+      </div>
+
+      <div class="filter-group">
+        <label class="filter-label">Sortiraj po</label>
+        <select 
+          class="filter-select"
+          [value]="filters.sortBy" 
+          (change)="onSortChange($event)">
+          <option value="name">Ime igrača</option>
+          <option value="dreamPoints">Dream Points</option>
+          <option value="goals">Golovi</option>
+          <option value="games">Utakmice</option>
+          <option value="team">Tim</option>
+        </select>
+      </div>
+
+      <div class="filter-actions">
+        <button class="btn btn-primary" (click)="onFilterClick()">Filtriraj</button>
+        <button class="btn btn-secondary" (click)="onResetClick()">Resetuj</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div class="loading" *ngIf="loading">
+    <div class="loading-spinner"></div>
+    <p>Učitavanje igrača...</p>
+  </div>
+
+  <!-- Error State -->
+  <div class="empty-state" *ngIf="error && !loading">
+    <div class="empty-icon">⚠️</div>
+    <h2>Greška pri učitavanju</h2>
+    <p>{{ error }}</p>
+  </div>
+
+  <!-- Players List -->
+  <div class="players-list" *ngIf="!loading && !error">
+    <!-- No results message -->
+    <div class="empty-state" *ngIf="players.length === 0">
+      <div class="empty-icon">🔍</div>
+      <h2>Nema rezultata</h2>
+      <p>Nema igrača koji odgovaraju vašim filterima.</p>
+      <button class="btn btn-secondary" (click)="onResetClick()">Resetuj filtere</button>
+    </div>
+
+    <!-- Player Cards -->
+    <div 
+      *ngFor="let player of players" 
+      class="player-card"
+      (click)="onPlayerClick(player.id)">
+      
+      <div class="player-header">
+        <div class="player-image-container">
+          <img 
+            [src]="getPlayerImage(player.image)" 
+            [alt]="getPlayerFullName(player)" 
+            class="player-image">
+          
+          <!-- Dream Points Badge -->
+          <div class="dream-points-badge">
+            <span class="dream-points-value">{{ player.dreamTeamPoints }}</span>
+            <span class="dream-points-label">DT PTS</span>
+          </div>
+        </div>
+        
+        <div class="player-info">
+          <h3>{{ getPlayerFullName(player) }}</h3>
+          <span class="player-position" [class.goalkeeper]="isGoalkeeper(player)">
+            {{ player.position === 'Goalkeeper' ? 'Golman' : 'Igrač' }}
+          </span>
+          
+          <!-- Current Team -->
+          <div class="current-team" *ngIf="player.currentTeamId">
+            <img 
+              [src]="getTeamLogo(player.currentTeamLogo)" 
+              [alt]="player.currentTeamName" 
+              class="team-logo-small"
+              (click)="onTeamClick(player.currentTeamId); $event.stopPropagation()">
+            <span class="team-name-small">{{ player.currentTeamName + " (" + player.currentTeamShortName + ")" }}</span>
+          </div>
+          
+          <div class="no-team" *ngIf="!player.currentTeamId">
+            <span class="no-team-text">Bez tima</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="player-performance">
+        <div class="performance-item">
+          <span class="performance-value">{{ player.seasonsPlayed }}</span>
+          <span class="performance-label">Sezone</span>
+        </div>
+        <div class="performance-item">
+          <span class="performance-value">{{ player.totalGames }}</span>
+          <span class="performance-label">Utakmice</span>
+        </div>
+        <div class="performance-item">
+          <span class="performance-value wins">{{ player.totalGoals }}</span>
+          <span class="performance-label">Golovi</span>
+        </div>
+        <div class="performance-item">
+          <span class="performance-value draws">{{ player.totalAssists }}</span>
+          <span class="performance-label">Asistencije</span>
+        </div>
+        <div class="performance-item" *ngIf="isGoalkeeper(player)">
+          <span class="performance-value losses">{{ player.totalSaves }}</span>
+          <span class="performance-label">Odbrane</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pagination Controls -->
+    <div class="pagination-container" *ngIf="totalPages > 1 && !loading">
+        <div class="pagination-info">
+            <span>{{ currentPage }} od {{ totalPages }} • {{ totalCount }} igrača</span>
+        </div>
+    
+        <div class="pagination-controls">
+            <button 
+            class="btn btn-secondary pagination-btn" 
+            [disabled]="!hasPreviousPage"
+            (click)="previousPage()">
+            ← Prethodna
+            </button>
+            
+            <button 
+            class="btn btn-secondary pagination-btn" 
+            [disabled]="!hasNextPage"
+            (click)="nextPage()">
+            Sledeća →
+            </button>
+        </div>
+    </div>
+  </div>
+
+  <!-- Results Summary -->
+  <div class="results-summary" *ngIf="!loading && !error && players.length > 0">
+    <p>Prikazano {{ players.length }} {{ players.length === 1 ? 'igrač' : 'igrača' }}</p>
+  </div>
+</div>

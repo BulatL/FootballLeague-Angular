@@ -11,7 +11,7 @@ import { ImageService } from '../../core/services/image.service';
   templateUrl: './player-list.component.html',
   styleUrls: ['./player-list.component.css']
 })
-export class PlayerListComponent implements OnInit {
+export class AdminPlayerListComponent implements OnInit {
   players: Player[] = [];
   loading = false;
   error: string = '';

@@ -11,11 +11,6 @@ export interface TeamListModel {
     playersCount: number;
 }
 
-export interface SeasonModel {
-    id: number;
-    name: string;
-}
-
 export interface TeamFilters {
     seasonId: number;
     searchTerm: string;

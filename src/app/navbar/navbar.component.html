@@ -13,6 +13,7 @@
         <div class="nav-links">
             <a routerLink="/fixtures" routerLinkActive="active" class="nav-link highlight-blue-color">Raspored</a>
             <a routerLink="/teams" routerLinkActive="active" class="nav-link highlight-blue-color">Timovi</a>
+            <a routerLink="/players" routerLinkActive="active" class="nav-link highlight-blue-color">Igrači</a>
             <a *ngIf="displayAdmin()" routerLink="/admin" routerLinkActive="active" class="nav-link highlight-blue-color">Admin</a>
         </div>
       </div>
@@ -48,6 +49,7 @@
     <div class="mobile-nav-content">
       <a routerLink="/fixtures" routerLinkActive="active" class="nav-link highlight-blue-color" (click)="closeMenu()">Raspored</a>
       <a routerLink="/teams" routerLinkActive="active" class="nav-link highlight-blue-color" (click)="closeMenu()">Timovi</a>
+      <a routerLink="/players" routerLinkActive="active" class="nav-link highlight-blue-color" (click)="closeMenu()">Igrači</a>
       <a *ngIf="displayAdmin()" routerLink="/admin" class="mobile-nav-link" (click)="closeMenu()">Admin</a>
     </div>
   </div>

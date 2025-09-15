@@ -22,6 +22,6 @@ export class SeasonService {
   }
 
   getAll(): Observable<any> {
-  return this.http.get<any>(`${this.apiUrl}/list`);
+    return this.http.get<any>(`${this.apiUrl}/list`);
   }
 }

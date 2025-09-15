@@ -1,7 +1,8 @@
-import { Component, OnInit, Input, HostListener } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule  } from '@angular/router';
-import { TeamListModel, SeasonModel, TeamFilters } from '../core/models/team-list-model';
+import { TeamListModel, TeamFilters } from '../core/models/team-list-model';
+import { SeasonModel } from '../core/models/season-model';
 import { ImageService } from '../core/services/image.service';
 import { TeamService } from '../core/services/team.service';
 import { SeasonService } from '../core/services/season.service';
@@ -39,7 +40,7 @@ export class TeamListComponent implements OnInit{
     this.loadInitialData();
   }
 
-   async loadInitialData() {
+  async loadInitialData() {
     this.loading = true;
     this.error = null;
 
@@ -61,12 +62,14 @@ export class TeamListComponent implements OnInit{
 
 
   loadSeasons() {
+    this.loading = true;
     this.seasonService.getAll().subscribe({
       next:(seasons: any) => {
         this.seasons = seasons.$values;
+        this.loading = false;
       },
       error: (error) => {
-        console.error('Error loading teams:', error);
+        console.error('Error loading seasons:', error);
         this.loading = false;
       }
     });
@@ -88,7 +91,7 @@ export class TeamListComponent implements OnInit{
     });
   }
 
-   onSeasonChange(event: Event) {
+  onSeasonChange(event: Event) {
     const target = event.target as HTMLSelectElement;
     this.filters.seasonId = parseInt(target.value) || 0;
     // Don't load teams automatically - wait for filter button

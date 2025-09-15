@@ -6,7 +6,7 @@ import { LeagueHomeComponent } from './league-home/league-home.component';
 import { LeagueFormComponent } from './admin/league-form/league-form.component';
 import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
 import { AdminTeamListComponent } from './admin/team-list/team-list.component';
-import { PlayerListComponent } from './admin/player-list/player-list.component';
+import { AdminPlayerListComponent } from './admin/player-list/player-list.component';
 import { RewardListComponent } from './admin/reward-list/reward-list.component';
 import { RewardFormComponent } from './admin/reward-form/reward-form.component';
 import { PlayerDetailComponent } from './player-detail/player-detail.component';
@@ -24,13 +24,20 @@ import { FixtureListComponent } from './fixture-list/fixture-list.component';
 import { FixtureFormComponent } from './admin/fixture-form/fixture-form.component';
 import { TeamDetailComponent } from './team-detail/team-detail.component';
 import { TeamListComponent } from './team-list/team-list.component';
+import { PlayerListComponent } from './player-list/player-list.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'league-home', pathMatch: 'full' },
   { path: 'Index', redirectTo: 'league-home', pathMatch: 'full' },
   { path: 'Home', redirectTo: 'league-home', pathMatch: 'full' },
   { path: 'league-home', component: LeagueHomeComponent },
-  { path: 'players/:id', component: PlayerDetailComponent },
+  { 
+    path: 'players', 
+    children: [
+      { path: ':id', component: PlayerDetailComponent },
+      { path: '', component: PlayerListComponent }
+    ]
+  },
   { 
     path: 'fixtures', 
     children: [
@@ -70,7 +77,7 @@ export const routes: Routes = [
       { path: 'teams/create', component: TeamFormComponent },
       { path: 'teams/:teamId/players', component: TeamPlayersComponent },
       // Players
-      { path: 'players', component: PlayerListComponent },
+      { path: 'players', component: AdminPlayerListComponent },
       { path: 'players/create', component: PlayerFormComponent },
       { path: 'players/edit/:id', component: PlayerFormComponent },
       // Fixtures

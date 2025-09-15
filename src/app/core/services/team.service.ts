@@ -31,4 +31,8 @@ export class TeamService {
 
     return this.http.get<any>(`${this.apiUrl}/filter`, { params });
   }
+
+  getAll(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/list`);
+  }
 }
