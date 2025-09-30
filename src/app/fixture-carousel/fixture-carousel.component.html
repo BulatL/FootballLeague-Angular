@@ -1,52 +1,107 @@
-<h1 class="header-highlight-blue-color">
-  Rezultati
-</h1>
+<div class="carousel-section">
+  <h1 class="header-highlight-blue-color">Rezultati</h1>
 
-<!-- Show fixtures when available -->
-<div class="fixture-marquee" *ngIf="fixtures && fixtures.length > 0; else noFixturesTemplate">
-  <div class="fixture-track" *ngFor="let duplicate of [1, 2]" [attr.aria-hidden]="duplicate === 2">
-    <div class="fixture-card"
-         *ngFor="let fixture of fixtures; trackBy: trackByFixtureId"
-         (click)="onFixtureClick(fixture)">
-      <div class="round">
-        <img src="soccer-ball-16.png" alt="Round" />
-        <span class="margin-left-5">Kolo: {{ fixture.roundNumber }}</span>
-      </div>
-      <div class="teams-container" >
-        <div class="team">
-          <img class="fixture-card-team-logo" [src]="getLogo(fixture.homeTeamLogo)" />
-          <div class="team-name margin-left-5">{{ fixture.homeTeamShortName }}</div>
-        </div>
+  <!-- Loading state -->
+  <div *ngIf="isLoading" class="loading-container">
+    <p>Učitavanje utakmica...</p>
+  </div>
 
-        <div class="score">
-          <span [class.winning-score]="isWinningTeam(fixture.homeTeamScore, fixture.awayTeamScore, true)" 
+  <!-- Carousel -->
+  <div *ngIf="!isLoading && fixtures.length > 0" class="carousel-container">
+    <!-- Navigation Buttons -->
+    <button 
+      *ngIf="showNavigation"
+      class="carousel-nav prev" 
+      [disabled]="!canGoPrevious"
+      (click)="onPrevClick()"
+      aria-label="Previous">
+      ‹
+    </button>
+    
+    <button 
+      *ngIf="showNavigation"
+      class="carousel-nav next" 
+      [disabled]="!canGoNext"
+      (click)="onNextClick()"
+      aria-label="Next">
+      ›
+    </button>
+
+    <div 
+      class="fixture-carousel"
+      (mouseenter)="onCarouselMouseEnter()"
+      (mouseleave)="onCarouselMouseLeave()">
+      
+      <div 
+        #fixtureTrack
+        class="fixture-track" 
+        [class.single-card]="!showNavigation"
+        [style.transform]="trackTransform">
+        
+        <!-- Fixture Cards -->
+        <div 
+          *ngFor="let fixture of fixtures; trackBy: trackByFixtureId" 
+          class="fixture-card"
+          (click)="onFixtureClick(fixture)">
+          
+          <div class="round">
+            <img src="soccer-ball-16.png" alt="Round" />
+            <span class="margin-left-5">Kolo: {{ fixture.roundNumber }}</span>
+          </div>
+          
+          <div class="teams-container">
+            <div class="team" (click)="onTeamClick($event, fixture.homeTeamId)">
+              <img 
+                class="fixture-card-team-logo" 
+                [src]="getLogo(fixture.homeTeamLogo)" 
+                [alt]="fixture.homeTeamShortName" />
+              <div class="team-name margin-left-5">{{ fixture.homeTeamShortName }}</div>
+            </div>
+
+            <div class="score">
+              <span 
+                [class.winning-score]="isWinningTeam(fixture.homeTeamScore, fixture.awayTeamScore, true)"
                 [class.losing-score]="isLosingTeam(fixture.homeTeamScore, fixture.awayTeamScore, true)">
-            {{ fixture.homeTeamScore ?? '-' }}
-          </span> 
-          - 
-          <span [class.winning-score]="isWinningTeam(fixture.homeTeamScore, fixture.awayTeamScore, false)" 
+                {{ fixture.homeTeamScore ?? '-' }}
+              </span> 
+              - 
+              <span 
+                [class.winning-score]="isWinningTeam(fixture.homeTeamScore, fixture.awayTeamScore, false)"
                 [class.losing-score]="isLosingTeam(fixture.homeTeamScore, fixture.awayTeamScore, false)">
-            {{ fixture.awayTeamScore ?? '-' }}
-          </span>
-        </div>
+                {{ fixture.awayTeamScore ?? '-' }}
+              </span>
+            </div>
 
-        <div class="team">
-          <img class="fixture-card-team-logo" [src]="getLogo(fixture.awayTeamLogo)" />
-          <div class="team-name margin-left-5">{{ fixture.awayTeamShortName }}</div>
+            <div class="team" (click)="onTeamClick($event, fixture.awayTeamId)">
+              <img 
+                class="fixture-card-team-logo" 
+                [src]="getLogo(fixture.awayTeamLogo)" 
+                [alt]="fixture.awayTeamShortName" />
+              <div class="team-name margin-left-5">{{ fixture.awayTeamShortName }}</div>
+            </div>
+          </div>
+
+          <!-- <div class="fixture-date" *ngIf="fixture.date">
+            <span>{{ fixture.date | date:'EEE, MMM d • HH:mm' }}</span>
+          </div> -->
         </div>
       </div>
-      <!-- <div class="datetime-container">
-        <div class="fixture-datetime">
-          <span>{{ fixture.date | date:'EEE, MMM d • HH:mm' }}</span>
-        </div>
-      </div> -->
+    </div>
+
+    <!-- Dots Indicator -->
+    <div *ngIf="showNavigation" class="carousel-dots">
+      <button 
+        *ngFor="let dot of dotsArray; let i = index"
+        class="dot"
+        [class.active]="i === currentIndex"
+        (click)="goToSlide(i)"
+        [attr.aria-label]="'Go to slide ' + (i + 1)">
+      </button>
     </div>
   </div>
-</div>
 
-<!-- Show when no fixtures available -->
-<ng-template #noFixturesTemplate>
-  <div class="no-fixtures-container">
+  <!-- No fixtures message -->
+  <div *ngIf="!isLoading && fixtures.length === 0" class="no-fixtures-container">
     <div class="no-fixtures-content">
       <div class="no-fixtures-icon">
         <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -61,4 +116,4 @@
       </div>
     </div>
   </div>
-</ng-template>
+</div>
