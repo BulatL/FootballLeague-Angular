@@ -25,6 +25,7 @@ import { FixtureFormComponent } from './admin/fixture-form/fixture-form.componen
 import { TeamDetailComponent } from './team-detail/team-detail.component';
 import { TeamListComponent } from './team-list/team-list.component';
 import { PlayerListComponent } from './player-list/player-list.component';
+import { PlayoffBracketComponent } from './playoff-bracket/playoff-bracket.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'league-home', pathMatch: 'full' },
@@ -41,8 +42,9 @@ export const routes: Routes = [
   { 
     path: 'fixtures', 
     children: [
+      { path: 'playoff', component: PlayoffBracketComponent },
       { path: ':id', component: FixtureDetailComponent },
-      { path: '', component: FixtureListComponent }
+      { path: '', component: FixtureListComponent },
     ]
   },
   { 

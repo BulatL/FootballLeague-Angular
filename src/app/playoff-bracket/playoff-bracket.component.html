@@ -1,0 +1,267 @@
+<div class="bracket-container" *ngIf="!loading">
+  <!-- Desktop View -->
+  <div class="bracket-desktop">
+    <div class="bracket-grid">
+      
+      <!-- Quarterfinals Column -->
+      <div class="bracket-round quarterfinals">
+        <h3 class="round-title">Četvrtfinale</h3>
+        <div class="matches-column">
+          <div 
+            *ngFor="let match of quarterfinals" 
+            class="match-card"
+            [class.clickable]="match.fixtureId"
+            (click)="onMatchClick(match)">
+            
+            <div class="match-header">
+              <span class="match-label">Utakmica {{ match.matchNumber }}</span>
+            </div>
+            
+            <div class="team-row" [class.winner]="isWinner(match, true)">
+              <img [src]="getTeamLogo(match.homeTeam.logo)" [alt]="match.homeTeam.name" class="team-logo">
+              <span class="team-name">{{ match.homeTeam.shortName }}</span>
+              <span class="team-score" *ngIf="match.isFinished">{{ match.homeTeam.score }}</span>
+              <span class="team-score placeholder" *ngIf="!match.isFinished">-</span>
+            </div>
+            
+            <div class="team-row" [class.winner]="isWinner(match, false)">
+              <img [src]="getTeamLogo(match.awayTeam.logo)" [alt]="match.awayTeam.name" class="team-logo">
+              <span class="team-name">{{ match.awayTeam.shortName }}</span>
+              <span class="team-score" *ngIf="match.isFinished">{{ match.awayTeam.score }}</span>
+              <span class="team-score placeholder" *ngIf="!match.isFinished">-</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Connector Lines 1 -->
+      <div class="connectors connectors-1">
+        <svg class="connector-svg" viewBox="0 0 100 400" preserveAspectRatio="none">
+          <!-- Top bracket (QF1 -> SF1) -->
+          <path d="M 0 50 L 50 50 L 50 125 L 100 125" class="connector-line" />
+          <!-- Second bracket (QF2 -> SF1) -->
+          <path d="M 0 150 L 50 150 L 50 125 L 100 125" class="connector-line" />
+          
+          <!-- Third bracket (QF3 -> SF2) -->
+          <path d="M 0 250 L 50 250 L 50 275 L 100 275" class="connector-line" />
+          <!-- Fourth bracket (QF4 -> SF2) -->
+          <path d="M 0 350 L 50 350 L 50 275 L 100 275" class="connector-line" />
+        </svg>
+      </div>
+
+      <!-- Semifinals Column -->
+      <div class="bracket-round semifinals">
+        <h3 class="round-title">Polufinale</h3>
+        <div class="matches-column">
+          <div 
+            *ngFor="let match of semifinals" 
+            class="match-card"
+            [class.clickable]="match.fixtureId"
+            (click)="onMatchClick(match)">
+            
+            <div class="match-header">
+              <span class="match-label">Utakmica {{ match.matchNumber }}</span>
+            </div>
+            
+            <div class="team-row" [class.winner]="isWinner(match, true)">
+              <img [src]="getTeamLogo(match.homeTeam.logo)" [alt]="match.homeTeam.name" class="team-logo">
+              <span class="team-name">{{ match.homeTeam.shortName }}</span>
+              <span class="team-score" *ngIf="match.isFinished">{{ match.homeTeam.score }}</span>
+              <span class="team-score placeholder" *ngIf="!match.isFinished">-</span>
+            </div>
+            
+            <div class="team-row" [class.winner]="isWinner(match, false)">
+              <img [src]="getTeamLogo(match.awayTeam.logo)" [alt]="match.awayTeam.name" class="team-logo">
+              <span class="team-name">{{ match.awayTeam.shortName }}</span>
+              <span class="team-score" *ngIf="match.isFinished">{{ match.awayTeam.score }}</span>
+              <span class="team-score placeholder" *ngIf="!match.isFinished">-</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Connector Lines 2 -->
+      <div class="connectors connectors-2">
+        <svg class="connector-svg" viewBox="0 0 100 400" preserveAspectRatio="none">
+          <!-- SF1 -> Final -->
+          <path d="M 0 125 L 50 125 L 50 200 L 100 200" class="connector-line" />
+          <!-- SF2 -> Final -->
+          <path d="M 0 275 L 50 275 L 50 200 L 100 200" class="connector-line" />
+        </svg>
+      </div>
+
+      <!-- Final Column -->
+      <div class="bracket-round final">
+        <h3 class="round-title">Finale</h3>
+        <div class="matches-column">
+          <div 
+            *ngIf="final"
+            class="match-card final-card"
+            [class.clickable]="final.fixtureId"
+            (click)="onMatchClick(final)">
+            
+            <div class="match-header">
+              <span class="match-label">🏆 Finale</span>
+            </div>
+            
+            <div class="team-row" [class.winner]="isWinner(final, true)">
+              <img [src]="getTeamLogo(final.homeTeam.logo || '')" [alt]="final.homeTeam.name || ''" class="team-logo">
+              <span class="team-name">{{ final.homeTeam.shortName }}</span>
+              <span class="team-score" *ngIf="final.isFinished">{{ final.homeTeam.score }}</span>
+              <span class="team-score placeholder" *ngIf="!final.isFinished">-</span>
+            </div>
+            
+            <div class="team-row" [class.winner]="isWinner(final, false)">
+              <img [src]="getTeamLogo(final.awayTeam.logo || '')" [alt]="final.awayTeam.name || ''" class="team-logo">
+              <span class="team-name">{{ final.awayTeam.shortName }}</span>
+              <span class="team-score" *ngIf="final.isFinished">{{ final.awayTeam.score }}</span>
+              <span class="team-score placeholder" *ngIf="!final.isFinished">-</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Champion -->
+      <div class="champion-section" *ngIf="champion">
+        <div class="champion-card">
+          <div class="champion-icon">👑</div>
+          <img [src]="getTeamLogo(champion.logo)" [alt]="champion.name" class="champion-logo">
+          <h3 class="champion-name">{{ champion.name }}</h3>
+          <p class="champion-label">Šampion</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile View -->
+  <div class="bracket-mobile">
+    <!-- Quarterfinals -->
+    <div class="mobile-round">
+      <h3 class="mobile-round-title">
+        <span class="round-icon">⚽</span>
+        Četvrtfinale
+      </h3>
+      <div class="mobile-matches">
+        <div 
+          *ngFor="let match of quarterfinals" 
+          class="mobile-match-card"
+          [class.clickable]="match.fixtureId"
+          (click)="onMatchClick(match)">
+          
+          <div class="mobile-match-header">
+            <span class="mobile-match-label">Utakmica {{ match.matchNumber }}</span>
+          </div>
+          
+          <div class="mobile-teams">
+            <div class="mobile-team" [class.winner]="isWinner(match, true)">
+              <img [src]="getTeamLogo(match.homeTeam.logo)" [alt]="match.homeTeam.name" class="mobile-team-logo">
+              <span class="mobile-team-name">{{ match.homeTeam.shortName }}</span>
+              <span class="mobile-team-score" *ngIf="match.isFinished">{{ match.homeTeam.score }}</span>
+              <span class="mobile-team-score placeholder" *ngIf="!match.isFinished">-</span>
+            </div>
+            
+            <div class="mobile-vs">VS</div>
+            
+            <div class="mobile-team" [class.winner]="isWinner(match, false)">
+              <img [src]="getTeamLogo(match.awayTeam.logo)" [alt]="match.awayTeam.name" class="mobile-team-logo">
+              <span class="mobile-team-name">{{ match.awayTeam.shortName }}</span>
+              <span class="mobile-team-score" *ngIf="match.isFinished">{{ match.awayTeam.score }}</span>
+              <span class="mobile-team-score placeholder" *ngIf="!match.isFinished">-</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Semifinals -->
+    <div class="mobile-round">
+      <h3 class="mobile-round-title">
+        <span class="round-icon">🔥</span>
+        Polufinale
+      </h3>
+      <div class="mobile-matches">
+        <div 
+          *ngFor="let match of semifinals" 
+          class="mobile-match-card"
+          [class.clickable]="match.fixtureId"
+          (click)="onMatchClick(match)">
+          
+          <div class="mobile-match-header">
+            <span class="mobile-match-label">Utakmica {{ match.matchNumber }}</span>
+          </div>
+          
+          <div class="mobile-teams">
+            <div class="mobile-team" [class.winner]="isWinner(match, true)">
+              <img [src]="getTeamLogo(match.homeTeam.logo)" [alt]="match.homeTeam.name" class="mobile-team-logo">
+              <span class="mobile-team-name">{{ match.homeTeam.shortName }}</span>
+              <span class="mobile-team-score" *ngIf="match.isFinished">{{ match.homeTeam.score }}</span>
+              <span class="mobile-team-score placeholder" *ngIf="!match.isFinished">-</span>
+            </div>
+            
+            <div class="mobile-vs">VS</div>
+            
+            <div class="mobile-team" [class.winner]="isWinner(match, false)">
+              <img [src]="getTeamLogo(match.awayTeam.logo)" [alt]="match.awayTeam.name" class="mobile-team-logo">
+              <span class="mobile-team-name">{{ match.awayTeam.shortName }}</span>
+              <span class="mobile-team-score" *ngIf="match.isFinished">{{ match.awayTeam.score }}</span>
+              <span class="mobile-team-score placeholder" *ngIf="!match.isFinished">-</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Final -->
+    <div class="mobile-round" *ngIf="final">
+      <h3 class="mobile-round-title">
+        <span class="round-icon">🏆</span>
+        Finale
+      </h3>
+      <div class="mobile-matches">
+        <div 
+          class="mobile-match-card final"
+          [class.clickable]="final.fixtureId"
+          (click)="onMatchClick(final)">
+          
+          <div class="mobile-match-header">
+            <span class="mobile-match-label">🏆 Finale</span>
+          </div>
+          
+          <div class="mobile-teams">
+            <div class="mobile-team" [class.winner]="isWinner(final, true)">
+              <img [src]="getTeamLogo(final.homeTeam.logo || '')" [alt]="final.homeTeam.name || ''" class="mobile-team-logo">
+              <span class="mobile-team-name">{{ final.homeTeam.shortName }}</span>
+              <span class="mobile-team-score" *ngIf="final.isFinished">{{ final.homeTeam.score }}</span>
+              <span class="mobile-team-score placeholder" *ngIf="!final.isFinished">-</span>
+            </div>
+            
+            <div class="mobile-vs">VS</div>
+            
+            <div class="mobile-team" [class.winner]="isWinner(final, false)">
+              <img [src]="getTeamLogo(final.awayTeam.logo || '')" [alt]="final.awayTeam.name || ''" class="mobile-team-logo">
+              <span class="mobile-team-name">{{ final.awayTeam.shortName }}</span>
+              <span class="mobile-team-score" *ngIf="final.isFinished">{{ final.awayTeam.score }}</span>
+              <span class="mobile-team-score placeholder" *ngIf="!final.isFinished">-</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Champion -->
+    <div class="mobile-champion" *ngIf="champion">
+      <div class="mobile-champion-card">
+        <div class="mobile-champion-icon">👑</div>
+        <img [src]="getTeamLogo(champion.logo)" [alt]="champion.name" class="mobile-champion-logo">
+        <h3 class="mobile-champion-name">{{ champion.name }}</h3>
+        <p class="mobile-champion-label">Šampion Sezone</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Loading State -->
+<div class="loading-container" *ngIf="loading">
+  <div class="loading-spinner"></div>
+  <p>Učitavanje playoff bracket-a...</p>
+</div>
