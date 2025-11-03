@@ -14,11 +14,16 @@ export class SeasonService {
   constructor(private http: HttpClient) {}
 
   setSeasonId(id: number) {
+    localStorage.setItem('seasonId', id.toString());
     this.seasonIdSubject.next(id);
   }
 
   getSeasonId(): number | null {
-    return this.seasonIdSubject.value; // synchronous getter
+    const current = this.seasonIdSubject.value;
+    if (current !== null) return current;
+
+    const stored = localStorage.getItem('seasonId');
+    return stored ? Number(stored) : null;
   }
 
   getAll(): Observable<any> {

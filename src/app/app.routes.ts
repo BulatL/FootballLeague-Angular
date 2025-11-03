@@ -32,6 +32,7 @@ export const routes: Routes = [
   { path: 'Index', redirectTo: 'league-home', pathMatch: 'full' },
   { path: 'Home', redirectTo: 'league-home', pathMatch: 'full' },
   { path: 'league-home', component: LeagueHomeComponent },
+  { path: 'playoff', component: PlayoffBracketComponent },
   { 
     path: 'players', 
     children: [
@@ -42,7 +43,6 @@ export const routes: Routes = [
   { 
     path: 'fixtures', 
     children: [
-      { path: 'playoff', component: PlayoffBracketComponent },
       { path: ':id', component: FixtureDetailComponent },
       { path: '', component: FixtureListComponent },
     ]

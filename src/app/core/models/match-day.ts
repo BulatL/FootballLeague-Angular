@@ -3,4 +3,6 @@ export interface MatchDay {
   roundNumber: number;
   isFinished: boolean;
   isCurrent: boolean;
+  isPlayoff: boolean;
+  roundName: string | null;
 }

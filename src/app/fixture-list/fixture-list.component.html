@@ -15,7 +15,7 @@
         [class.active]="isMatchDaySelected(matchDay.id)"
         [class.finished]="matchDay.isFinished"
         (click)="selectMatchDay(matchDay.id)">
-        Kolo {{ matchDay.roundNumber }}
+        {{ matchDay.isPlayoff == false ? 'Kolo ' + matchDay.roundNumber : matchDay.roundName }}
       </button>
     </div>
   </div>

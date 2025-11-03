@@ -11,6 +11,7 @@
       <div class="nav-right">
         <!-- Desktop Nav Links -->
         <div class="nav-links">
+            <a routerLink="/playoff" routerLinkActive="active" class="nav-link highlight-blue-color">Playoff</a>
             <a routerLink="/fixtures" routerLinkActive="active" class="nav-link highlight-blue-color">Raspored</a>
             <a routerLink="/teams" routerLinkActive="active" class="nav-link highlight-blue-color">Timovi</a>
             <a routerLink="/players" routerLinkActive="active" class="nav-link highlight-blue-color">Igrači</a>
@@ -47,6 +48,7 @@
   <!-- Mobile Navigation Menu -->
   <div class="mobile-nav" [class.mobile-nav-open]="isMenuOpen">
     <div class="mobile-nav-content">
+      <a routerLink="/playoff" routerLinkActive="active" class="nav-link highlight-blue-color" (click)="closeMenu()">Playoff</a>
       <a routerLink="/fixtures" routerLinkActive="active" class="nav-link highlight-blue-color" (click)="closeMenu()">Raspored</a>
       <a routerLink="/teams" routerLinkActive="active" class="nav-link highlight-blue-color" (click)="closeMenu()">Timovi</a>
       <a routerLink="/players" routerLinkActive="active" class="nav-link highlight-blue-color" (click)="closeMenu()">Igrači</a>

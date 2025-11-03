@@ -8,7 +8,6 @@ import { MatchDay } from '../models/match-day';
 import { FixtureDetailModel } from '../models/fixture-detail-mode';
 import { GetFixtureLineupResponse } from '../models/fixture-lineup-response.mode';
 import { ApiResponse } from '../../shared/api-response';
-import { FixtureTimelineModel } from '../models/fixture-timeline-model';
 import { PlayerDetailFixture } from '../models/player-detail-model';
 
 @Injectable({
@@ -16,7 +15,6 @@ import { PlayerDetailFixture } from '../models/player-detail-model';
 })
 export class FixtureService {
   private apiUrl = environment.apiUrl + '/fixtures';
-    // private apiUrl = environment.mockApiUrl + '/fixture/previewactivematchday';
   
   constructor(private http: HttpClient) {}
 

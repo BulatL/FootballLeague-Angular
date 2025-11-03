@@ -1,4 +1,12 @@
 <div class="bracket-container" *ngIf="!loading">
+  <!-- Section Header -->
+  <div class="section-header">
+    <h1 class="section-title">
+      <span class="title-icon">🏆</span>
+      {{ playoffBracket?.name || 'Playoff Bracket' }}
+    </h1>
+  </div>
+
   <!-- Desktop View -->
   <div class="bracket-desktop">
     <div class="bracket-grid">
@@ -8,27 +16,57 @@
         <h3 class="round-title">Četvrtfinale</h3>
         <div class="matches-column">
           <div 
-            *ngFor="let match of quarterfinals" 
+            *ngFor="let match of quarterfinals; let i = index" 
             class="match-card"
             [class.clickable]="match.fixtureId"
             (click)="onMatchClick(match)">
             
-            <div class="match-header">
-              <span class="match-label">Utakmica {{ match.matchNumber }}</span>
+            <!-- Round Badge -->
+            <div class="round-badge">
+              <img src="soccer-ball-16.png" alt="Match" class="round-icon" />
+              <span>Utakmica {{ i + 1 }}</span>
             </div>
-            
-            <div class="team-row" [class.winner]="isWinner(match, true)">
-              <img [src]="getTeamLogo(match.homeTeam.logo)" [alt]="match.homeTeam.name" class="team-logo">
-              <span class="team-name">{{ match.homeTeam.shortName }}</span>
-              <span class="team-score" *ngIf="match.isFinished">{{ match.homeTeam.score }}</span>
-              <span class="team-score placeholder" *ngIf="!match.isFinished">-</span>
-            </div>
-            
-            <div class="team-row" [class.winner]="isWinner(match, false)">
-              <img [src]="getTeamLogo(match.awayTeam.logo)" [alt]="match.awayTeam.name" class="team-logo">
-              <span class="team-name">{{ match.awayTeam.shortName }}</span>
-              <span class="team-score" *ngIf="match.isFinished">{{ match.awayTeam.score }}</span>
-              <span class="team-score placeholder" *ngIf="!match.isFinished">-</span>
+
+            <!-- Teams Container -->
+            <div class="teams-container">
+              <!-- Home Team -->
+              <div class="team home-team" [class.winner]="isWinner(match, true)">
+                <img 
+                  [src]="getTeamLogo(match.homeTeamLogo || '')" 
+                  [alt]="match.homeTeamName || 'TBD'" 
+                  class="team-logo">
+                <div class="team-name">
+                  {{ match.homeTeamShortName || 'TBD' }}
+                </div>
+              </div>
+
+              <!-- Score -->
+              <div class="score">
+                <span 
+                  class="team-score"
+                  [class.winning-score]="isWinner(match, true)"
+                  [class.losing-score]="!isWinner(match, true) && match.isFinished">
+                  {{ match.isFinished ? match.homeScore : '-' }}
+                </span>
+                <span class="score-separator">-</span>
+                <span 
+                  class="team-score"
+                  [class.winning-score]="isWinner(match, false)"
+                  [class.losing-score]="!isWinner(match, false) && match.isFinished">
+                  {{ match.isFinished ? match.awayScore : '-' }}
+                </span>
+              </div>
+
+              <!-- Away Team -->
+              <div class="team away-team" [class.winner]="isWinner(match, false)">
+                <img 
+                  [src]="getTeamLogo(match.awayTeamLogo || '')" 
+                  [alt]="match.awayTeamName || 'TBD'" 
+                  class="team-logo">
+                <div class="team-name">
+                  {{ match.awayTeamShortName || 'TBD' }}
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -54,27 +92,57 @@
         <h3 class="round-title">Polufinale</h3>
         <div class="matches-column">
           <div 
-            *ngFor="let match of semifinals" 
+            *ngFor="let match of semifinals; let i = index" 
             class="match-card"
             [class.clickable]="match.fixtureId"
             (click)="onMatchClick(match)">
             
-            <div class="match-header">
-              <span class="match-label">Utakmica {{ match.matchNumber }}</span>
+            <!-- Round Badge -->
+            <div class="round-badge">
+              <img src="soccer-ball-16.png" alt="Match" class="round-icon" />
+              <span>Utakmica {{ i + 5 }}</span>
             </div>
-            
-            <div class="team-row" [class.winner]="isWinner(match, true)">
-              <img [src]="getTeamLogo(match.homeTeam.logo)" [alt]="match.homeTeam.name" class="team-logo">
-              <span class="team-name">{{ match.homeTeam.shortName }}</span>
-              <span class="team-score" *ngIf="match.isFinished">{{ match.homeTeam.score }}</span>
-              <span class="team-score placeholder" *ngIf="!match.isFinished">-</span>
-            </div>
-            
-            <div class="team-row" [class.winner]="isWinner(match, false)">
-              <img [src]="getTeamLogo(match.awayTeam.logo)" [alt]="match.awayTeam.name" class="team-logo">
-              <span class="team-name">{{ match.awayTeam.shortName }}</span>
-              <span class="team-score" *ngIf="match.isFinished">{{ match.awayTeam.score }}</span>
-              <span class="team-score placeholder" *ngIf="!match.isFinished">-</span>
+
+            <!-- Teams Container -->
+            <div class="teams-container">
+              <!-- Home Team -->
+              <div class="team home-team" [class.winner]="isWinner(match, true)">
+                <img 
+                  [src]="getTeamLogo(match.homeTeamLogo || '')" 
+                  [alt]="match.homeTeamName || 'TBD'" 
+                  class="team-logo">
+                <div class="team-name">
+                  {{ match.homeTeamShortName || 'TBD' }}
+                </div>
+              </div>
+
+              <!-- Score -->
+              <div class="score">
+                <span 
+                  class="team-score"
+                  [class.winning-score]="isWinner(match, true)"
+                  [class.losing-score]="!isWinner(match, true) && match.isFinished">
+                  {{ match.isFinished ? match.homeScore : '-' }}
+                </span>
+                <span class="score-separator">-</span>
+                <span 
+                  class="team-score"
+                  [class.winning-score]="isWinner(match, false)"
+                  [class.losing-score]="!isWinner(match, false) && match.isFinished">
+                  {{ match.isFinished ? match.awayScore : '-' }}
+                </span>
+              </div>
+
+              <!-- Away Team -->
+              <div class="team away-team" [class.winner]="isWinner(match, false)">
+                <img 
+                  [src]="getTeamLogo(match.awayTeamLogo || '')" 
+                  [alt]="match.awayTeamName || 'TBD'" 
+                  class="team-logo">
+                <div class="team-name">
+                  {{ match.awayTeamShortName || 'TBD' }}
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -94,39 +162,134 @@
       <div class="bracket-round final">
         <h3 class="round-title">Finale</h3>
         <div class="matches-column">
+
+          <!-- Final Match -->
           <div 
-            *ngIf="final"
+            *ngIf="finals"
             class="match-card final-card"
-            [class.clickable]="final.fixtureId"
-            (click)="onMatchClick(final)">
+            [class.clickable]="finals.fixtureId"
+            (click)="onMatchClick(finals)">
             
-            <div class="match-header">
-              <span class="match-label">🏆 Finale</span>
+            <!-- Round Badge -->
+            <div class="round-badge final-badge">
+              <span>🏆 Finale</span>
             </div>
-            
-            <div class="team-row" [class.winner]="isWinner(final, true)">
-              <img [src]="getTeamLogo(final.homeTeam.logo || '')" [alt]="final.homeTeam.name || ''" class="team-logo">
-              <span class="team-name">{{ final.homeTeam.shortName }}</span>
-              <span class="team-score" *ngIf="final.isFinished">{{ final.homeTeam.score }}</span>
-              <span class="team-score placeholder" *ngIf="!final.isFinished">-</span>
+
+            <!-- Teams Container -->
+            <div class="teams-container">
+              <!-- Home Team -->
+              <div class="team home-team" [class.winner]="isWinner(finals, true)">
+                <img 
+                  [src]="getTeamLogo(finals.homeTeamLogo || '')" 
+                  [alt]="finals.homeTeamName || 'TBD'" 
+                  class="team-logo">
+                <div class="team-name">
+                  {{ finals.homeTeamShortName || 'TBD' }}
+                </div>
+              </div>
+
+              <!-- Score -->
+              <div class="score">
+                <span 
+                  class="team-score"
+                  [class.winning-score]="isWinner(finals, true)"
+                  [class.losing-score]="!isWinner(finals, true) && finals.isFinished">
+                  {{ finals.isFinished ? finals.homeScore : '-' }}
+                </span>
+                <span class="score-separator">-</span>
+                <span 
+                  class="team-score"
+                  [class.winning-score]="isWinner(finals, false)"
+                  [class.losing-score]="!isWinner(finals, false) && finals.isFinished">
+                  {{ finals.isFinished ? finals.awayScore : '-' }}
+                </span>
+              </div>
+
+              <!-- Away Team -->
+              <div class="team away-team" [class.winner]="isWinner(finals, false)">
+                <img 
+                  [src]="getTeamLogo(finals.awayTeamLogo || '')" 
+                  [alt]="finals.awayTeamName || 'TBD'" 
+                  class="team-logo">
+                <div class="team-name">
+                  {{ finals.awayTeamShortName || 'TBD' }}
+                </div>
+              </div>
             </div>
+
+            <!-- Match Date/Time if not finished -->
+            <div class="match-datetime" *ngIf="!finals.isFinished && finals.fixtureDateTime">
+              {{ finals.fixtureDateTime | date:'short' }}
+            </div>
+          </div>
+
+          <!-- 3rd Place Match -->
+          <div 
+            *ngIf="thirdPlace"
+            class="match-card third-place-card"
+            [class.clickable]="thirdPlace.fixtureId"
+            (click)="onMatchClick(thirdPlace)">
             
-            <div class="team-row" [class.winner]="isWinner(final, false)">
-              <img [src]="getTeamLogo(final.awayTeam.logo || '')" [alt]="final.awayTeam.name || ''" class="team-logo">
-              <span class="team-name">{{ final.awayTeam.shortName }}</span>
-              <span class="team-score" *ngIf="final.isFinished">{{ final.awayTeam.score }}</span>
-              <span class="team-score placeholder" *ngIf="!final.isFinished">-</span>
+            <!-- Round Badge -->
+            <div class="round-badge third-place-badge">
+              <span>🥉 3. Mesto</span>
+            </div>
+
+            <!-- Teams Container -->
+            <div class="teams-container">
+              <!-- Home Team -->
+              <div class="team home-team" [class.winner]="isWinner(thirdPlace, true)">
+                <img 
+                  [src]="getTeamLogo(thirdPlace.homeTeamLogo || '')" 
+                  [alt]="thirdPlace.homeTeamName || 'TBD'" 
+                  class="team-logo">
+                <div class="team-name">
+                  {{ thirdPlace.homeTeamShortName || 'TBD' }}
+                </div>
+              </div>
+
+              <!-- Score -->
+              <div class="score">
+                <span 
+                  class="team-score"
+                  [class.winning-score]="isWinner(thirdPlace, true)"
+                  [class.losing-score]="!isWinner(thirdPlace, true) && thirdPlace.isFinished">
+                  {{ thirdPlace.isFinished ? thirdPlace.homeScore : '-' }}
+                </span>
+                <span class="score-separator">-</span>
+                <span 
+                  class="team-score"
+                  [class.winning-score]="isWinner(thirdPlace, false)"
+                  [class.losing-score]="!isWinner(thirdPlace, false) && thirdPlace.isFinished">
+                  {{ thirdPlace.isFinished ? thirdPlace.awayScore : '-' }}
+                </span>
+              </div>
+
+              <!-- Away Team -->
+              <div class="team away-team" [class.winner]="isWinner(thirdPlace, false)">
+                <img 
+                  [src]="getTeamLogo(thirdPlace.awayTeamLogo || '')" 
+                  [alt]="thirdPlace.awayTeamName || 'TBD'" 
+                  class="team-logo">
+                <div class="team-name">
+                  {{ thirdPlace.awayTeamShortName || 'TBD' }}
+                </div>
+              </div>
+            </div>
+
+            <!-- Match Date/Time if not finished -->
+            <div class="match-datetime" *ngIf="!thirdPlace.isFinished && thirdPlace.fixtureDateTime">
+              {{ thirdPlace.fixtureDateTime | date:'short' }}
             </div>
           </div>
         </div>
       </div>
 
       <!-- Champion -->
-      <div class="champion-section" *ngIf="champion">
+      <div class="champion-section" *ngIf="playoffBracket?.isFinished && playoffBracket?.championTeamName">
         <div class="champion-card">
           <div class="champion-icon">👑</div>
-          <img [src]="getTeamLogo(champion.logo)" [alt]="champion.name" class="champion-logo">
-          <h3 class="champion-name">{{ champion.name }}</h3>
+          <h3 class="champion-name">{{ playoffBracket?.championTeamName }}</h3>
           <p class="champion-label">Šampion</p>
         </div>
       </div>
@@ -143,30 +306,56 @@
       </h3>
       <div class="mobile-matches">
         <div 
-          *ngFor="let match of quarterfinals" 
+          *ngFor="let match of quarterfinals; let i = index" 
           class="mobile-match-card"
           [class.clickable]="match.fixtureId"
           (click)="onMatchClick(match)">
           
-          <div class="mobile-match-header">
-            <span class="mobile-match-label">Utakmica {{ match.matchNumber }}</span>
+          <!-- Round Badge -->
+          <div class="round-badge">
+            <img src="soccer-ball-16.png" alt="Match" class="round-icon" />
+            <span>Utakmica {{ i + 1 }}</span>
           </div>
-          
-          <div class="mobile-teams">
-            <div class="mobile-team" [class.winner]="isWinner(match, true)">
-              <img [src]="getTeamLogo(match.homeTeam.logo)" [alt]="match.homeTeam.name" class="mobile-team-logo">
-              <span class="mobile-team-name">{{ match.homeTeam.shortName }}</span>
-              <span class="mobile-team-score" *ngIf="match.isFinished">{{ match.homeTeam.score }}</span>
-              <span class="mobile-team-score placeholder" *ngIf="!match.isFinished">-</span>
+
+          <!-- Teams Container -->
+          <div class="teams-container">
+            <!-- Home Team -->
+            <div class="team home-team" [class.winner]="isWinner(match, true)">
+              <img 
+                [src]="getTeamLogo(match.homeTeamLogo || '')" 
+                [alt]="match.homeTeamName || 'TBD'" 
+                class="team-logo">
+              <div class="team-name">
+                {{ match.homeTeamShortName || 'TBD' }}
+              </div>
             </div>
-            
-            <div class="mobile-vs">VS</div>
-            
-            <div class="mobile-team" [class.winner]="isWinner(match, false)">
-              <img [src]="getTeamLogo(match.awayTeam.logo)" [alt]="match.awayTeam.name" class="mobile-team-logo">
-              <span class="mobile-team-name">{{ match.awayTeam.shortName }}</span>
-              <span class="mobile-team-score" *ngIf="match.isFinished">{{ match.awayTeam.score }}</span>
-              <span class="mobile-team-score placeholder" *ngIf="!match.isFinished">-</span>
+
+            <!-- Score -->
+            <div class="score">
+              <span 
+                class="team-score"
+                [class.winning-score]="isWinner(match, true)"
+                [class.losing-score]="!isWinner(match, true) && match.isFinished">
+                {{ match.isFinished ? match.homeScore : '-' }}
+              </span>
+              <span class="score-separator">-</span>
+              <span 
+                class="team-score"
+                [class.winning-score]="isWinner(match, false)"
+                [class.losing-score]="!isWinner(match, false) && match.isFinished">
+                {{ match.isFinished ? match.awayScore : '-' }}
+              </span>
+            </div>
+
+            <!-- Away Team -->
+            <div class="team away-team" [class.winner]="isWinner(match, false)">
+              <img 
+                [src]="getTeamLogo(match.awayTeamLogo || '')" 
+                [alt]="match.awayTeamName || 'TBD'" 
+                class="team-logo">
+              <div class="team-name">
+                {{ match.awayTeamShortName || 'TBD' }}
+              </div>
             </div>
           </div>
         </div>
@@ -176,43 +365,136 @@
     <!-- Semifinals -->
     <div class="mobile-round">
       <h3 class="mobile-round-title">
-        <span class="round-icon">🔥</span>
+        <span class="round-icon">⚽</span>
         Polufinale
       </h3>
       <div class="mobile-matches">
         <div 
-          *ngFor="let match of semifinals" 
+          *ngFor="let match of semifinals; let i = index" 
           class="mobile-match-card"
           [class.clickable]="match.fixtureId"
           (click)="onMatchClick(match)">
           
-          <div class="mobile-match-header">
-            <span class="mobile-match-label">Utakmica {{ match.matchNumber }}</span>
+          <!-- Round Badge -->
+          <div class="round-badge">
+            <img src="soccer-ball-16.png" alt="Match" class="round-icon" />
+            <span>Utakmica {{ i + 5 }}</span>
           </div>
-          
-          <div class="mobile-teams">
-            <div class="mobile-team" [class.winner]="isWinner(match, true)">
-              <img [src]="getTeamLogo(match.homeTeam.logo)" [alt]="match.homeTeam.name" class="mobile-team-logo">
-              <span class="mobile-team-name">{{ match.homeTeam.shortName }}</span>
-              <span class="mobile-team-score" *ngIf="match.isFinished">{{ match.homeTeam.score }}</span>
-              <span class="mobile-team-score placeholder" *ngIf="!match.isFinished">-</span>
+
+          <!-- Teams Container -->
+          <div class="teams-container">
+            <!-- Home Team -->
+            <div class="team home-team" [class.winner]="isWinner(match, true)">
+              <img 
+                [src]="getTeamLogo(match.homeTeamLogo || '')" 
+                [alt]="match.homeTeamName || 'TBD'" 
+                class="team-logo">
+              <div class="team-name">
+                {{ match.homeTeamShortName || 'TBD' }}
+              </div>
             </div>
-            
-            <div class="mobile-vs">VS</div>
-            
-            <div class="mobile-team" [class.winner]="isWinner(match, false)">
-              <img [src]="getTeamLogo(match.awayTeam.logo)" [alt]="match.awayTeam.name" class="mobile-team-logo">
-              <span class="mobile-team-name">{{ match.awayTeam.shortName }}</span>
-              <span class="mobile-team-score" *ngIf="match.isFinished">{{ match.awayTeam.score }}</span>
-              <span class="mobile-team-score placeholder" *ngIf="!match.isFinished">-</span>
+
+            <!-- Score -->
+            <div class="score">
+              <span 
+                class="team-score"
+                [class.winning-score]="isWinner(match, true)"
+                [class.losing-score]="!isWinner(match, true) && match.isFinished">
+                {{ match.isFinished ? match.homeScore : '-' }}
+              </span>
+              <span class="score-separator">-</span>
+              <span 
+                class="team-score"
+                [class.winning-score]="isWinner(match, false)"
+                [class.losing-score]="!isWinner(match, false) && match.isFinished">
+                {{ match.isFinished ? match.awayScore : '-' }}
+              </span>
+            </div>
+
+            <!-- Away Team -->
+            <div class="team away-team" [class.winner]="isWinner(match, false)">
+              <img 
+                [src]="getTeamLogo(match.awayTeamLogo || '')" 
+                [alt]="match.awayTeamName || 'TBD'" 
+                class="team-logo">
+              <div class="team-name">
+                {{ match.awayTeamShortName || 'TBD' }}
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Final -->
-    <div class="mobile-round" *ngIf="final">
+    <!-- 3rd Place Match (Mobile) -->
+    <div class="mobile-round" *ngIf="thirdPlace">
+      <h3 class="mobile-round-title">
+        <span class="round-icon">🥉</span>
+        3. Mesto
+      </h3>
+      <div class="mobile-matches">
+        <div 
+          class="mobile-match-card third-place"
+          [class.clickable]="thirdPlace.fixtureId"
+          (click)="onMatchClick(thirdPlace)">
+          
+          <!-- Round Badge -->
+          <div class="round-badge third-place-badge">
+            <span>🥉 3. Mesto</span>
+          </div>
+
+          <!-- Teams Container -->
+          <div class="teams-container">
+            <!-- Home Team -->
+            <div class="team home-team" [class.winner]="isWinner(thirdPlace, true)">
+              <img 
+                [src]="getTeamLogo(thirdPlace.homeTeamLogo || '')" 
+                [alt]="thirdPlace.homeTeamName || 'TBD'" 
+                class="team-logo">
+              <div class="team-name">
+                {{ thirdPlace.homeTeamShortName || 'TBD' }}
+              </div>
+            </div>
+
+            <!-- Score -->
+            <div class="score">
+              <span 
+                class="team-score"
+                [class.winning-score]="isWinner(thirdPlace, true)"
+                [class.losing-score]="!isWinner(thirdPlace, true) && thirdPlace.isFinished">
+                {{ thirdPlace.isFinished ? thirdPlace.homeScore : '-' }}
+              </span>
+              <span class="score-separator">-</span>
+              <span 
+                class="team-score"
+                [class.winning-score]="isWinner(thirdPlace, false)"
+                [class.losing-score]="!isWinner(thirdPlace, false) && thirdPlace.isFinished">
+                {{ thirdPlace.isFinished ? thirdPlace.awayScore : '-' }}
+              </span>
+            </div>
+
+            <!-- Away Team -->
+            <div class="team away-team" [class.winner]="isWinner(thirdPlace, false)">
+              <img 
+                [src]="getTeamLogo(thirdPlace.awayTeamLogo || '')" 
+                [alt]="thirdPlace.awayTeamName || 'TBD'" 
+                class="team-logo">
+              <div class="team-name">
+                {{ thirdPlace.awayTeamShortName || 'TBD' }}
+              </div>
+            </div>
+          </div>
+
+          <!-- Match Date/Time if not finished -->
+          <div class="match-datetime" *ngIf="!thirdPlace.isFinished && thirdPlace.fixtureDateTime">
+            {{ thirdPlace.fixtureDateTime | date:'short' }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Final (Mobile) -->
+    <div class="mobile-round" *ngIf="finals">
       <h3 class="mobile-round-title">
         <span class="round-icon">🏆</span>
         Finale
@@ -220,40 +502,69 @@
       <div class="mobile-matches">
         <div 
           class="mobile-match-card final"
-          [class.clickable]="final.fixtureId"
-          (click)="onMatchClick(final)">
+          [class.clickable]="finals.fixtureId"
+          (click)="onMatchClick(finals)">
           
-          <div class="mobile-match-header">
-            <span class="mobile-match-label">🏆 Finale</span>
+          <!-- Round Badge -->
+          <div class="round-badge final-badge">
+            <span>🏆 Finale</span>
           </div>
-          
-          <div class="mobile-teams">
-            <div class="mobile-team" [class.winner]="isWinner(final, true)">
-              <img [src]="getTeamLogo(final.homeTeam.logo || '')" [alt]="final.homeTeam.name || ''" class="mobile-team-logo">
-              <span class="mobile-team-name">{{ final.homeTeam.shortName }}</span>
-              <span class="mobile-team-score" *ngIf="final.isFinished">{{ final.homeTeam.score }}</span>
-              <span class="mobile-team-score placeholder" *ngIf="!final.isFinished">-</span>
+
+          <!-- Teams Container -->
+          <div class="teams-container">
+            <!-- Home Team -->
+            <div class="team home-team" [class.winner]="isWinner(finals, true)">
+              <img 
+                [src]="getTeamLogo(finals.homeTeamLogo || '')" 
+                [alt]="finals.homeTeamName || 'TBD'" 
+                class="team-logo">
+              <div class="team-name">
+                {{ finals.homeTeamShortName || 'TBD' }}
+              </div>
             </div>
-            
-            <div class="mobile-vs">VS</div>
-            
-            <div class="mobile-team" [class.winner]="isWinner(final, false)">
-              <img [src]="getTeamLogo(final.awayTeam.logo || '')" [alt]="final.awayTeam.name || ''" class="mobile-team-logo">
-              <span class="mobile-team-name">{{ final.awayTeam.shortName }}</span>
-              <span class="mobile-team-score" *ngIf="final.isFinished">{{ final.awayTeam.score }}</span>
-              <span class="mobile-team-score placeholder" *ngIf="!final.isFinished">-</span>
+
+            <!-- Score -->
+            <div class="score">
+              <span 
+                class="team-score"
+                [class.winning-score]="isWinner(finals, true)"
+                [class.losing-score]="!isWinner(finals, true) && finals.isFinished">
+                {{ finals.isFinished ? finals.homeScore : '-' }}
+              </span>
+              <span class="score-separator">-</span>
+              <span 
+                class="team-score"
+                [class.winning-score]="isWinner(finals, false)"
+                [class.losing-score]="!isWinner(finals, false) && finals.isFinished">
+                {{ finals.isFinished ? finals.awayScore : '-' }}
+              </span>
             </div>
+
+            <!-- Away Team -->
+            <div class="team away-team" [class.winner]="isWinner(finals, false)">
+              <img 
+                [src]="getTeamLogo(finals.awayTeamLogo || '')" 
+                [alt]="finals.awayTeamName || 'TBD'" 
+                class="team-logo">
+              <div class="team-name">
+                {{ finals.awayTeamShortName || 'TBD' }}
+              </div>
+            </div>
+          </div>
+
+          <!-- Match Date/Time if not finished -->
+          <div class="match-datetime" *ngIf="!finals.isFinished && finals.fixtureDateTime">
+            {{ finals.fixtureDateTime | date:'short' }}
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Champion -->
-    <div class="mobile-champion" *ngIf="champion">
+    <!-- Mobile Champion -->
+    <div class="mobile-champion" *ngIf="playoffBracket?.isFinished && playoffBracket?.championTeamName">
       <div class="mobile-champion-card">
         <div class="mobile-champion-icon">👑</div>
-        <img [src]="getTeamLogo(champion.logo)" [alt]="champion.name" class="mobile-champion-logo">
-        <h3 class="mobile-champion-name">{{ champion.name }}</h3>
+        <h3 class="mobile-champion-name">{{ playoffBracket?.championTeamName }}</h3>
         <p class="mobile-champion-label">Šampion Sezone</p>
       </div>
     </div>
@@ -264,4 +575,9 @@
 <div class="loading-container" *ngIf="loading">
   <div class="loading-spinner"></div>
   <p>Učitavanje playoff bracket-a...</p>
+</div>
+
+<!-- Error State -->
+<div class="error-container" *ngIf="error">
+  <p class="error-message">{{ error }}</p>
 </div>
