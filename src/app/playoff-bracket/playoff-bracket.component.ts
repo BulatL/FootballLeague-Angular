@@ -6,30 +6,8 @@ import { ActivatedRoute } from '@angular/router';
 import { PlayoffService} from '../core/services/playoff.service';
 import { PlayoffBracket, PlayoffFixture, PlayoffSeed } from '../core/models/playoff-model';
 import { SeasonService } from '../core/services/season.service';
-import { ApiListResponse } from '../shared/api-list-response';
+import { ImageService } from '../core/services/image.service';
 
-
-// export interface BracketMatch {
-//   id: number;
-//   homeTeam: {
-//     id: number;
-//     name: string;
-//     shortName: string;
-//     logo: string;
-//     score?: number;
-//   };
-//   awayTeam: {
-//     id: number;
-//     name: string;
-//     shortName: string;
-//     logo: string;
-//     score?: number;
-//   };
-//   round: 'quarterfinal' | 'semifinal' | 'final';
-//   matchNumber: number;
-//   isFinished: boolean;
-//   fixtureId?: number;
-// }
 
 @Component({
   selector: 'app-playoff-bracket',
@@ -52,6 +30,7 @@ export class PlayoffBracketComponent implements OnInit {
     private playoffService: PlayoffService,
     private seasonService: SeasonService,
     private route: ActivatedRoute,
+    private imageService: ImageService,
     private router: Router
   ) {}
 
@@ -115,8 +94,9 @@ export class PlayoffBracketComponent implements OnInit {
   }
 
   getTeamLogo(fileName: string): string {
-    if (fileName === '') return 'default-team.png';
-    return fileName;
+    if(fileName == "")
+        return "default-team.png";
+    return this.imageService.getImageUrl('Teams', fileName);
   }
 
   onMatchClick(match: PlayoffFixture): void {
@@ -132,5 +112,11 @@ export class PlayoffBracketComponent implements OnInit {
     return isHome 
       ? match.homeScore > match.awayScore 
       : match.awayScore > match.homeScore;
+  }
+  
+  onTeamClick(teamId: number | undefined, event: Event){
+    event.stopPropagation();
+    if(teamId != undefined)
+      this.router.navigate(['/teams/', teamId]);
   }
 }

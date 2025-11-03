@@ -30,7 +30,7 @@
             <!-- Teams Container -->
             <div class="teams-container">
               <!-- Home Team -->
-              <div class="team home-team" [class.winner]="isWinner(match, true)">
+              <div class="team home-team" [class.winner]="isWinner(match, true)" (click)="onTeamClick(match.homeTeamId, $event)">
                 <img 
                   [src]="getTeamLogo(match.homeTeamLogo || '')" 
                   [alt]="match.homeTeamName || 'TBD'" 
@@ -58,7 +58,7 @@
               </div>
 
               <!-- Away Team -->
-              <div class="team away-team" [class.winner]="isWinner(match, false)">
+              <div class="team away-team" [class.winner]="isWinner(match, false)" (click)="onTeamClick(match.homeTeamId, $event)">
                 <img 
                   [src]="getTeamLogo(match.awayTeamLogo || '')" 
                   [alt]="match.awayTeamName || 'TBD'" 
@@ -106,7 +106,7 @@
             <!-- Teams Container -->
             <div class="teams-container">
               <!-- Home Team -->
-              <div class="team home-team" [class.winner]="isWinner(match, true)">
+              <div class="team home-team" [class.winner]="isWinner(match, true)" (click)="onTeamClick(match.homeTeamId, $event)">
                 <img 
                   [src]="getTeamLogo(match.homeTeamLogo || '')" 
                   [alt]="match.homeTeamName || 'TBD'" 
@@ -134,7 +134,7 @@
               </div>
 
               <!-- Away Team -->
-              <div class="team away-team" [class.winner]="isWinner(match, false)">
+              <div class="team away-team" [class.winner]="isWinner(match, false)" (click)="onTeamClick(match.homeTeamId, $event)">
                 <img 
                   [src]="getTeamLogo(match.awayTeamLogo || '')" 
                   [alt]="match.awayTeamName || 'TBD'" 
@@ -178,7 +178,7 @@
             <!-- Teams Container -->
             <div class="teams-container">
               <!-- Home Team -->
-              <div class="team home-team" [class.winner]="isWinner(finals, true)">
+              <div class="team home-team" [class.winner]="isWinner(finals, true)" (click)="onTeamClick(finals.homeTeamId, $event)">
                 <img 
                   [src]="getTeamLogo(finals.homeTeamLogo || '')" 
                   [alt]="finals.homeTeamName || 'TBD'" 
@@ -206,7 +206,7 @@
               </div>
 
               <!-- Away Team -->
-              <div class="team away-team" [class.winner]="isWinner(finals, false)">
+              <div class="team away-team" [class.winner]="isWinner(finals, false)" (click)="onTeamClick(finals.homeTeamId, $event)">
                 <img 
                   [src]="getTeamLogo(finals.awayTeamLogo || '')" 
                   [alt]="finals.awayTeamName || 'TBD'" 
@@ -238,7 +238,7 @@
             <!-- Teams Container -->
             <div class="teams-container">
               <!-- Home Team -->
-              <div class="team home-team" [class.winner]="isWinner(thirdPlace, true)">
+              <div class="team home-team" [class.winner]="isWinner(thirdPlace, true)" (click)="onTeamClick(thirdPlace.homeTeamId, $event)">
                 <img 
                   [src]="getTeamLogo(thirdPlace.homeTeamLogo || '')" 
                   [alt]="thirdPlace.homeTeamName || 'TBD'" 
@@ -266,7 +266,7 @@
               </div>
 
               <!-- Away Team -->
-              <div class="team away-team" [class.winner]="isWinner(thirdPlace, false)">
+              <div class="team away-team" [class.winner]="isWinner(thirdPlace, false)" (click)="onTeamClick(thirdPlace.homeTeamId, $event)">
                 <img 
                   [src]="getTeamLogo(thirdPlace.awayTeamLogo || '')" 
                   [alt]="thirdPlace.awayTeamName || 'TBD'" 
@@ -320,7 +320,7 @@
           <!-- Teams Container -->
           <div class="teams-container">
             <!-- Home Team -->
-            <div class="team home-team" [class.winner]="isWinner(match, true)">
+            <div class="team home-team" [class.winner]="isWinner(match, true)" (click)="onTeamClick(match.homeTeamId, $event)">
               <img 
                 [src]="getTeamLogo(match.homeTeamLogo || '')" 
                 [alt]="match.homeTeamName || 'TBD'" 
@@ -348,7 +348,7 @@
             </div>
 
             <!-- Away Team -->
-            <div class="team away-team" [class.winner]="isWinner(match, false)">
+            <div class="team away-team" [class.winner]="isWinner(match, false)" (click)="onTeamClick(match.homeTeamId, $event)">
               <img 
                 [src]="getTeamLogo(match.awayTeamLogo || '')" 
                 [alt]="match.awayTeamName || 'TBD'" 
@@ -384,7 +384,7 @@
           <!-- Teams Container -->
           <div class="teams-container">
             <!-- Home Team -->
-            <div class="team home-team" [class.winner]="isWinner(match, true)">
+            <div class="team home-team" [class.winner]="isWinner(match, true)" (click)="onTeamClick(match.homeTeamId, $event)">
               <img 
                 [src]="getTeamLogo(match.homeTeamLogo || '')" 
                 [alt]="match.homeTeamName || 'TBD'" 
@@ -412,7 +412,7 @@
             </div>
 
             <!-- Away Team -->
-            <div class="team away-team" [class.winner]="isWinner(match, false)">
+            <div class="team away-team" [class.winner]="isWinner(match, false)" (click)="onTeamClick(match.homeTeamId, $event)">
               <img 
                 [src]="getTeamLogo(match.awayTeamLogo || '')" 
                 [alt]="match.awayTeamName || 'TBD'" 
@@ -446,7 +446,7 @@
           <!-- Teams Container -->
           <div class="teams-container">
             <!-- Home Team -->
-            <div class="team home-team" [class.winner]="isWinner(thirdPlace, true)">
+            <div class="team home-team" [class.winner]="isWinner(thirdPlace, true)" (click)="onTeamClick(thirdPlace.homeTeamId, $event)">
               <img 
                 [src]="getTeamLogo(thirdPlace.homeTeamLogo || '')" 
                 [alt]="thirdPlace.homeTeamName || 'TBD'" 
@@ -474,7 +474,7 @@
             </div>
 
             <!-- Away Team -->
-            <div class="team away-team" [class.winner]="isWinner(thirdPlace, false)">
+            <div class="team away-team" [class.winner]="isWinner(thirdPlace, false)" (click)="onTeamClick(thirdPlace.homeTeamId, $event)">
               <img 
                 [src]="getTeamLogo(thirdPlace.awayTeamLogo || '')" 
                 [alt]="thirdPlace.awayTeamName || 'TBD'" 
@@ -513,7 +513,7 @@
           <!-- Teams Container -->
           <div class="teams-container">
             <!-- Home Team -->
-            <div class="team home-team" [class.winner]="isWinner(finals, true)">
+            <div class="team home-team" [class.winner]="isWinner(finals, true)" (click)="onTeamClick(finals.homeTeamId, $event)">
               <img 
                 [src]="getTeamLogo(finals.homeTeamLogo || '')" 
                 [alt]="finals.homeTeamName || 'TBD'" 
@@ -541,7 +541,7 @@
             </div>
 
             <!-- Away Team -->
-            <div class="team away-team" [class.winner]="isWinner(finals, false)">
+            <div class="team away-team" [class.winner]="isWinner(finals, false)" (click)="onTeamClick(finals.homeTeamId, $event)">
               <img 
                 [src]="getTeamLogo(finals.awayTeamLogo || '')" 
                 [alt]="finals.awayTeamName || 'TBD'" 
