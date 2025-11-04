@@ -9,6 +9,7 @@ import { Season } from '../core/models/season';
 import { GetStatisticsResponse } from '../core/models/ApiResponse/Season/get-statistics-response';
 import { FixtureGenerationModalComponent } from './../fixture-generation-modal/fixture-generation-modal.component';
 import { GenerateFixturesRequest } from '../core/models/ApiRequest/generate-fixtures-request';
+import { PlayoffService } from '../core/services/playoff.service';
 
 @Component({
   selector: 'app-season-details',
@@ -24,6 +25,8 @@ export class SeasonDetailsComponent implements OnInit {
   error = '';
   fixturesGenerated = false;
   isStandingGenerated = false;
+  semifinalsGenerated = false;
+  finalsGenerated = false;
   
   // Modal state
   showFixtureModal = false;
@@ -48,6 +51,7 @@ export class SeasonDetailsComponent implements OnInit {
     private router: Router,
     private seasonService: SeasonService,
     private fixtureService: FixtureService,
+    private playoffService: PlayoffService
   ) {}
 
   ngOnInit(): void {
@@ -189,4 +193,46 @@ Prva utakmica: ${this.formatDate(response.data?.firstMatchDate!)}`;
   goToStandings(): void {
     this.router.navigate(['standings'], { relativeTo: this.route });
   }
+  
+  createSemifinalFixtures(): void {
+  const confirmed = confirm('Generiši utakmice za Polufinale?\n\n Sva četvrtfinala moraju biti završena.');
+  if (confirmed) {
+    this.playoffService.createNextRoundFixtures(this.seasonId, 2).subscribe({
+      next: (response: any) => {
+        if(response.isValid == true){
+          this.semifinalsGenerated = true;
+          alert('Utakmice su generisane!');
+        }
+        else
+          alert(response.errors.$values[0].message)
+        console.log(response);
+      },
+      error: (err) => {
+        console.log(err);
+        alert('Doslo je do greske prilikom pravljenja utakmica!');
+      }
+    });
+  }
+}
+
+createFinalFixtures(): void {
+  const confirmed = confirm('Generiši utakmicu za finale i 3. mesto?\n\n Oba polufinala moraju biti završena.');
+  if (confirmed) {
+    this.playoffService.createNextRoundFixtures(this.seasonId, 3).subscribe({
+      next: (response: any) => {
+        if(response.isValid == true){
+          this.finalsGenerated = true;
+          alert('Utakmice su generisane!');
+        }
+        else
+          alert(response.errors.$values[0].message)
+        console.log(response);
+      },
+      error: (err) => {
+        console.log(err);
+        alert('Doslo je do greske prilikom pravljenja utakmica!');
+      }
+    });
+  }
+}
 }

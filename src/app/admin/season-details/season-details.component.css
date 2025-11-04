@@ -435,3 +435,147 @@
   background-color: #f8f9fa;
   color: #6c757d;
 }
+/* Playoff Action Cards */
+.action-card.semifinals {
+  border-color: #6f42c1;
+}
+
+.action-card.semifinals:hover {
+  border-color: #6f42c1;
+  background-color: #faf8ff;
+}
+
+.action-card.semifinals .action-icon {
+  background-color: rgba(111, 66, 193, 0.1);
+  color: #6f42c1;
+}
+
+/* Semifinals button when generated */
+.action-card.semifinals.generated {
+  background: linear-gradient(135deg, #6f42c1 0%, #5a32a3 100%);
+  color: white;
+}
+
+.action-card.semifinals.generated .action-content p {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.action-card.semifinals.generated .action-stat {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.action-card.semifinals.generated .action-icon {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+/* Semifinals button when disabled */
+.action-card.semifinals:disabled {
+  background: #e9ecef;
+  color: #6c757d;
+  cursor: not-allowed;
+  transform: none;
+  border-color: transparent;
+}
+
+.action-card.semifinals:disabled:hover {
+  background: #e9ecef;
+  color: #6c757d;
+  transform: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.action-card.semifinals:disabled .action-icon {
+  background-color: rgba(108, 117, 125, 0.1);
+  color: #6c757d;
+}
+
+.action-card.semifinals:disabled .action-content p {
+  color: #6c757d;
+}
+
+.action-card.semifinals:disabled .action-stat {
+  background-color: #f8f9fa;
+  color: #6c757d;
+}
+
+/* Finals Action Card */
+.action-card.finals {
+  border-color: #fd7e14;
+}
+
+.action-card.finals:hover {
+  border-color: #fd7e14;
+  background-color: #fff9f5;
+}
+
+.action-card.finals .action-icon {
+  background-color: rgba(253, 126, 20, 0.1);
+  color: #fd7e14;
+}
+
+/* Finals button when generated */
+.action-card.finals.generated {
+  background: linear-gradient(135deg, #fd7e14 0%, #e8590c 100%);
+  color: white;
+}
+
+.action-card.finals.generated .action-content p {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.action-card.finals.generated .action-stat {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.action-card.finals.generated .action-icon {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+/* Finals button when disabled */
+.action-card.finals:disabled {
+  background: #e9ecef;
+  color: #6c757d;
+  cursor: not-allowed;
+  transform: none;
+  border-color: transparent;
+}
+
+.action-card.finals:disabled:hover {
+  background: #e9ecef;
+  color: #6c757d;
+  transform: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.action-card.finals:disabled .action-icon {
+  background-color: rgba(108, 117, 125, 0.1);
+  color: #6c757d;
+}
+
+.action-card.finals:disabled .action-content p {
+  color: #6c757d;
+}
+
+.action-card.finals:disabled .action-stat {
+  background-color: #f8f9fa;
+  color: #6c757d;
+}
+
+/* Bracket View Card */
+.action-card.bracket {
+  border-color: #20c997;
+}
+
+.action-card.bracket:hover {
+  border-color: #20c997;
+  background-color: #f0fdf9;
+}
+
+.action-card.bracket .action-icon {
+  background-color: rgba(32, 201, 151, 0.1);
+  color: #20c997;
+}
