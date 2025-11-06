@@ -335,7 +335,7 @@
               </div>
               <div class="trophy-info">          
                   <h3 class="trophy-name">
-                      {{ trophy.awardName }}{{ trophy.fixtureId !== null ? ' utakmice' : '' }}
+                    {{ trophy.awardName }}{{ trophy.seasonName !== null ? (' ' + trophy.seasonName) : '' }}
                   </h3>
                   <span class="trophy-season">{{ trophy.seasonName }}</span>
                   <p class="trophy-description" *ngIf="trophy.awardName">{{ trophy.awardName }}</p>

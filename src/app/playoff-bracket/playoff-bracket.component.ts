@@ -67,9 +67,6 @@ export class PlayoffBracketComponent implements OnInit {
   
   // 3rd place match has roundNumber 0, bracketPosition 8
   this.thirdPlace = fixtures.find(f => f.bracketPosition === 8);
-  
-  console.log('Finals:', this.finals);
-  console.log('Third Place:', this.thirdPlace);
 }
 
   getTeamDisplay(fixture: PlayoffFixture, isHome: boolean): string {

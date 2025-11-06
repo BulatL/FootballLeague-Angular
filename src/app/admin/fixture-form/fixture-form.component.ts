@@ -7,6 +7,7 @@ import { ImageService } from '../../core/services/image.service';
 import { FixtureService } from '../core/services/fixture.service';
 import { PlayerService } from '../core/services/player.service';
 import { PostFixtureRequestModel } from '../core/models/ApiRequest/post-fixture-details-request';
+import { SeasonService } from '../../core/services/season.service';
 
 
 interface Player {
@@ -50,6 +51,7 @@ export class FixtureFormComponent implements OnInit {
     private imageService: ImageService,
     private fixtureService: FixtureService,
     private playerService: PlayerService,
+    private seasonService: SeasonService,
     private router: Router,
   ) {}
 
@@ -186,6 +188,9 @@ export class FixtureFormComponent implements OnInit {
     this.fixtureService.postFixtureDetails(request).subscribe({
       next: (res) => {
         alert('Fixture saved successfully!');
+
+        const seasonId = this.seasonService.getSeasonId();
+        this.router.navigate(['/admin/seasons', seasonId, 'fixtures']);
       },
       error: (err) => {
         alert('Error while saving fixture!');

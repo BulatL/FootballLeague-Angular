@@ -58,7 +58,7 @@
               </div>
 
               <!-- Away Team -->
-              <div class="team away-team" [class.winner]="isWinner(match, false)" (click)="onTeamClick(match.homeTeamId, $event)">
+              <div class="team away-team" [class.winner]="isWinner(match, false)" (click)="onTeamClick(match.awayTeamId, $event)">
                 <img 
                   [src]="getTeamLogo(match.awayTeamLogo || '')" 
                   [alt]="match.awayTeamName || 'TBD'" 
@@ -134,7 +134,7 @@
               </div>
 
               <!-- Away Team -->
-              <div class="team away-team" [class.winner]="isWinner(match, false)" (click)="onTeamClick(match.homeTeamId, $event)">
+              <div class="team away-team" [class.winner]="isWinner(match, false)" (click)="onTeamClick(match.awayTeamId, $event)">
                 <img 
                   [src]="getTeamLogo(match.awayTeamLogo || '')" 
                   [alt]="match.awayTeamName || 'TBD'" 
@@ -206,7 +206,7 @@
               </div>
 
               <!-- Away Team -->
-              <div class="team away-team" [class.winner]="isWinner(finals, false)" (click)="onTeamClick(finals.homeTeamId, $event)">
+              <div class="team away-team" [class.winner]="isWinner(finals, false)" (click)="onTeamClick(finals.awayTeamId, $event)">
                 <img 
                   [src]="getTeamLogo(finals.awayTeamLogo || '')" 
                   [alt]="finals.awayTeamName || 'TBD'" 
@@ -266,7 +266,7 @@
               </div>
 
               <!-- Away Team -->
-              <div class="team away-team" [class.winner]="isWinner(thirdPlace, false)" (click)="onTeamClick(thirdPlace.homeTeamId, $event)">
+              <div class="team away-team" [class.winner]="isWinner(thirdPlace, false)" (click)="onTeamClick(thirdPlace.awayTeamId, $event)">
                 <img 
                   [src]="getTeamLogo(thirdPlace.awayTeamLogo || '')" 
                   [alt]="thirdPlace.awayTeamName || 'TBD'" 
@@ -286,13 +286,13 @@
       </div>
 
       <!-- Champion -->
-      <div class="champion-section" *ngIf="playoffBracket?.isFinished && playoffBracket?.championTeamName">
+      <!-- <div class="champion-section" *ngIf="playoffBracket?.isFinished && playoffBracket?.championTeamName">
         <div class="champion-card">
           <div class="champion-icon">👑</div>
           <h3 class="champion-name">{{ playoffBracket?.championTeamName }}</h3>
           <p class="champion-label">Šampion</p>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 
@@ -348,7 +348,7 @@
             </div>
 
             <!-- Away Team -->
-            <div class="team away-team" [class.winner]="isWinner(match, false)" (click)="onTeamClick(match.homeTeamId, $event)">
+            <div class="team away-team" [class.winner]="isWinner(match, false)" (click)="onTeamClick(match.awayTeamId, $event)">
               <img 
                 [src]="getTeamLogo(match.awayTeamLogo || '')" 
                 [alt]="match.awayTeamName || 'TBD'" 
@@ -412,7 +412,7 @@
             </div>
 
             <!-- Away Team -->
-            <div class="team away-team" [class.winner]="isWinner(match, false)" (click)="onTeamClick(match.homeTeamId, $event)">
+            <div class="team away-team" [class.winner]="isWinner(match, false)" (click)="onTeamClick(match.awayTeamId, $event)">
               <img 
                 [src]="getTeamLogo(match.awayTeamLogo || '')" 
                 [alt]="match.awayTeamName || 'TBD'" 
@@ -474,7 +474,7 @@
             </div>
 
             <!-- Away Team -->
-            <div class="team away-team" [class.winner]="isWinner(thirdPlace, false)" (click)="onTeamClick(thirdPlace.homeTeamId, $event)">
+            <div class="team away-team" [class.winner]="isWinner(thirdPlace, false)" (click)="onTeamClick(thirdPlace.awayTeamId, $event)">
               <img 
                 [src]="getTeamLogo(thirdPlace.awayTeamLogo || '')" 
                 [alt]="thirdPlace.awayTeamName || 'TBD'" 
@@ -541,7 +541,7 @@
             </div>
 
             <!-- Away Team -->
-            <div class="team away-team" [class.winner]="isWinner(finals, false)" (click)="onTeamClick(finals.homeTeamId, $event)">
+            <div class="team away-team" [class.winner]="isWinner(finals, false)" (click)="onTeamClick(finals.awayTeamId, $event)">
               <img 
                 [src]="getTeamLogo(finals.awayTeamLogo || '')" 
                 [alt]="finals.awayTeamName || 'TBD'" 
