@@ -1,13 +1,14 @@
 export interface DreamTeamModel {
-  goalkeeper: Player;
-  player1: Player;
-  player2: Player;
-  player3: Player;
-  player4: Player;
+  goalkeeper: Player | null;
+  player1: Player | null;
+  player2: Player | null;
+  player3: Player | null;
+  player4: Player | null;
   totalPoints: number;
   avgPoints: number;
   playedGames: number;
   totalGoals: number;
+  isCurrentSeason: boolean;
 }
 
 export interface Player {

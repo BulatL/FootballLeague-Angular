@@ -50,12 +50,12 @@
           </div>
           
           <div class="teams-container">
-            <div class="team" (click)="onTeamClick($event, fixture.homeTeamId)">
-              <img 
-                class="fixture-card-team-logo" 
-                [src]="getLogo(fixture.homeTeamLogo)" 
-                [alt]="fixture.homeTeamShortName" />
-              <div class="team-name margin-left-5">{{ fixture.homeTeamShortName }}</div>
+            <div class="team" (click)="onTeamClick($event, fixture.homeTeamId ?? 0)">
+              <img
+                class="fixture-card-team-logo"
+                [src]="getLogo(fixture.homeTeamId ? fixture.homeTeamLogo : '')"
+                [alt]="fixture.homeTeamId ? fixture.homeTeamShortName : 'Slobodno kolo'" />
+              <div class="team-name margin-left-5">{{ fixture.homeTeamId ? fixture.homeTeamShortName : 'Slobodno kolo' }}</div>
             </div>
 
             <div class="score">
@@ -72,12 +72,12 @@
               </span>
             </div>
 
-            <div class="team" (click)="onTeamClick($event, fixture.awayTeamId)">
-              <img 
-                class="fixture-card-team-logo" 
-                [src]="getLogo(fixture.awayTeamLogo)" 
-                [alt]="fixture.awayTeamShortName" />
-              <div class="team-name margin-left-5">{{ fixture.awayTeamShortName }}</div>
+            <div class="team" (click)="onTeamClick($event, fixture.awayTeamId ?? 0)">
+              <img
+                class="fixture-card-team-logo"
+                [src]="getLogo(fixture.awayTeamId ? fixture.awayTeamLogo : '')"
+                [alt]="fixture.awayTeamId ? fixture.awayTeamShortName : 'Slobodno kolo'" />
+              <div class="team-name margin-left-5">{{ fixture.awayTeamId ? fixture.awayTeamShortName : 'Slobodno kolo' }}</div>
             </div>
           </div>
 
@@ -109,7 +109,7 @@
           <path d="M8 12h8"></path>
         </svg>
       </div>
-      <h3>Nema utakmica</h3>
+      <h3>Trenutno nema utakmica</h3>
       <p>Trenutno nema zakazanih ili odigranih utakmica za prikaz.</p>
       <div class="no-fixtures-suggestion">
         <p>Utakmice će biti prikazane kada sezona krene.</p>

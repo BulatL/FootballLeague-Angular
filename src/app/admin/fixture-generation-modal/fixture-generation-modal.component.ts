@@ -53,8 +53,10 @@ export class FixtureGenerationModalComponent {
 
   calculateTotalMatches(): number {
     if (this.teamsCount < 2) return 0;
-    // Round-robin: each team plays every other team twice (home and away)
-    return this.teamsCount * (this.teamsCount - 1);
+      if(this.teamsCount % 2 === 0 )
+        return (this.teamsCount * (this.teamsCount - 1)) / 2;
+      else
+        return (this.teamsCount * (this.teamsCount + 1)) / 2;
   }
 
   calculateRounds(): number {
@@ -62,8 +64,8 @@ export class FixtureGenerationModalComponent {
     // In round-robin with even teams: (teams - 1) * 2 rounds
     // With odd teams: teams * 2 rounds (some teams get bye weeks)
     return this.teamsCount % 2 === 0 
-      ? (this.teamsCount - 1) * 2 
-      : this.teamsCount * 2;
+      ? (this.teamsCount / 2 ) 
+      : (this.teamsCount + 1 ) / 2;
   }
 
   getValidationWarnings(): string[] {

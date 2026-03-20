@@ -184,7 +184,8 @@ export class PlayerListComponent implements OnInit {
   }
 
   onTeamClick(teamId: number): void {
-    this.router.navigate([`/teams/${teamId}`]);
+    if(teamId > 0)
+      this.router.navigate([`/teams/${teamId}`]);
   }
 
   getPlayerFullName(player: PlayerListModel): string {

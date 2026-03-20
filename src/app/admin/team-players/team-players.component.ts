@@ -2,9 +2,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { PlayerService } from '../core/services/player.service';
+import { TeamService } from '../core/services/team.service';
+import { SeasonService } from '../../core/services/season.service';
 import { ImageService } from '../../core/services/image.service';
 import { AvailablePlayer } from '../core/models/ApiResponse/Player/available-players-response';
+
 
 export interface TeamPlayer {
   id: number;
@@ -18,18 +22,29 @@ export interface TeamPlayer {
   selector: 'app-team-players',
   templateUrl: './team-players.component.html',
   styleUrls: ['./team-players.component.css'],
-  imports: [CommonModule]
+  imports: [CommonModule, FormsModule]
 })
 export class TeamPlayersComponent implements OnInit {
   teamId: number = 0;
   teamName: string = '';
-  
+
   // Current team players
   teamPlayers: TeamPlayer[] = [];
-  
+
   // Available players to add
   availablePlayers: AvailablePlayer[] = [];
-  
+  availableSearch: string = '';
+
+  get filteredAvailablePlayers(): AvailablePlayer[] {
+    if (!this.availableSearch) return this.availablePlayers;
+    const q = this.availableSearch.toLowerCase();
+    return this.availablePlayers.filter(p => p.playerName.toLowerCase().includes(q));
+  }
+
+  // Seasons
+  seasons: any[] = [];
+  selectedSeasonId: number | undefined = undefined;
+
   // Loading states
   isLoading = false;
   isAddingPlayer = false;
@@ -39,21 +54,60 @@ export class TeamPlayersComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private playerService: PlayerService,
+    private teamService: TeamService,
+    private seasonService: SeasonService,
     private imageService: ImageService
   ) {}
 
   ngOnInit(): void {
     this.teamId = Number(this.route.snapshot.paramMap.get('teamId'));
+    this.loadSeasons();
+  }
+
+  loadSeasons(): void {
+    this.seasonService.getAll().subscribe({
+      next: (res: any) => {
+        this.seasons = res.$values ?? res;
+        if (this.seasons.length > 0) {
+          this.selectedSeasonId = this.seasons[this.seasons.length - 1].id;
+          this.loadTeamPlayers();
+          this.loadAvailablePlayers();
+        }
+      },
+      error: (err: any) => console.error('Error loading seasons:', err)
+    });
+  }
+
+  get isFirstSeasonSelected(): boolean {
+    return this.seasons.length === 0 || this.selectedSeasonId === this.seasons[0].id;
+  }
+
+  onSeasonChange(): void {
     this.loadTeamPlayers();
     this.loadAvailablePlayers();
   }
 
+  copyFromPreviousSeason(): void {
+    const currentIndex = this.seasons.findIndex(s => s.id === this.selectedSeasonId);
+    if (currentIndex <= 0) return;
+    const previousSeasonId = this.seasons[currentIndex - 1].id;
+
+    if (!confirm('Da li si siguran da zelis da kopiras iz prethodne sezone?')) return;
+
+    this.teamService.copyPlayersFromSeason(this.teamId, previousSeasonId).subscribe({
+      next: () => {
+        this.loadTeamPlayers();
+        this.loadAvailablePlayers();
+      },
+      error: (err: any) => console.error('Error copying from previous season:', err)
+    });
+  }
+
   loadTeamPlayers(): void {
     this.isLoading = true;
-    this.playerService.listPlayerTeamByTeamId(this.teamId).subscribe({
+    this.playerService.listPlayerTeamByTeamId(this.teamId, this.selectedSeasonId).subscribe({
       next: (players) => {
-        if(players.$values.length > 0)
-          this.teamPlayers = players.$values;
+        this.teamPlayers = players.$values;
         this.isLoading = false;
       },
       error: (error) => {
@@ -64,7 +118,7 @@ export class TeamPlayersComponent implements OnInit {
   }
 
   loadAvailablePlayers(): void {
-    this.playerService.listAvailablePlayers().subscribe({
+    this.playerService.listAvailablePlayers(this.selectedSeasonId!).subscribe({
       next: (players) => {
         if(players.$values.length > 0)
           this.availablePlayers = players.$values;

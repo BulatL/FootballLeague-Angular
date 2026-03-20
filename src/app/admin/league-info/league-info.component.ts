@@ -145,10 +145,28 @@ export class LeagueInfoComponent implements OnInit {
     }
   }
   
-  viewSeason(id: number): void{ 
+  viewSeason(id: number): void{
     this.router.navigate([`/admin/seasons/${id}`], {
       state: { leagueId: this.leagueId }
     });
+  }
+
+  endSeason(id: number): void {
+    if (confirm('Da li ste sigurni da želite da završite ovu sezonu? Ovo se ne može vratiti.')) {
+      this.seasonService.endSeason(id).subscribe({
+        next: (response) => {
+          if (response.isValid) {
+            alert('Sezona je uspešno završena.');
+            window.location.reload();
+          } else {
+            alert(response.erros?.[0]?.Message ?? 'Greška pri završavanju sezone.');
+          }
+        },
+        error: () => {
+          alert('Greška pri završavanju sezone...');
+        }
+      });
+    }
   }
 
   // Teams methods

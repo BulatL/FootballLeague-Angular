@@ -57,4 +57,8 @@ export class SeasonService {
   generateStanding(data: { seasonId: number; }): Observable<any>{
     return this.http.post<any>(`${this.apiAdminUrl}/GenerateStanding/`, data);
   }
+
+  endSeason(id: number): Observable<any> {
+    return this.http.post<any>(`${this.apiAdminUrl}/EndSeason/${id}`, {});
+  }
 }

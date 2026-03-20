@@ -113,7 +113,7 @@ export class PlayoffBracketComponent implements OnInit {
   
   onTeamClick(teamId: number | undefined, event: Event){
     event.stopPropagation();
-    if(teamId != undefined)
+    if(teamId != undefined && teamId > 0)
       this.router.navigate(['/teams/', teamId]);
   }
 }

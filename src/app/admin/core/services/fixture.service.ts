@@ -10,6 +10,7 @@ import { GenerateFixturesRequest } from '../models/ApiRequest/generate-fixtures-
 import { MatchDay } from '../../../core/models/match-day';
 import { FixtureFormModel } from '../models/fixture-form';
 import { PostFixtureRequestModel } from '../models/ApiRequest/post-fixture-details-request';
+import { FixtureDetailsResponse } from '../models/ApiResponse/Fixture/fixture-details-response';
 
 
 @Injectable({ providedIn: 'root' })
@@ -25,6 +26,10 @@ export class FixtureService {
 
   getById(id: number): Observable<FixtureFormModel> {
     return this.http.get<FixtureFormModel>(`${this.apiAdminUrl}/${id}`);
+  }
+
+  getFixtureDetails(id: number): Observable<FixtureDetailsResponse> {
+    return this.http.get<FixtureDetailsResponse>(`${this.apiAdminUrl}/GetDetails/${id}`);
   }
 
   create(formData: FormData): Observable<CommandResult<Fixture>> {

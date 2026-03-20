@@ -22,10 +22,15 @@ export class PlayerDetailComponent {
   player!: PlayerDetailModel;
 
   currentIndex = 0;
-  cardWidth = 280; 
+  cardWidth = 280;
   cardsPerView: number = 4;
   maxIndex: number = 0;
   autoScrollInterval: any;
+
+  // Trophy carousel
+  trophyCurrentIndex = 0;
+  trophyCardsPerView: number = 4;
+  trophyMaxIndex: number = 0;
 
   constructor(private playerService: PlayerService,
               private route: ActivatedRoute,
@@ -58,7 +63,9 @@ export class PlayerDetailComponent {
       next: (response: PlayerDetailModel) => {
         this.player = response;
         this.loading = false;
-        this.loadFixtures(this.player.playerTeamId)
+        this.initTrophyCarousel();
+        this.loadFixtures(this.playerId)
+        console.log(response);
       },
       error: (error) => {
         this.error = 'Failed to load player data';
@@ -68,11 +75,11 @@ export class PlayerDetailComponent {
     });
   }
 
-  private loadFixtures(playerTeamId: number){
+  private loadFixtures(playerId: number){
      this.loadingFixtures = true;
     this.error = null;
     
-    this.fixtureService.getByPlayer(playerTeamId).subscribe({
+    this.fixtureService.getByPlayer(playerId).subscribe({
       next: (response: ApiListResponse<PlayerDetailFixture>) => {
         console.log(response);
         this.player.fixtures = response.$values;
@@ -138,6 +145,12 @@ export class PlayerDetailComponent {
       this.currentIndex = Math.min(this.currentIndex, this.maxIndex);
       this.updateCarousel();
     }
+    const newTrophyCardsPerView = this.getTrophyCardsPerView();
+    if (newTrophyCardsPerView !== this.trophyCardsPerView) {
+      this.trophyCardsPerView = newTrophyCardsPerView;
+      this.calculateTrophyMaxIndex();
+      this.trophyCurrentIndex = Math.min(this.trophyCurrentIndex, this.trophyMaxIndex);
+    }
   }
 
   private calculateCardsPerView(): void {
@@ -146,10 +159,27 @@ export class PlayerDetailComponent {
 
   private getCardsPerView(): number {
     const screenWidth = window.innerWidth;
-    if (screenWidth <= 480) return 1;
+    if (screenWidth <= 640) return 1;
     if (screenWidth <= 768) return 2;
     if (screenWidth <= 1024) return 3;
-    return 4; // Desktop
+    return 4;
+  }
+
+  private getTrophyCardsPerView(): number {
+    const screenWidth = window.innerWidth;
+    if (screenWidth <= 640) return 1;
+    if (screenWidth <= 1024) return 2;
+    return 3;
+  }
+
+  // Returns card width + gap in px, matching the CSS card sizing at each breakpoint.
+  // At ≤640px cards fill the carousel viewport; above that they're fixed 16rem.
+  // Padding stack: player-info-container (15px*2) + section (16px*2) + carousel container (45 or 50px *2)
+  private getCardPxWidth(): number {
+    const w = window.innerWidth;
+    if (w <= 480) return w - 128; // card = w-152, + 24px gap
+    if (w <= 640) return w - 138; // card = w-162, + 24px gap
+    return 256 + 24; // 16rem card + 1.5rem gap
   }
 
   private calculateMaxIndex(): void {
@@ -192,8 +222,7 @@ export class PlayerDetailComponent {
   }
 
   get trackTransform(): string {
-    const cardWidth = 256 + 24; // 16rem + 1.5rem gap (converted to px)
-    const offset = this.currentIndex * cardWidth;
+    const offset = this.currentIndex * this.getCardPxWidth();
     return `translateX(-${offset}px)`;
   }
 
@@ -209,7 +238,50 @@ export class PlayerDetailComponent {
   }
   
 
+  // Trophy carousel
+  private initTrophyCarousel(): void {
+    this.trophyCardsPerView = this.getTrophyCardsPerView();
+    this.calculateTrophyMaxIndex();
+  }
+
+  private calculateTrophyMaxIndex(): void {
+    const count = this.player?.playerAwards?.$values?.length ?? 0;
+    this.trophyMaxIndex = Math.max(0, count - this.trophyCardsPerView);
+  }
+
+  moveTrophyCarousel(direction: number): void {
+    this.trophyCurrentIndex += direction;
+    this.trophyCurrentIndex = Math.max(0, Math.min(this.trophyCurrentIndex, this.trophyMaxIndex));
+  }
+
+  goToTrophySlide(index: number): void {
+    this.trophyCurrentIndex = index;
+  }
+
+  get canGoTrophyPrevious(): boolean {
+    return this.trophyCurrentIndex > 0;
+  }
+
+  get canGoTrophyNext(): boolean {
+    return this.trophyCurrentIndex < this.trophyMaxIndex;
+  }
+
+  get showTrophyNavigation(): boolean {
+    const count = this.player?.playerAwards?.$values?.length ?? 0;
+    return count > this.trophyCardsPerView;
+  }
+
+  get trophyDotsArray(): number[] {
+    return Array.from({ length: this.trophyMaxIndex + 1 }, (_, i) => i);
+  }
+
+  get trophyTrackTransform(): string {
+    const offset = this.trophyCurrentIndex * this.getCardPxWidth();
+    return `translateX(-${offset}px)`;
+  }
+
   onTeamClick(teamId: number){
-    this.router.navigate(['/teams/', teamId]);
+    if(teamId > 0)
+      this.router.navigate(['/teams/', teamId]);
   }
 }

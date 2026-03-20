@@ -46,4 +46,8 @@ export class TeamService {
   getStatistics(id: number): Observable<GetStatisticsResponse> {
     return this.http.get<GetStatisticsResponse>(`${this.apiUrl}/${id}/getStatistics`);
   }
+
+  copyPlayersFromSeason(teamId: number, seasonId: number): Observable<any> {
+    return this.http.post<any>(`${this.apiAdminUrl}/copyplayersfromseason`, { teamId, seasonId });
+  }
 }

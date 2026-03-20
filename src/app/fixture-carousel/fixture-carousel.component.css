@@ -11,6 +11,11 @@
   background-clip: text;
 }
 
+.no-fixtures-container {
+  text-align: center;
+  margin: 0 auto;
+}
+
 /* Carousel Container */
 .carousel-container {
   max-width: 1520px;

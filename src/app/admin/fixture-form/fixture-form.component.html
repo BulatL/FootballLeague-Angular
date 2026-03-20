@@ -5,9 +5,9 @@
         <div class="fixture-info">
             <!-- Home Team -->
             <div>
-                <img [src]="getTeamLogo(fixtureModel.homeTeamLogo)" alt="Home Team">
-                <p class="team-name">{{ fixtureModel.homeTeamName }}</p>
-                <div class="result-header">
+                <img [src]="getTeamLogo(fixtureModel.homeTeamId ? fixtureModel.homeTeamLogo : '')" alt="Home Team">
+                <p class="team-name">{{ fixtureModel.homeTeamId ? fixtureModel.homeTeamName : 'Slobodno kolo' }}</p>
+                <div *ngIf="!isEditMode" class="result-header">
                     <button class="btn-result" (click)="submitOfficialResult(fixtureModel.homeTeamId, fixtureModel.homeTeamName)">Službeni Rezultat</button>
                 </div>
             </div>
@@ -25,13 +25,19 @@
             </div>
             <!-- Away Team -->
             <div>
-                <img [src]="getTeamLogo(fixtureModel.awayTeamLogo)" alt="Away Team">
-                <p class="team-name">{{ fixtureModel.awayTeamName }}</p>
-                <div class="result-header">
+                <img [src]="getTeamLogo(fixtureModel.awayTeamId ? fixtureModel.awayTeamLogo : '')" alt="Away Team">
+                <p class="team-name">{{ fixtureModel.awayTeamId ? fixtureModel.awayTeamName : 'Slobodno kolo' }}</p>
+                <div *ngIf="!isEditMode" class="result-header">
                     <button class="btn-result" (click)="submitOfficialResult(fixtureModel.awayTeamId, fixtureModel.awayTeamName)">Službeni Rezultat</button>
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- Edit mode banner — shown when fixture is finished and not yet in edit mode -->
+    <div *ngIf="fixtureModel.isFinished && !isEditMode" class="edit-mode-banner">
+        <p>Utakmica je već završena.</p>
+        <button class="btn-edit" (click)="enterEditMode()">Izmeni</button>
     </div>
 
     <!-- Main Content -->
@@ -46,6 +52,7 @@
                 <div *ngFor="let player of homePlayers"
                     class="player-card"
                     [class.selected]="player.isSelected"
+                    [class.readonly]="!isEditMode"
                     (click)="togglePlayer(player, $event)">
 
                     <div class="player-info">
@@ -58,6 +65,7 @@
 
                     <div class="player-actions">
                     <select [value]="player.selectedPosition"
+                            [disabled]="!isEditMode"
                             (change)="updatePosition(player, $any($event.target).value)">
                         <option value="Goalkeeper">Golman</option>
                         <option value="Player">Igrac</option>
@@ -74,6 +82,7 @@
                 <div *ngFor="let player of awayPlayers"
                     class="player-card"
                     [class.selected]="player.isSelected"
+                    [class.readonly]="!isEditMode"
                     (click)="togglePlayer(player, $event)">
 
                     <div class="player-info">
@@ -86,6 +95,7 @@
 
                     <div class="player-actions">
                     <select [value]="player.selectedPosition"
+                            [disabled]="!isEditMode"
                             (change)="updatePosition(player, $any($event.target).value)">
                         <option value="Goalkeeper">Golman</option>
                         <option value="Player">Igrac</option>
@@ -101,7 +111,7 @@
             <h2>Golovi i Penali</h2>
 
             <!-- Add goal buttons -->
-            <div class="goal-buttons">
+            <div *ngIf="isEditMode" class="goal-buttons">
                 <button class="btn-primary" (click)="addGoal('home', fixtureModel.homeTeamId)">+ Dodaj gol ({{ fixtureModel.homeTeamName }})</button>
                 <button class="btn-primary" (click)="addGoal('away', fixtureModel.awayTeamId)">+ Dodaj gol ({{ fixtureModel.awayTeamName }})</button>
             </div>
@@ -116,13 +126,13 @@
                     <!-- Goal minute -->
                     <div class="goal-field">
                         <label>⏱</label>
-                        <input type="number" min="1" max="120" [(ngModel)]="goal.minuteScored" placeholder="min">
+                        <input type="number" min="1" max="120" [(ngModel)]="goal.minuteScored" [disabled]="!isEditMode" placeholder="min">
                     </div>
 
                     <!-- Scorer -->
                     <div class="goal-field scorer">
                         <label style="margin: 10px;">⚽ Strelac</label>
-                        <select [(ngModel)]="goal.playerTeamId" (ngModelChange)="updateScore()">
+                        <select [(ngModel)]="goal.playerTeamId" [disabled]="!isEditMode" (ngModelChange)="updateScore()">
                             <option *ngFor="let p of goal.team === 'home' ? getPlayingPlayers(true) : getPlayingPlayers(false)" [value]="p.playerTeamId">
                                 {{ p.playerName }}
                             </option>
@@ -132,7 +142,7 @@
                     <!-- Assist -->
                     <div class="goal-field assist">
                         <label style="margin: 10px;">🎯 Asistent</label>
-                        <select [(ngModel)]="goal.assistPlayerTeamId" (ngModelChange)="updateScore()">
+                        <select [(ngModel)]="goal.assistPlayerTeamId" [disabled]="!isEditMode" (ngModelChange)="updateScore()">
                             <option value="">Nema Asistenta</option>
                             <option *ngFor="let p of goal.team === 'home' ? getPlayingPlayers(true) : getPlayingPlayers(false)" [value]="p.playerTeamId">
                                 {{ p.playerName }}
@@ -143,7 +153,7 @@
                     <!-- Goal type -->
                     <div class="goal-field">
                         <label style="margin: 10px;">Tip gola</label>
-                        <select [(ngModel)]="goal.type" (ngModelChange)="updateScore()">
+                        <select [(ngModel)]="goal.type" [disabled]="!isEditMode" (ngModelChange)="updateScore()">
                             <option value="goal">Gol iz igre</option>
                             <option value="free_kick">Gol iz slobodnog udarca</option>
                             <option value="own_goal">Auto Gol</option>
@@ -152,7 +162,7 @@
                         </select>
                     </div>
 
-                    <!-- Only if penalty missed -->
+                    <!-- Only if penalty scored -->
                     <div *ngIf="goal.type === 'penalty_scored'" class="penalty-saved">
                         Primio:
                         <span class="gk-name">
@@ -167,7 +177,7 @@
                         </span>
                     </div>
 
-                    <button class="remove-btn" (click)="removeGoal(i)">✖</button>
+                    <button *ngIf="isEditMode" class="remove-btn" (click)="removeGoal(i)">✖</button>
                 </div>
             </div>
         </div>
@@ -180,13 +190,13 @@
                 <div class="gk-box">
                     <h3>{{ fixtureModel.homeTeamName }}</h3>
                     <span class="gk-name">{{ getHomeGoalkeeper()?.playerName }}</span>
-                    <input type="number" min="0" [(ngModel)]="homeSaves" placeholder="Saves">
+                    <input type="number" min="0" [(ngModel)]="homeSaves" [disabled]="!isEditMode" placeholder="Saves">
                 </div>
 
                 <div class="gk-box">
                     <h3>{{ fixtureModel.awayTeamName }}</h3>
                     <span class="gk-name">{{ getAwayGoalkeeper()?.playerName }}</span>
-                    <input type="number" min="0" [(ngModel)]="awaySaves" placeholder="Saves">
+                    <input type="number" min="0" [(ngModel)]="awaySaves" [disabled]="!isEditMode" placeholder="Saves">
                 </div>
             </div>
         </div>
@@ -195,7 +205,7 @@
         <div class="card cards-section">
             <h2>Kartoni</h2>
 
-            <div class="card-buttons">
+            <div *ngIf="isEditMode" class="card-buttons">
                 <button class="btn-primary" (click)="addCard('home')">+ Dodaj karton ({{ fixtureModel.homeTeamName }})</button>
                 <button class="btn-primary" (click)="addCard('away')">+ Dodaj karton ({{ fixtureModel.awayTeamName }})</button>
             </div>
@@ -205,24 +215,24 @@
                 <span class="team-label">{{ card.team === 'home' ? fixtureModel.homeTeamName : fixtureModel.awayTeamName }}</span>
 
                 <!-- Minute -->
-                <input type="number" min="1" max="120" [(ngModel)]="card.minuteGiven" placeholder="Min">
+                <input type="number" min="1" max="120" [(ngModel)]="card.minuteGiven" [disabled]="!isEditMode" placeholder="Min">
 
                 <!-- Player -->
-                <select [(ngModel)]="card.playerTeamId">
+                <select [(ngModel)]="card.playerTeamId" [disabled]="!isEditMode">
                     <option *ngFor="let p of card.team === 'home' ? getPlayingPlayers(true) : getPlayingPlayers(false)" [value]="p.playerTeamId">
                     {{ p.playerName }}
                     </option>
                 </select>
 
                 <!-- Card Type -->
-                <select [(ngModel)]="card.cardType">
+                <select [(ngModel)]="card.cardType" [disabled]="!isEditMode">
                     <option value="yellow">🟨 Zuti </option>
                     <option value="red">🟥 Crveni </option>
                     <option value="second_yellow">🟥 Drugi zuti → Crveni </option>
                     <option value="dangerous_red">🟥 Crveni - Opasan start</option>
                 </select>
 
-                <button class="remove-btn" (click)="removeCard(i)">✖</button>
+                <button *ngIf="isEditMode" class="remove-btn" (click)="removeCard(i)">✖</button>
                 </div>
             </div>
         </div>
@@ -235,15 +245,15 @@
 
             <div class="statistics-grid">
                 <div class="stat-row">
-                    <input type="number" [(ngModel)]="fixtureStatistic.homeShots" class="stat-home-input">
+                    <input type="number" [(ngModel)]="fixtureStatistic.homeShots" [disabled]="!isEditMode" class="stat-home-input">
                     <span class="stat-name">Ukupno Šuteva</span>
-                    <input type="number" [(ngModel)]="fixtureStatistic.awayShots" class="stat-away-input">
+                    <input type="number" [(ngModel)]="fixtureStatistic.awayShots" [disabled]="!isEditMode" class="stat-away-input">
                 </div>
 
                 <div class="stat-row">
-                    <input type="number" [(ngModel)]="fixtureStatistic.homeShotsOnTarget" class="stat-home-input">
+                    <input type="number" [(ngModel)]="fixtureStatistic.homeShootsOnTarget" [disabled]="!isEditMode" class="stat-home-input">
                     <span class="stat-name">Šutevi u Okvir</span>
-                    <input type="number" [(ngModel)]="fixtureStatistic.awayShotsOnTarget" class="stat-away-input">
+                    <input type="number" [(ngModel)]="fixtureStatistic.awayShootsOnTarget" [disabled]="!isEditMode" class="stat-away-input">
                 </div>
 
                 <div class="stat-row">
@@ -253,15 +263,15 @@
                 </div>
 
                 <div class="stat-row">
-                    <input type="number" [(ngModel)]="fixtureStatistic.homeCorners" class="stat-home-input">
+                    <input type="number" [(ngModel)]="fixtureStatistic.homeCorners" [disabled]="!isEditMode" class="stat-home-input">
                     <span class="stat-name">Korneri</span>
-                    <input type="number" [(ngModel)]="fixtureStatistic.awayCorners" class="stat-away-input">
+                    <input type="number" [(ngModel)]="fixtureStatistic.awayCorners" [disabled]="!isEditMode" class="stat-away-input">
                 </div>
 
                 <div class="stat-row">
-                    <input type="number" [(ngModel)]="fixtureStatistic.homeFouls" class="stat-home-input">
+                    <input type="number" [(ngModel)]="fixtureStatistic.homeFouls" [disabled]="!isEditMode" class="stat-home-input">
                     <span class="stat-name">Prekršaji</span>
-                    <input type="number" [(ngModel)]="fixtureStatistic.awayFouls" class="stat-away-input">
+                    <input type="number" [(ngModel)]="fixtureStatistic.awayFouls" [disabled]="!isEditMode" class="stat-away-input">
                 </div>
 
                 <div class="stat-row">
@@ -278,9 +288,9 @@
             </div>
         </div>
 
-    
+
         <!-- Save Button -->
-        <div class="fixture-actions">
+        <div *ngIf="isEditMode" class="fixture-actions">
             <button class="save-btn" (click)="saveFixture()">Sacuvaj</button>
         </div>
 </div>

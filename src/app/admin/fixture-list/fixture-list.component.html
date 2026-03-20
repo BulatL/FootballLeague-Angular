@@ -80,11 +80,11 @@
                 <div class="fixture-content">
                   <!-- Home Team -->
                   <div class="team home-team" (click)="onFixtureClick(fixture.id)">
-                    <img 
-                      [src]="getTeamLogo(fixture.homeTeamLogo)" 
-                      [alt]="fixture.homeTeamName"
+                    <img
+                      [src]="getTeamLogo(fixture.homeTeamId ? fixture.homeTeamLogo : '')"
+                      [alt]="fixture.homeTeamId ? fixture.homeTeamName : 'Slobodno kolo'"
                       class="team-logo">
-                    <span class="team-name">{{ fixture.homeTeamName }}</span>
+                    <span class="team-name">{{ fixture.homeTeamId ? fixture.homeTeamName : 'Slobodno kolo' }}</span>
                   </div>
 
                   <!-- Score -->
@@ -102,10 +102,10 @@
 
                   <!-- Away Team -->
                   <div class="team away-team" (click)="onFixtureClick(fixture.id)">
-                    <span class="team-name">{{ fixture.awayTeamName }}</span>
-                    <img 
-                      [src]="getTeamLogo(fixture.awayTeamLogo)" 
-                      [alt]="fixture.awayTeamName"
+                    <span class="team-name">{{ fixture.awayTeamId ? fixture.awayTeamName : 'Slobodno kolo' }}</span>
+                    <img
+                      [src]="getTeamLogo(fixture.awayTeamId ? fixture.awayTeamLogo : '')"
+                      [alt]="fixture.awayTeamId ? fixture.awayTeamName : 'Slobodno kolo'"
                       class="team-logo">
                   </div>
                 </div>

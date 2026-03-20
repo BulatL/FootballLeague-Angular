@@ -4,8 +4,14 @@
     <div class="col-12">
       <!-- Header -->
       <div class="d-flex justify-content-between align-items-center mb-4">
-        <div>
-          <h2>Upravljaj igracima - {{ teamName }}</h2>
+        <div class="d-flex align-items-center gap-3">
+          <h2 class="mb-0">Upravljaj igracima - {{ teamName }}</h2>
+          <select class="form-select" style="width: auto;" [(ngModel)]="selectedSeasonId" (ngModelChange)="onSeasonChange()">
+            <option *ngFor="let season of seasons" [ngValue]="season.id">{{ season.name }}</option>
+          </select>
+          <button type="button" class="btn btn-outline-primary btn-sm" (click)="copyFromPreviousSeason()" [disabled]="isFirstSeasonSelected">
+            Kopiraj iz prethodne sezone
+          </button>
         </div>
         <button type="button" class="btn btn-secondary" (click)="goBack()">
           ← Nazad na Tim
@@ -129,18 +135,25 @@
           <div class="card">
             <div class="card-header">
               <h5 class="mb-0">
-                Slobodni igraci ({{ availablePlayers.length }})
+                Slobodni igraci ({{ filteredAvailablePlayers.length }})
               </h5>
             </div>
             <div class="card-body">
-              
+
+              <!-- Search -->
+              <input *ngIf="availablePlayers.length > 0"
+                type="text"
+                class="form-control form-control-sm mb-3"
+                placeholder="Pretraga po imenu..."
+                [(ngModel)]="availableSearch" />
+
               <!-- No Available Players -->
               <div *ngIf="availablePlayers.length === 0" class="text-center py-4">
                 <p class="text-muted mt-2 mb-0">Trenutno nema slobodnih igraca</p>
               </div>
 
               <!-- Available Players List -->
-              <div *ngFor="let player of availablePlayers" class="d-flex align-items-center mb-3 p-2 border rounded">
+              <div *ngFor="let player of filteredAvailablePlayers" class="d-flex align-items-center mb-3 p-2 border rounded">
                 <img [src]="getPlayerImage(player.image)" 
                      class="rounded-circle me-3" 
                      width="50" 

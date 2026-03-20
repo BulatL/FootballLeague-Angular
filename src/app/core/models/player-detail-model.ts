@@ -14,6 +14,7 @@ export interface PlayerDetailModel {
   currentSeasonStats: CurrentSeasonStats;
   playerAwards: { $values: Award[]};
   fixtures: PlayerDetailFixture[];
+  totalDreamTeamPoints: number;
 }
 
 export interface CurrentSeasonStats {
@@ -42,11 +43,11 @@ export interface Award {
 export interface PlayerDetailFixture {
   roundNumber: string;
   fixtureId: number;
-  homeTeamId: number;
+  homeTeamId: number | null;
   homeTeamShortName: string;
   homeTeamLogo: string;
   homeTeamScore: number;
-  awayTeamId: number;
+  awayTeamId: number | null;
   awayTeamShortName: string;
   awayTeamLogo: string;
   awayTeamScore: number;

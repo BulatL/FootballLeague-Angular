@@ -32,7 +32,7 @@ export class FixtureService {
 
   listCurrentRound(seasonId: number): Observable<ApiListResponse<Fixture>> {
       return this.http.get<ApiListResponse<Fixture>>(`${this.apiUrl}/ListCurrentRound/${seasonId}`);
-    }
+  }
       
         
   listMatchDays(): Observable<ApiListResponse<MatchDay>> {
@@ -45,8 +45,8 @@ export class FixtureService {
   }
 
 
-  getByPlayer(playerTeamId: number): Observable<ApiListResponse<PlayerDetailFixture>> {
-    return this.http.get<ApiListResponse<PlayerDetailFixture>>(`${this.apiUrl}/GetByPlayer/${playerTeamId}`);
+  getByPlayer(playerId: number): Observable<ApiListResponse<PlayerDetailFixture>> {
+    return this.http.get<ApiListResponse<PlayerDetailFixture>>(`${this.apiUrl}/GetByPlayer/${playerId}`);
   }
 
 

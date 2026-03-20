@@ -54,12 +54,12 @@
         <!-- Teams Container -->
         <div class="teams-container">
           <!-- Home Team -->
-          <div class="team home-team" (click)="onTeamClick(fixture.homeTeamId, $event)">
+          <div class="team home-team" (click)="onTeamClick(fixture.homeTeamId ?? 0, $event)">
             <img 
               class="team-logo" 
               [src]="getTeamLogo(fixture.homeTeamLogo)" 
-              [alt]="fixture.homeTeamName" />
-            <div class="team-name">{{ fixture.homeTeamName }}</div>
+              [alt]="fixture.homeTeamName ? fixture.homeTeamName : 'Slobodno kolo'" />
+            <div class="team-name">{{ fixture.homeTeamName ? fixture.homeTeamName : 'Slobodno kolo' }}</div>
           </div>
 
           <!-- Score Section -->
@@ -78,12 +78,12 @@
           </div>
 
           <!-- Away Team -->
-          <div class="team away-team" (click)="onTeamClick(fixture.awayTeamId, $event)" >
+          <div class="team away-team" (click)="onTeamClick(fixture.awayTeamId ?? 0, $event)" >
             <img 
               class="team-logo" 
               [src]="getTeamLogo(fixture.awayTeamLogo)" 
-              [alt]="fixture.awayTeamName"/>
-            <div class="team-name">{{ fixture.awayTeamName }}</div>
+              [alt]="fixture.awayTeamId ? fixture.awayTeamName : 'Slobodno kolo'"/>
+            <div class="team-name">{{ fixture.awayTeamId ? fixture.awayTeamName : 'Slobodno kolo' }}</div>
           </div>
         </div>
         

@@ -11,7 +11,7 @@ import { SeasonService } from '../core/services/season.service';
 })
 export class HeroSectionComponent implements OnInit, OnDestroy {
   images = [
-    { src: 'teren.jpg', thumb: 'teren.jpg' },
+    { src: 'teren.jpg', thumb: 'teren.jpg' }
   ];
   activeIndex = 0;
   intervalId: any;

@@ -16,7 +16,7 @@
           <img [src]="getPlayerImage(player.image)" [alt]="player.firstName + ' ' + player.lastName" class="player-image">
           <div class="dream-points-badge">
               <span class="dream-points-label">Dream Points</span>
-              <span class="dream-points-value">{{player.currentSeasonStats.dreamTeamPoint}}</span>
+              <span class="dream-points-value">{{player.totalDreamTeamPoints}}</span>
           </div>
       </div>
       
@@ -88,7 +88,7 @@
                   </div>
                   <div class="stat-row">
                       <span class="stat-name">Dream Team / Utakmice</span>
-                      <span class="stat-value highlighted">{{ (player.currentSeasonStats.dreamTeamPoint / player.currentSeasonStats.games).toFixed(2) }}</span>
+                      <span class="stat-value highlighted">{{ player.currentSeasonStats.games ? (player.currentSeasonStats.dreamTeamPoint / player.currentSeasonStats.games).toFixed(2) : '0.00' }}</span>
                   </div>
                   <div class="stat-row">
                       <span class="stat-name">Trofeji</span>
@@ -126,11 +126,11 @@
                   </div>
                   <div class="stat-row">
                       <span class="stat-name">Gol po utakmici</span>
-                      <span class="stat-value performance-stat">{{ (player.currentSeasonStats.goalsScored / player.currentSeasonStats.games).toFixed(2) }}</span>
+                      <span class="stat-value performance-stat">{{ player.currentSeasonStats.games ? (player.currentSeasonStats.goalsScored / player.currentSeasonStats.games).toFixed(2) : '0.00' }}</span>
                   </div>
                   <div class="stat-row">
                       <span class="stat-name">% Pobeda</span>
-                      <span class="stat-value percentage">{{ (player.currentSeasonStats.wins / player.currentSeasonStats.games * 100).toFixed(1) }}%</span>
+                      <span class="stat-value percentage">{{ player.currentSeasonStats.games ? (player.currentSeasonStats.wins / player.currentSeasonStats.games * 100).toFixed(1) : '0.0' }}%</span>
                   </div>
               </div>
           </div>
@@ -196,11 +196,11 @@
                       
                       <div class="teams-container">
                           <div class="team">
-                              <img 
-                                  class="fixture-card-team-logo" 
-                                  [src]="getTeamLogo(fixture.homeTeamLogo)" 
-                                  [alt]="fixture.homeTeamShortName" />
-                              <div class="team-name margin-left-5">{{ fixture.homeTeamShortName }}</div>
+                              <img
+                                  class="fixture-card-team-logo"
+                                  [src]="getTeamLogo(fixture.homeTeamId ? fixture.homeTeamLogo : '')"
+                                  [alt]="fixture.homeTeamId ? fixture.homeTeamShortName : 'Slobodno kolo'" />
+                              <div class="team-name margin-left-5">{{ fixture.homeTeamId ? fixture.homeTeamShortName : 'Slobodno kolo' }}</div>
                           </div>
 
                           <div class="score">
@@ -218,11 +218,11 @@
                           </div>
 
                           <div class="team">
-                              <img 
-                                  class="fixture-card-team-logo" 
-                                  [src]="getTeamLogo(fixture.awayTeamLogo)" 
-                                  [alt]="fixture.awayTeamShortName" />
-                              <div class="team-name margin-left-5">{{ fixture.awayTeamShortName }}</div>
+                              <img
+                                  class="fixture-card-team-logo"
+                                  [src]="getTeamLogo(fixture.awayTeamId ? fixture.awayTeamLogo : '')"
+                                  [alt]="fixture.awayTeamId ? fixture.awayTeamShortName : 'Slobodno kolo'" />
+                              <div class="team-name margin-left-5">{{ fixture.awayTeamId ? fixture.awayTeamShortName : 'Slobodno kolo' }}</div>
                           </div>
                       </div>
                       
@@ -255,7 +255,9 @@
   <!-- No fixtures message -->
   <div class="section" *ngIf="!loadingFixtures && (!player.fixtures || player.fixtures.length === 0)">
       <h2 class="section-title">📅 Utakmice</h2>
-      <p>Igrac nije odigrao ni jednu utakmicu.</p>
+      <div class="empty-state">
+          <p class="empty-state-text">Igrač nije odigrao ni jednu utakmicu.</p>
+      </div>
   </div>
 
   <!-- Trophies Section -->
@@ -265,20 +267,53 @@
           Trofeji
       </h2>
       
-      <div class="trophies-grid">
-          <div class="trophy-card" 
-              *ngFor="let trophy of player.playerAwards.$values"
-              [class.clickable]="trophy.fixtureId !== null"
-              (click)="onTrophyClick(trophy)">
-              <div class="trophy-image-container">
-                  <img src="trophy.jpeg" [alt]="trophy.awardName" class="trophy-image">
+      <div class="trophies-carousel-container">
+          <button
+              *ngIf="showTrophyNavigation"
+              class="carousel-nav prev"
+              [disabled]="!canGoTrophyPrevious"
+              (click)="moveTrophyCarousel(-1)">
+              ‹
+          </button>
+
+          <button
+              *ngIf="showTrophyNavigation"
+              class="carousel-nav next"
+              [disabled]="!canGoTrophyNext"
+              (click)="moveTrophyCarousel(1)">
+              ›
+          </button>
+
+          <div class="trophies-carousel">
+              <div
+                  class="trophies-track"
+                  [class.single-card]="!showTrophyNavigation"
+                  [style.transform]="trophyTrackTransform">
+
+                  <div class="trophy-card"
+                      *ngFor="let trophy of player.playerAwards.$values"
+                      [class.clickable]="trophy.fixtureId !== null"
+                      (click)="onTrophyClick(trophy)">
+                      <div class="trophy-image-container">
+                          <img src="trophy.jpeg" [alt]="trophy.awardName" class="trophy-image">
+                      </div>
+                      <div class="trophy-info">
+                          <h3 class="trophy-name">
+                              {{ trophy.awardName }}{{ trophy.fixtureId !== null ? ' utakmice' : '' }}
+                          </h3>
+                          <span class="trophy-season">{{ trophy.seasonName }}</span>
+                          <p class="trophy-description" *ngIf="trophy.awardName">{{ trophy.awardName }}</p>
+                      </div>
+                  </div>
               </div>
-              <div class="trophy-info">          
-                  <h3 class="trophy-name">
-                      {{ trophy.awardName }}{{ trophy.fixtureId !== null ? ' utakmice' : '' }}
-                  </h3>
-                  <span class="trophy-season">{{ trophy.seasonName }}</span>
-                  <p class="trophy-description" *ngIf="trophy.awardName">{{ trophy.awardName }}</p>
+          </div>
+
+          <div *ngIf="showTrophyNavigation" class="carousel-dots">
+              <div
+                  *ngFor="let dot of trophyDotsArray; let i = index"
+                  class="dot"
+                  [class.active]="i === trophyCurrentIndex"
+                  (click)="goToTrophySlide(i)">
               </div>
           </div>
       </div>

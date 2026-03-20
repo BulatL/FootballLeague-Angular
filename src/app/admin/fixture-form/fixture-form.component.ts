@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { forkJoin } from 'rxjs';
 import { FixtureFormModel } from '../core/models/fixture-form';
+import { FixtureDetailPlayerStat } from '../core/models/ApiResponse/Fixture/fixture-details-response';
 import { ImageService } from '../../core/services/image.service';
 import { FixtureService } from '../core/services/fixture.service';
 import { PlayerService } from '../core/services/player.service';
@@ -45,6 +47,7 @@ export class FixtureFormComponent implements OnInit {
   homeSaves: number = 0;
   awaySaves: number = 0;
   showOfficialResult: boolean = false;
+  isEditMode: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -82,6 +85,7 @@ export class FixtureFormComponent implements OnInit {
                                                 fixture.fixtureDateTime,
                                                 fixture.isFinished
         );
+        this.isEditMode = !fixture.isFinished;
         this.loadPlayers();
       },
       error: (error) => {
@@ -94,8 +98,8 @@ export class FixtureFormComponent implements OnInit {
     this.fixtureStatistic = {
       homeShots: 0,
       awayShots: 0,
-      homeShotsOnTarget: 0,
-      awayShotsOnTarget: 0,
+      homeShootsOnTarget: 0,
+      awayShootsOnTarget: 0,
       homeSaves: 0,
       awaySaves: 0,
       cornersHome: 0,
@@ -110,29 +114,67 @@ export class FixtureFormComponent implements OnInit {
   }
 
   loadPlayers(): void{
-    this.playerService.listPlayerTeamByTeamId(this.fixtureModel.homeTeamId).subscribe({
-      next: (homePlayers) => {
-          if(homePlayers.$values.length > 0)
-            this.homePlayers = homePlayers.$values
-          else
-            alert(`Nisu pronadjeni igraci ${this.fixtureModel.homeTeamName} tima!`);
+    forkJoin([
+      this.playerService.listPlayerTeamByTeamId(this.fixtureModel.homeTeamId),
+      this.playerService.listPlayerTeamByTeamId(this.fixtureModel.awayTeamId)
+    ]).subscribe({
+      next: ([homePlayers, awayPlayers]) => {
+        if(homePlayers.$values.length > 0)
+          this.homePlayers = homePlayers.$values;
+        else
+          alert(`Nisu pronadjeni igraci ${this.fixtureModel.homeTeamName} tima!`);
+
+        if(awayPlayers.$values.length > 0)
+          this.awayPlayers = awayPlayers.$values;
+        else
+          alert(`Nisu pronadjeni igraci ${this.fixtureModel.awayTeamName} tima!`);
+
+        if (this.fixtureModel.isFinished)
+          this.loadFixtureDetails();
       },
       error: (error) => {
-        console.error('Error loading homeplayers:', error);
+        console.error('Error loading players:', error);
       }
     });
-    
-    this.playerService.listPlayerTeamByTeamId(this.fixtureModel.awayTeamId).subscribe({
-      next: (awayPlayers) => {
-          if(awayPlayers.$values.length > 0)
-            this.awayPlayers = awayPlayers.$values
-          else
-            alert(`Nisu pronadjeni igraci ${this.fixtureModel.awayTeamName} tima!`);
+  }
+
+  loadFixtureDetails(): void {
+    this.fixtureService.getFixtureDetails(this.fixtureId!).subscribe({
+      next: (details: any) => {
+        // API wraps collections in $values — unwrap if present
+        this.goals = details.goals.$values ?? details.goals;
+        this.cards = details.cards.$values ?? details.cards;
+        this.fixtureStatistic = details.statistics;
+        this.homeSaves = details.statistics.homeSaves;
+        this.awaySaves = details.statistics.awaySaves;
+        const playerStats = details.playerStatistics.$values ?? details.playerStatistics;
+        this.applyPlayerStats(playerStats);
       },
-      error: (error) => {
-        console.error('Error loading awayPlayers:', error);
-      }
+      error: (err) => console.error('Error loading fixture details:', err)
     });
+  }
+
+  applyPlayerStats(playerStatistics: FixtureDetailPlayerStat[]): void {
+    for (const player of this.homePlayers) {
+      const stat = playerStatistics.find(ps => ps.playerTeamId === player.playerTeamId);
+      if (stat) {
+        player.isSelected = stat.isPlaying;
+        player.selectedPosition = stat.position;
+        player.saves = stat.saves;
+      }
+    }
+    for (const player of this.awayPlayers) {
+      const stat = playerStatistics.find(ps => ps.playerTeamId === player.playerTeamId);
+      if (stat) {
+        player.isSelected = stat.isPlaying;
+        player.selectedPosition = stat.position;
+        player.saves = stat.saves;
+      }
+    }
+  }
+
+  enterEditMode(): void {
+    this.isEditMode = true;
   }
 
   saveFixture() {
@@ -148,8 +190,8 @@ export class FixtureFormComponent implements OnInit {
       awayTeamId: this.fixtureModel.awayTeamId,
       homeScore: this.fixtureModel.homeScore,
       awayScore: this.fixtureModel.awayScore,
-      HomeShootsOnTarget: this.fixtureStatistic.homeShotsOnTarget,
-      AwayShootsOnTarget: this.fixtureStatistic.awayShotsOnTarget,
+      HomeShootsOnTarget: this.fixtureStatistic.homeShootsOnTarget,
+      AwayShootsOnTarget: this.fixtureStatistic.awayShootsOnTarget,
       HomeTotalShoots:  this.fixtureStatistic.homeShots,
       AwayTotalShoots: this.fixtureStatistic.awayShots,
       savesByHomeTeam:  this.fixtureStatistic.homeSaves,
@@ -336,6 +378,7 @@ export class FixtureFormComponent implements OnInit {
   }
 
   togglePlayer(player: Player, event: Event): void {
+    if (!this.isEditMode) return;
     // Prevent toggling if dropdown was clicked
     if ((event.target as HTMLElement).tagName.toLowerCase() === 'select') {
       return;

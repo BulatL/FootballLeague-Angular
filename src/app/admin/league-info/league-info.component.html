@@ -83,8 +83,9 @@
               <td>{{ season.endDate | date:'dd.MM.yyyy' }}</td>
               <td class="action-buttons">
                 <button class="btn-secondary-admin" (click)="editSeason(season.id)">Izmeni</button>
-                <button class="btn-danger-admin" (click)="deleteSeason(season.id)">Obriši</button>
+                <button class="btn-danger-admin" (click)="deleteSeason(season.id)" [disabled]="season.endDate">Obriši</button>
                 <button class="btn-view-admin" (click)="viewSeason(season.id)">Detalji</button>
+                <button *ngIf="!season.endDate" class="btn-end-season-admin" (click)="endSeason(season.id)">Završi</button>
               </td>
             </tr>
           </tbody>

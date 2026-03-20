@@ -39,11 +39,11 @@ export interface Award {
 export interface TeamDetailFixture {
   roundNumber: string;
   fixtureId: number;
-  homeTeamId: number;
+  homeTeamId: number | null;
   homeTeamShortName: string;
   homeTeamLogo: string;
   homeTeamScore: number;
-  awayTeamId: number;
+  awayTeamId: number | null;
   awayTeamShortName: string;
   awayTeamLogo: string;
   awayTeamScore: number;

@@ -154,6 +154,7 @@ selectMatchDay(matchDayId: number): void {
   onTeamClick(teamId: number, event: Event){
     event.stopPropagation();
     
-    this.router.navigate(['/teams/', teamId]);
+    if(teamId > 0)
+      this.router.navigate(['/teams/', teamId]);
   }
 }

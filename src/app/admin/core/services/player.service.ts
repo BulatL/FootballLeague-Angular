@@ -49,11 +49,12 @@ export class PlayerService {
   updatePlayingStatus(playerTeamId: number, newStatus: boolean): Observable<any>{
     return this.http.get<any>(`${this.apiUrl}/playerteam/${playerTeamId}/${newStatus}`);
   }
-  listPlayerTeamByTeamId(teamId: number): Observable<any>{
-    return this.http.get<any>(`${this.adminApiUrl}/teams/${teamId}/list`);
+  listPlayerTeamByTeamId(teamId: number, seasonId?: number): Observable<any>{
+    const params = seasonId ? `?seasonId=${seasonId}` : '';
+    return this.http.get<any>(`${this.adminApiUrl}/teams/${teamId}/list${params}`);
   }
-  listAvailablePlayers(): Observable<ApiResponse<AvailablePlayer[]>> {
-    return this.http.get<ApiResponse<AvailablePlayer[]>>(`${this.adminApiUrl}/listavailableplayers`);
+  listAvailablePlayers(seasonId: number): Observable<ApiResponse<AvailablePlayer[]>> {
+    return this.http.get<ApiResponse<AvailablePlayer[]>>(`${this.adminApiUrl}/listavailableplayers?seasonId=${seasonId}`);
   }
 
   postPlayerTeam(playerId: number, teamId: number, position: string, addPlayer: boolean): Observable<any> {

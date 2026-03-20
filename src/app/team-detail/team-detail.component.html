@@ -90,7 +90,7 @@
                     </div>
                     <div class="stat-row">
                         <span class="stat-name">Dream Team / Utakmice</span>
-                        <span class="stat-value highlighted">{{ (team.currentSeasonStats.dreamTeamPoint / team.currentSeasonStats.games).toFixed(2) }}</span>
+                        <span class="stat-value highlighted">{{ team.currentSeasonStats.games ?  (team.currentSeasonStats.dreamTeamPoint / team.currentSeasonStats.games).toFixed(2) : '0.00' }}</span>
                     </div>
                 </div>
             </div>
@@ -116,11 +116,11 @@
                     </div>
                     <div class="stat-row">
                         <span class="stat-name">Gol po utakmici</span>
-                        <span class="stat-value performance-stat">{{ (team.currentSeasonStats.goalsScored / team.currentSeasonStats.games).toFixed(2) }}</span>
+                        <span class="stat-value performance-stat">{{ team.currentSeasonStats.games ? (team.currentSeasonStats.goalsScored / team.currentSeasonStats.games).toFixed(2) : '0.00' }}</span>
                     </div>
                     <div class="stat-row">
                         <span class="stat-name">% Pobeda</span>
-                        <span class="stat-value percentage">{{ (team.currentSeasonStats.wins / team.currentSeasonStats.games * 100).toFixed(1) }}%</span>
+                        <span class="stat-value percentage">{{ team.currentSeasonStats.games ? (team.currentSeasonStats.wins / team.currentSeasonStats.games * 100).toFixed(1) : '0'}}%</span>
                     </div>
                 </div>
             </div>
@@ -186,11 +186,11 @@
                         
                         <div class="fixture-teams-container">
                             <div class="fixture-team">
-                                <img 
-                                    class="fixture-card-team-logo" 
-                                    [src]="getTeamLogo(fixture.homeTeamLogo)" 
-                                    [alt]="fixture.homeTeamShortName" />
-                                <div class="fixture-team-name margin-left-5">{{ fixture.homeTeamShortName }}</div>
+                                <img
+                                    class="fixture-card-team-logo"
+                                    [src]="getTeamLogo(fixture.homeTeamId ? fixture.homeTeamLogo : '')"
+                                    [alt]="fixture.homeTeamId ? fixture.homeTeamShortName : 'Slobodno kolo'" />
+                                <div class="fixture-team-name margin-left-5">{{ fixture.homeTeamId ? fixture.homeTeamShortName : 'Slobodno kolo' }}</div>
                             </div>
 
                             <div class="score">
@@ -208,11 +208,11 @@
                             </div>
 
                             <div class="fixture-team">
-                                <img 
-                                    class="fixture-card-team-logo" 
-                                    [src]="getTeamLogo(fixture.awayTeamLogo)" 
-                                    [alt]="fixture.awayTeamShortName" />
-                                <div class="fixture-team-name margin-left-5">{{ fixture.awayTeamShortName }}</div>
+                                <img
+                                    class="fixture-card-team-logo"
+                                    [src]="getTeamLogo(fixture.awayTeamId ? fixture.awayTeamLogo : '')"
+                                    [alt]="fixture.awayTeamId ? fixture.awayTeamShortName : 'Slobodno kolo'" />
+                                <div class="fixture-team-name margin-left-5">{{ fixture.awayTeamId ? fixture.awayTeamShortName : 'Slobodno kolo' }}</div>
                             </div>
                         </div>
                         
@@ -281,7 +281,7 @@
                             </div>  
                             </div>
                             <div class="player-breakdown" *ngIf="expandedPlayerId === player.playerId">
-                            <h4>Statistika:</h4>
+                            <h4>Statistika trenutne sezone:</h4>
                             <div class="breakdown-items">
                                 <div class="breakdown-item games" >
                                 <span class="breakdown-desc">Odigranih Utakmica</span>

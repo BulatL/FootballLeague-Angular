@@ -2,7 +2,7 @@ export interface FixtureDetailModel{
     id: number;
     dateTime: Date;
     roundNumber: number;
-    homeTeamId: number;
+    homeTeamId: number | null;
     homeTeamName: string;
     homeTeamLogo: string;
     homeTeamScore: number | null;
@@ -11,7 +11,7 @@ export interface FixtureDetailModel{
     savesByHomeTeam: number;
     homeTeamCorners: number;
     homeTeamFouls: number;
-    awayTeamId: number;
+    awayTeamId: number | null;
     awayTeamName: string;
     awayTeamLogo: string;
     awayTeamScore: number | null;

@@ -48,6 +48,7 @@ export class DreamTeamComponent {
   }
 
   onPlayerClick(playerId: number){
-    this.router.navigate(['/players/', playerId]);
+    if(playerId > 0)
+      this.router.navigate(['/players/', playerId]);
   }
 }

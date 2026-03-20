@@ -215,6 +215,24 @@ Prva utakmica: ${this.formatDate(response.data?.firstMatchDate!)}`;
   }
 }
 
+endSeason(): void {
+  if (confirm('Da li ste sigurni da želite da završite ovu sezonu? Ovo se ne može pokriunuti.')) {
+    this.seasonService.endSeason(this.seasonId).subscribe({
+      next: (response) => {
+        if (response.IsValid) {
+          alert('Sezona je uspešno završena.');
+          this.loadSeasonDetails();
+        } else {
+          alert(response.Erros[0].Message);
+        }
+      },
+      error: () => {
+        alert('Greška pri završavanju sezone...');
+      }
+    });
+  }
+}
+
 createFinalFixtures(): void {
   const confirmed = confirm('Generiši utakmicu za finale i 3. mesto?\n\n Oba polufinala moraju biti završena.');
   if (confirmed) {

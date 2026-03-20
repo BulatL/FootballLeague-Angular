@@ -10,4 +10,5 @@ export interface SeasonStanding {
   points: number;
   goalDiffSort: number;
   matchesPlayed: number;
+  isCurrentSeason: boolean;
 }

@@ -111,6 +111,10 @@
   box-shadow: 0 2px 6px rgba(0,0,0,0.15);
 }
 
+.player-card.readonly {
+  cursor: default;
+}
+
 .player-card.selected {
   background: #e0e7ef; /* subtle blue-grey for selection */
 }
@@ -529,6 +533,41 @@
   font-style: italic;
   color: #6c757d;
   margin-top: 10px;
+}
+
+/* Edit mode banner */
+.edit-mode-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  background: #fff3cd;
+  border: 1px solid #ffc107;
+  border-radius: 10px;
+  padding: 12px 20px;
+  margin-bottom: 20px;
+}
+
+.edit-mode-banner p {
+  margin: 0;
+  color: #856404;
+  font-weight: 500;
+}
+
+.btn-edit {
+  background-color: #ffc107;
+  color: #333;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-edit:hover {
+  background-color: #e6b100;
 }
 
 /* Responsive design */

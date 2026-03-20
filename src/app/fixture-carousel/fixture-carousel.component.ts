@@ -204,7 +204,7 @@ export class FixtureCarouselComponent implements OnInit, OnDestroy {
   }
 
   // Responsive handling
-  @HostListener('window:resize', ['$event'])
+  @HostListener('window:resize')
   onResize(): void {
     const newCardsPerView = this.getCardsPerView();
     if (newCardsPerView !== this.cardsPerView) {
@@ -230,7 +230,7 @@ export class FixtureCarouselComponent implements OnInit, OnDestroy {
     return this.imageService.getImageUrl('Teams', fileName);
   }
 
-  trackByFixtureId(index: number, fixture: Fixture): number {
+  trackByFixtureId(_index: number, fixture: Fixture): number {
     return fixture.id;
   }
 
@@ -255,6 +255,7 @@ export class FixtureCarouselComponent implements OnInit, OnDestroy {
 
   onTeamClick(event: Event, teamId: number): void {
     event.stopPropagation(); // Prevent fixture click
-    this.router.navigate(['/teams/', teamId]);
+    if(teamId > 0)
+      this.router.navigate(['/teams/', teamId]);
   }
 }
