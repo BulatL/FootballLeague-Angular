@@ -4,11 +4,11 @@
         <div class="filters-grid">
             <div class="filter-group">
                 <label class="filter-label">Sezona</label>
-                <select 
-                    class="filter-select" 
-                    [value]="filters.seasonId" 
+                <select
+                    class="filter-select"
+                    [(ngModel)]="filters.seasonId"
                     (change)="onSeasonChange($event)">
-                    <option value="0">Sve sezone</option>
+                    <option [value]="0">Sve sezone</option>
                     <option 
                         *ngFor="let season of seasons" 
                         [value]="season.id">
@@ -109,7 +109,7 @@
                 </div>
                 <div class="performance-item">
                     <span class="performance-value">{{ team.playersCount }}</span>
-                    <span class="performance-label">Igrača</span>
+                    <span class="performance-label">Aktivnih Igrača</span>
                 </div>
             </div>
 

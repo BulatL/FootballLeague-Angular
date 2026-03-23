@@ -1,7 +1,7 @@
 /* fixture-list.component.css */
 
 .margin-8-auto {
-  margin: 2rem auto;
+  margin: 8rem auto;
   max-width: 1200px;
   padding: 0 1rem;
 }
@@ -161,11 +161,6 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .margin-8-auto {
-    margin: 1rem auto;
-    padding: 0 0.5rem;
-  }
-  
   .fixture-content {
     flex-direction: column;
     gap: 1rem;

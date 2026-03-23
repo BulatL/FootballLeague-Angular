@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 import { forkJoin } from 'rxjs';
 import { FixtureFormModel } from '../core/models/fixture-form';
 import { FixtureDetailPlayerStat } from '../core/models/ApiResponse/Fixture/fixture-details-response';
@@ -51,12 +52,17 @@ export class FixtureFormComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private location: Location,
     private imageService: ImageService,
     private fixtureService: FixtureService,
     private playerService: PlayerService,
     private seasonService: SeasonService,
     private router: Router,
   ) {}
+
+  goBack(): void {
+    this.location.back();
+  }
 
   ngOnInit(): void {
     // later you’ll fetch these from API

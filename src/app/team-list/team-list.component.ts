@@ -46,12 +46,7 @@ export class TeamListComponent implements OnInit{
 
     try {
       // Load seasons for filter dropdowns
-      Promise.all([
-        this.loadSeasons()
-      ]);
-
-      // Load teams with default filters
-      this.loadTeams();
+      this.loadSeasons();
     } catch (error) {
       this.error = 'Failed to load data';
       console.error('Error loading initial data:', error);
@@ -66,6 +61,12 @@ export class TeamListComponent implements OnInit{
     this.seasonService.getAll().subscribe({
       next:(seasons: any) => {
         this.seasons = seasons.$values;
+        const current = this.seasons.find(s => s.isCurrentSeason);
+        if (current) {
+          this.filters.seasonId = current.id;
+        }
+        console.log(current);
+        this.loadTeams();
         this.loading = false;
       },
       error: (error) => {

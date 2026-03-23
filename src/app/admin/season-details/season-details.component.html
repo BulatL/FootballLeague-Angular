@@ -8,10 +8,9 @@
       <div class="header-info">
         <h1>{{ season.name }}</h1>
         <div class="header-meta">
-          <span class="league-badge">Ime lige</span>
           <span class="date-range">
             <!-- {{ formatDate(season.startDate) }}  -->
-              {{season.startDate}}
+              {{ season.startDate | date:'dd.MM.yyyy' }}
             <span *ngIf="season.endDate"> - {{ season.endDate }}</span>
           </span>
         </div>

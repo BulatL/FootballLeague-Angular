@@ -245,3 +245,20 @@ body{
     margin: 20px 0;
   }
 }
+
+.btn-back {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.btn-back:hover {
+  background-color: #5a6268;
+}

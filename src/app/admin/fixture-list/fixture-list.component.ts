@@ -8,6 +8,7 @@ import { Fixture } from '../../core/models/fixture.model';
 import { MatchDay } from '../../core/models/match-day';
 import { FixtureTimeModalComponent } from "../fixture-time-modal/fixture-time-modal.component";
 import { UpdateFixtureDateTimeRequest } from '../core/models/ApiRequest/update-fixture-datetime-request';
+import { SeasonService } from '../../core/services/season.service';
 
 @Component({
   selector: 'app-fixture-list',
@@ -33,7 +34,8 @@ export class AdminFixtureListComponent implements OnInit {
   constructor(
     private router: Router,
     private fixtureService: FixtureService,
-    private imageService: ImageService
+    private imageService: ImageService,
+    private seasonService: SeasonService
   ) {}
 
   ngOnInit(): void {
@@ -146,5 +148,10 @@ export class AdminFixtureListComponent implements OnInit {
   onCloseModal(): void {
     this.showFixtureTimeModal = false;
     this.modalLoading = false;
+  }
+  
+  goBack(): void {
+    const seasonId = this.seasonService.getSeasonId();
+    this.router.navigate(['/admin/seasons', seasonId]);
   }
 }
