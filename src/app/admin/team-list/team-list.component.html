@@ -18,7 +18,6 @@
           <th>Logo</th>
           <th>Naziv</th>
           <th>Kratki naziv</th>
-          <th>Aktivna sezona</th>
           <th>Datum kreiranja</th>
           <th>Akcija</th>
         </tr>
@@ -31,12 +30,6 @@
           </td>
           <td>
             <span class="short-name-badge">{{ team.shortName }}</span>
-          </td>
-          <td>
-            <span class="season-info" *ngIf="team.seasonName">
-              {{ team.seasonName }}
-            </span>
-            <span class="no-data" *ngIf="!team.seasonName">Nema aktivne sezone</span>
           </td>
           <td>{{ formatDate(team.joinedDate) }}</td>
           <td class="action-buttons">

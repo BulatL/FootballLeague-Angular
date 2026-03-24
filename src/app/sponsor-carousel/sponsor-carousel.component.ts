@@ -15,35 +15,6 @@ export interface Sponsor {
   imports: [CommonModule]
 })
 export class SponsorCarouselComponent implements OnInit {
-  
-  // Static list of sponsors with image filenames
-  sponsors: Sponsor[] = [
-    {
-      name: 'Sponsor 1',
-      logo: 'Sponzor-GirosIn.png',
-    },
-    {
-      name: 'Sponsor 2',
-      logo: 'sponsor2.png',
-    },
-    {
-      name: 'Sponsor 3',
-      logo: 'sponsor3.png'
-    },
-    {
-      name: 'Sponsor 4',
-      logo: 'sponsor4.png',
-    },
-    {
-      name: 'Sponsor 5',
-      logo: 'sponsor5.png'
-    },
-    {
-      name: 'Sponsor 6',
-      logo: 'sponsor6.png',
-    }
-  ];
-
   constructor(private imageService: ImageService) {}
 
   ngOnInit(): void {
@@ -58,4 +29,22 @@ export class SponsorCarouselComponent implements OnInit {
     return sponsor.name;
   }
 
+  goToSponsorPage(sponsorName: string): void {
+    const urls: Record<string, string> = {
+      // 'GirosIn': 'https://www.facebook.com/GirosIN',
+      'Helioprogress': 'http://www.helioprogress.com',
+      // 'NormaPetrol': 'https://www.normapetrol.rs',
+      'Plamen': 'https://www.plamen.rs',
+      'Ideal': 'https://www.idealdoo.rs',
+      'PROBAG': 'https://pro-bag.net',
+      'PROLinePVC': 'https://www.prolinepvc.rs',
+      'MetalInZelic': 'https://www.metalinzelic.com',
+      'HealthAndFit': 'https://www.healthandfit.shop',
+    };
+
+    const url = urls[sponsorName];
+    if (url) {
+      window.open(url, '_blank');
+    }
+  }
 }
