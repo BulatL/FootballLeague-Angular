@@ -6,14 +6,20 @@
     Rezultati
   </h1>
 
-  <!-- Matchday Selector - Segmented Control -->
-  <div class="matchday-section" *ngIf="!isLoadingMatchDays">
-    <div class="segmented-control">
-      <button 
-        *ngFor="let matchDay of matchDays" 
-        class="segment-item"
-        [class.active]="isMatchDaySelected(matchDay.id)"
-        [class.finished]="matchDay.isFinished"
+  <!-- Matchday Selector -->
+  <div class="matchday-panel" *ngIf="!isLoadingMatchDays">
+    <div class="round-picker"
+         #roundPicker
+         [class.round-picker-dragging]="isDragging"
+         (mousedown)="onRoundPickerMouseDown($event)"
+         (mousemove)="onRoundPickerMouseMove($event)"
+         (mouseup)="onRoundPickerMouseUp()"
+         (mouseleave)="onRoundPickerMouseUp()">
+      <button
+        *ngFor="let matchDay of matchDays"
+        class="round-btn"
+        [class.round-btn-active]="isMatchDaySelected(matchDay.id)"
+        [class.round-btn-finished]="matchDay.isFinished"
         (click)="selectMatchDay(matchDay.id)">
         {{ matchDay.isPlayoff == false ? 'Kolo ' + matchDay.roundNumber : matchDay.roundName }}
       </button>

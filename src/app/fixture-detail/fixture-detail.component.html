@@ -359,12 +359,12 @@
             {{ getEventIcon(event.type) }}
           </div>
           <div class="event-details">
-            <div class="event-player">{{ event.player }}</div>
+            <div class="event-player" (click)="onPlayerClick(event.playerId)">{{ event.playerName }}</div>
             <div class="event-description">{{ event.description }}</div>
-            <div class="event-assist" *ngIf="event.assistPlayer">Asistencija: {{ event.assistPlayer }}</div>
+            <div class="event-assist" *ngIf="event.assistPlayerId" (click)="onPlayerClick(event.assistPlayerId)">Asistencija: {{ event.assistPlayerName }}</div>
           </div>
           <div class="event-team" [class]="event.team">
-            <img [src]="event.team === 'home' ? getTeamLogo(fixture.homeTeamLogo) : getTeamLogo(fixture.awayTeamLogo)" 
+            <img src="default-team.png" 
                 [alt]="event.team === 'home' ? fixture.homeTeamName : fixture.awayTeamName" 
                 class="event-team-logo">
           </div>

@@ -1,5 +1,5 @@
 // user-fixture-list.component.ts
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FixtureService } from '../core/services/fixture.service';
 import { ImageService } from '../core/services/image.service';
@@ -14,13 +14,20 @@ import { Router } from '@angular/router';
   imports: [CommonModule]
 })
 export class FixtureListComponent implements OnInit {
+  @ViewChild('roundPicker') roundPickerRef!: ElementRef<HTMLDivElement>;
+
   matchDays: MatchDay[] = [];
   fixtures: Fixture[] = [];
   selectedMatchDayId: number | null = null;
-  
+
   // Loading states
   isLoadingMatchDays = false;
   isLoadingFixtures = false;
+
+  // Drag-to-scroll state
+  isDragging = false;
+  private dragStartX = 0;
+  private dragScrollLeft = 0;
 
   constructor(
     private fixtureService: FixtureService,
@@ -81,33 +88,6 @@ export class FixtureListComponent implements OnInit {
 selectMatchDay(matchDayId: number): void {
   this.selectedMatchDayId = matchDayId;
   this.loadFixtures(matchDayId);
-
-  // Use a slightly longer timeout to ensure the DOM has updated
-  setTimeout(() => {
-    this.scrollToSelectedMatchDay(matchDayId);
-  }, 100);
-}
-
-  private scrollToSelectedMatchDay(matchDayId: number): void {
-  const segmentedControl = document.querySelector('.segmented-control');
-  const activeButton = document.querySelector('.segment-item.active');
-  
-  if (segmentedControl && activeButton) {
-    const containerWidth = segmentedControl.clientWidth;
-    const buttonLeft = (activeButton as HTMLElement).offsetLeft;
-    const buttonWidth = (activeButton as HTMLElement).offsetWidth;
-    
-    // Calculate the scroll position to center the active button
-    const scrollLeft = buttonLeft - (containerWidth / 2) + (buttonWidth / 2);
-    
-    // Ensure the scroll position is not negative
-    const finalScrollLeft = Math.max(0, scrollLeft);
-    
-    segmentedControl.scrollTo({
-      left: finalScrollLeft,
-      behavior: 'smooth'
-    });
-  }
 }
 
   getTeamLogo(fileName: string): string {
@@ -139,6 +119,25 @@ selectMatchDay(matchDayId: number): void {
 
 
   
+  onRoundPickerMouseDown(event: MouseEvent): void {
+    const el = this.roundPickerRef.nativeElement;
+    this.isDragging = true;
+    this.dragStartX = event.pageX - el.offsetLeft;
+    this.dragScrollLeft = el.scrollLeft;
+  }
+
+  onRoundPickerMouseMove(event: MouseEvent): void {
+    if (!this.isDragging) return;
+    event.preventDefault();
+    const el = this.roundPickerRef.nativeElement;
+    const x = event.pageX - el.offsetLeft;
+    el.scrollLeft = this.dragScrollLeft - (x - this.dragStartX);
+  }
+
+  onRoundPickerMouseUp(): void {
+    this.isDragging = false;
+  }
+
   onFixtureClick(fixture: Fixture): void {
     const fixtureDate = new Date(fixture.date); // convert string -> Date
     const now = new Date();

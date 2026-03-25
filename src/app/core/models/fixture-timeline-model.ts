@@ -1,9 +1,11 @@
 export interface FixtureTimelineModel {
   minute: number;
   type: EventType;
-  player: string;
+  playerName: string;
+  playerId: number;
   description: string;
-  assistPlayer?: string;
+  assistPlayerName?: string;
+  assistPlayerId?: number;
   team: 'home' | 'away';
 }
 

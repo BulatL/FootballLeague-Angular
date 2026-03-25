@@ -41,8 +41,8 @@
   100% { width: 120px; opacity: 1; }
 }
 
-/* Matchday Section */
-.matchday-section {
+
+.matchday-panel {
   background: rgba(255, 255, 255, 0.9);
   border-radius: 20px;
   padding: 1.5rem;
@@ -52,25 +52,30 @@
   backdrop-filter: blur(10px);
 }
 
-/* Segmented Control */
-.segmented-control {
+.round-picker {
   background: rgba(1, 35, 76, 0.1);
   border-radius: 25px;
   padding: 6px;
   display: flex;
-  justify-content: center;
   gap: 4px;
   overflow-x: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
   scroll-behavior: smooth;
+  cursor: grab;
+  user-select: none;
 }
 
-.segmented-control::-webkit-scrollbar {
+.round-picker::-webkit-scrollbar {
   display: none;
 }
 
-.segment-item {
+.round-picker-dragging {
+  cursor: grabbing;
+  scroll-behavior: auto;
+}
+
+.round-btn {
   background: transparent;
   border: none;
   color: #01234c;
@@ -80,30 +85,29 @@
   cursor: pointer;
   transition: all 0.3s ease;
   white-space: nowrap;
-  flex-shrink: 0;
   font-size: 0.9rem;
   position: relative;
 }
 
-.segment-item:hover:not(.active) {
+.round-btn:hover:not(.round-btn-active) {
   background: rgba(255, 255, 255, 0.5);
   transform: translateY(-1px);
 }
 
-.segment-item.active {
+.round-btn-active {
   background: linear-gradient(135deg, #01234c 0%, #0a3d6b 100%);
   color: white;
   box-shadow: 0 4px 12px rgba(1, 35, 76, 0.3);
   transform: translateY(-2px);
 }
 
-.segment-item.finished:not(.active) {
+.round-btn-finished:not(.round-btn-active) {
   background: rgba(0, 255, 136, 0.1);
   color: #01234c;
   border: 1px solid rgba(0, 255, 136, 0.3);
 }
 
-.segment-item.finished:not(.active)::after {
+.round-btn-finished:not(.round-btn-active)::after {
   content: '✓';
   position: absolute;
   top: -5px;
@@ -119,6 +123,7 @@
   justify-content: center;
   font-weight: bold;
 }
+
 
 /* Loading Container */
 .loading-container {
@@ -438,15 +443,6 @@
     width: 35px;
   }
 
-  .segmented-control {
-    padding: 4px;
-    gap: 2px;
-  }
-
-  .segment-item {
-    padding: 10px 16px;
-    font-size: 0.85rem;
-  }
 }
 
 @media (max-width: 480px) {
@@ -469,12 +465,7 @@
     padding: 6px 10px;
   }
 
-  .segment-item {
-    padding: 8px 12px;
-    font-size: 0.8rem;
-  }
-
-  .matchday-section,
+  .matchday-panel,
   .fixtures-section {
     padding: 1rem;
   }
@@ -493,7 +484,7 @@
 
 /* Focus states for accessibility */
 .fixture-card:focus-within,
-.segment-item:focus {
+.round-btn:focus {
   outline: 2px solid #00ff88;
   outline-offset: 2px;
 }

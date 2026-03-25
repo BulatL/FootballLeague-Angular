@@ -592,6 +592,10 @@
     font-size: 1rem;
     margin-bottom: 0.25rem;
   }
+  .event-player:hover, .event-assist:hover{
+    cursor: pointer;
+    color: #00cc6a;
+  }
   
   .event-description {
     color: #666;
@@ -612,8 +616,7 @@
   }
   
   .event-team-logo {
-    width: 30px;
-    height: 30px;
+    width: 4.5rem;
     border-radius: 50%;
     object-fit: cover;
   }
@@ -795,16 +798,25 @@
     }
   
     .timeline-event {
-      grid-template-columns: auto 1fr;
+      grid-template-columns: auto auto auto 1fr;
       padding-left: 50px;
     }
-  
+
     .timeline-event:nth-child(odd) {
       direction: ltr;
     }
-  
+
     .event-team {
-      display: none;
+      display: flex;
+      order: 3;
+    }
+
+    .event-details {
+      order: 4;
+    }
+
+    .event-team-logo {
+      width: 2.5rem;
     }
   
     .mvp-card {
