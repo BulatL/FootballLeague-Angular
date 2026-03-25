@@ -364,7 +364,7 @@
             <div class="event-assist" *ngIf="event.assistPlayerId" (click)="onPlayerClick(event.assistPlayerId)">Asistencija: {{ event.assistPlayerName }}</div>
           </div>
           <div class="event-team" [class]="event.team">
-            <img src="default-team.png" 
+            <img [src]="event.team === 'home' ? getTeamLogo(fixture.homeTeamLogo) : getTeamLogo(fixture.awayTeamLogo)" 
                 [alt]="event.team === 'home' ? fixture.homeTeamName : fixture.awayTeamName" 
                 class="event-team-logo">
           </div>
