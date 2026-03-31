@@ -37,10 +37,10 @@ export const routes: Routes = [
   { path: 'Home', redirectTo: 'league-home', pathMatch: 'full' },
   { path: 'league-home', component: LeagueHomeComponent },
   { path: 'playoff', component: PlayoffBracketComponent },
-  { path: 'about-league-v1', component: OLigiComponent },
-  { path: 'about-league-v2', component: AboutLeagueComponent},
-  { path: 'about-league-v3', component: AboutLeagueV2Component},
-  { path: 'about-league-v4', component: AboutLeagueV3Component},
+  // { path: 'about-league-v1', component: OLigiComponent },
+  // { path: 'about-league-v2', component: AboutLeagueComponent},
+  // { path: 'about-league-v3', component: AboutLeagueV2Component},
+  // { path: 'about-league-v4', component: AboutLeagueV3Component},
   { 
     path: 'players', 
     children: [
