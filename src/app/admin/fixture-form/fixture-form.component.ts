@@ -96,9 +96,6 @@ export class FixtureFormComponent implements OnInit {
         );
         this.isEditMode = !fixture.isFinished;
         this.isFixtureFinished = fixture.isFinished;
-        console.log(this.isFixtureFinished);
-        console.log(this.isEditMode);
-        console.log(fixture);
         this.loadPlayers();
       },
       error: (error) => {

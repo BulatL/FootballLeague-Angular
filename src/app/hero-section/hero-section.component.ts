@@ -49,8 +49,6 @@ export class HeroSectionComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.leagueService.getLeageuInfo().subscribe({
       next: (data) => {
-        console.log('here');
-        console.log(data);
         this.leagueService.setLeagueId(data.id);
         this.seasonService.setSeasonId(data.currentSeason.id);
         this.leagueId = data.id;

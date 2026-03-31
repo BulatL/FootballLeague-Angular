@@ -65,7 +65,6 @@ export class PlayerDetailComponent {
         this.loading = false;
         this.initTrophyCarousel();
         this.loadFixtures(this.playerId)
-        console.log(response);
       },
       error: (error) => {
         this.error = 'Failed to load player data';
@@ -81,7 +80,6 @@ export class PlayerDetailComponent {
     
     this.fixtureService.getByPlayer(playerId).subscribe({
       next: (response: ApiListResponse<PlayerDetailFixture>) => {
-        console.log(response);
         this.player.fixtures = response.$values;
         this.loadingFixtures = false;
         

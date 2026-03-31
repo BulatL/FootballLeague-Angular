@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 import { environment } from '../../../environment';
-import { PlayoffBracket, PlayoffFixture, PlayoffSeed } from '../models/playoff-model';
-import { ApiListResponse } from '../../shared/api-list-response';
+import { PlayoffBracket } from '../models/playoff-model';
 
 @Injectable({  providedIn: 'root' })
 export class PlayoffService {
@@ -11,7 +11,14 @@ export class PlayoffService {
 
   constructor(private http: HttpClient) {}
 
-  getBySeasonId(seasonId: number | null): Observable<ApiListResponse<PlayoffBracket>> {
-    return this.http.get<ApiListResponse<PlayoffBracket>>(`${this.apiUrl}/season/${seasonId}`);
+  getBySeasonId(seasonId: number | null): Observable<PlayoffBracket> {
+    return this.http.get<PlayoffBracket>(`${this.apiUrl}/season/${seasonId}`);
+  }
+
+  hasPlayoffStarted(seasonId: number): Observable<boolean> {
+    return this.getBySeasonId(seasonId).pipe(
+      map(bracket => !!bracket?.startDate && new Date(bracket.startDate) <= new Date()),
+      catchError(() => of(false))
+    );
   }
 }

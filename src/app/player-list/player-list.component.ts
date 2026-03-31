@@ -84,7 +84,6 @@ export class PlayerListComponent implements OnInit {
   }
 
   loadTeams(){
-    console.log('load teams');
     this.loading = true;
     this.teamService.getAll().subscribe({
       next: (teams: any) => {
@@ -100,10 +99,8 @@ export class PlayerListComponent implements OnInit {
 
   loadPlayers(){
     this.loading = true;
-    console.log(this.filters);
     this.playerService.listPlayers(this.filters, this.currentPage, this.pageSize).subscribe({
       next: (result: any) => {
-        console.log(result);
         if(result.totalCount > 0){
           this.players = result.players.$values;
         }
@@ -222,7 +219,6 @@ export class PlayerListComponent implements OnInit {
   }
 
   nextPage() {
-    console.log(this.hasNextPage);
     if (this.hasNextPage) {
       this.goToPage(this.currentPage + 1);
     }

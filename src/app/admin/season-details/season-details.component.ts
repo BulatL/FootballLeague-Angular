@@ -205,10 +205,8 @@ Prva utakmica: ${this.formatDate(response.data?.firstMatchDate!)}`;
         }
         else
           alert(response.errors.$values[0].message)
-        console.log(response);
       },
       error: (err) => {
-        console.log(err);
         alert('Doslo je do greske prilikom pravljenja utakmica!');
       }
     });
@@ -244,10 +242,8 @@ createFinalFixtures(): void {
         }
         else
           alert(response.errors.$values[0].message)
-        console.log(response);
       },
       error: (err) => {
-        console.log(err);
         alert('Doslo je do greske prilikom pravljenja utakmica!');
       }
     });

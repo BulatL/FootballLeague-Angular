@@ -65,7 +65,6 @@ export class TeamListComponent implements OnInit{
         if (current) {
           this.filters.seasonId = current.id;
         }
-        console.log(current);
         this.loadTeams();
         this.loading = false;
       },
