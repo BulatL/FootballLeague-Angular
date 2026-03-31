@@ -35,7 +35,7 @@
     </div>
   </div>
 
-  <div *ngIf="isFixtureFinished == false" class="fixture-not-finished-container">
+  <div *ngIf="isFixtureFinished == false && (fixture.homeTeamName != null && fixture.awayTeamName != null)" class="fixture-not-finished-container">
     <div class="not-finished-card">
       <div class="not-finished-icon">
         <div class="clock-icon">
@@ -76,7 +76,7 @@
     </div>
   </div>
 
-  <div *ngIf="isFixtureFinished == true">
+  <div *ngIf="isFixtureFinished == true && (fixture.homeTeamName != null && fixture.awayTeamName != null)">
     <!-- MVP Section -->
     <div class="section" *ngIf="isOfficialResul == false">
       <h2 class="section-title">
@@ -245,7 +245,7 @@
                     <span class="breakdown-points negative">{{ player.dreamPointsBreakdown.redCards.points }}</span>
                   </div>
                   <div class="breakdown-item" *ngIf="player.dreamPointsBreakdown.ownGoalsPenalty < 0">
-                    <span class="breakdown-desc">Autopogodci</span>
+                    <span class="breakdown-desc">Autogolovi</span>
                     <span class="breakdown-points negative">{{ player.dreamPointsBreakdown.ownGoalsPenalty }}</span>
                   </div>
                   <div class="breakdown-item" *ngIf="player.dreamPointsBreakdown.goalsConcededPenalty < 0">
@@ -326,7 +326,7 @@
                     <span class="breakdown-points negative">{{ player.dreamPointsBreakdown.redCards.points }}</span>
                   </div>
                   <div class="breakdown-item" *ngIf="player.dreamPointsBreakdown.ownGoalsPenalty < 0">
-                    <span class="breakdown-desc">Autopogodci</span>
+                    <span class="breakdown-desc">Autogolovi</span>
                     <span class="breakdown-points negative">{{ player.dreamPointsBreakdown.ownGoalsPenalty }}</span>
                   </div>
                   <div class="breakdown-item" *ngIf="player.dreamPointsBreakdown.goalsConcededPenalty < 0">

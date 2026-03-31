@@ -49,6 +49,9 @@ export class FixtureFormComponent implements OnInit {
   awaySaves: number = 0;
   showOfficialResult: boolean = false;
   isEditMode: boolean = false;
+  isFixtureFinished: boolean = false;
+  isSaving: boolean = false;
+  isSubmittingOfficialResult: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -92,6 +95,10 @@ export class FixtureFormComponent implements OnInit {
                                                 fixture.isFinished
         );
         this.isEditMode = !fixture.isFinished;
+        this.isFixtureFinished = fixture.isFinished;
+        console.log(this.isFixtureFinished);
+        console.log(this.isEditMode);
+        console.log(fixture);
         this.loadPlayers();
       },
       error: (error) => {
@@ -233,15 +240,20 @@ export class FixtureFormComponent implements OnInit {
       })),
     };
 
+    this.isSaving = true;
     this.fixtureService.postFixtureDetails(request).subscribe({
       next: (res) => {
+        this.isSaving = false;
         alert('Fixture saved successfully!');
 
         const seasonId = this.seasonService.getSeasonId();
         this.router.navigate(['/admin/seasons', seasonId, 'fixtures']);
       },
       error: (err) => {
-        alert('Error while saving fixture!');
+        this.isSaving = false;
+        const body = err?.error;
+        const msg = body?.errors?.[0] ?? body?.errors?.$values?.[0] ?? err?.message ?? 'Nepoznata greška';
+        alert("Greška pri čuvanju: " + msg);
         console.error('Save fixture error:', err);
       }
     });
@@ -423,16 +435,23 @@ export class FixtureFormComponent implements OnInit {
   }
   submitOfficialResult(winingTeamId: number, teamName: string){
     if (confirm('Da li ste sigurni da želite da dodelite službeni rezultat timu: ' + teamName)){
+      this.isSubmittingOfficialResult = true;
       this.fixtureService.postOfficialResult(winingTeamId, this.fixtureId!).subscribe({
         next: (response: any) => {
+            this.isSubmittingOfficialResult = false;
             if(response.isValid){
               alert("Sluzbeni rezultat uspesno sacuvan");
-              this.router.navigate([`/admin/seasons/${response.data}/fixtures`]); 
+              this.router.navigate([`/admin/seasons/${response.data}/fixtures`]);
+            } else {
+              const msg = response.errors?.$values?.[0] ?? response.errors?.[0] ?? 'Nepoznata greška';
+              alert("Doslo je do greske: " + msg);
             }
-            else
-              alert("Doslo je do greske prilikom cuvanja sluzbenog rezultata: " + response.errors.$values[0])
         },
         error: (error) => {
+          this.isSubmittingOfficialResult = false;
+          const body = error?.error;
+          const msg = body?.errors?.[0] ?? body?.errors?.$values?.[0] ?? error?.message ?? 'Nepoznata greška';
+          alert("Doslo je do greske: " + msg);
           console.error('Error saving official result:', error);
         }
       });

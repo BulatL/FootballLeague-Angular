@@ -248,7 +248,7 @@ export class FixtureCarouselComponent implements OnInit, OnDestroy {
     const fixtureDate = new Date(fixture.date);
     const now = new Date();
 
-    if (fixtureDate < now) {
+    if (fixtureDate < now && (fixture.homeTeamName != "" && fixture.awayTeamName != "")) {
       this.router.navigate([`/fixtures/${fixture.id}`]);
     }
   }

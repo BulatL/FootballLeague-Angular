@@ -142,7 +142,7 @@ selectMatchDay(matchDayId: number): void {
     const fixtureDate = new Date(fixture.date); // convert string -> Date
     const now = new Date();
 
-    if (fixtureDate < now) 
+    if (fixtureDate < now && (fixture.homeTeamName != null && fixture.awayTeamName != null)) 
       this.router.navigate([`/fixtures/${fixture.id}`]);
   }
 
