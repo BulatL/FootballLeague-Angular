@@ -28,6 +28,8 @@ import { PlayerListComponent } from './player-list/player-list.component';
 import { PlayoffBracketComponent } from './playoff-bracket/playoff-bracket.component';
 import { OLigiComponent } from './o-ligi/o-ligi.component';
 import { AboutLeagueComponent } from './about-league/about-league.component';
+import { AboutLeagueV2Component } from './about-league-v2/about-league-v2.component';
+import { AboutLeagueV3Component } from './about-league-v3/about-league-v3.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'league-home', pathMatch: 'full' },
@@ -35,8 +37,10 @@ export const routes: Routes = [
   { path: 'Home', redirectTo: 'league-home', pathMatch: 'full' },
   { path: 'league-home', component: LeagueHomeComponent },
   { path: 'playoff', component: PlayoffBracketComponent },
-  { path: 'o-ligi2222222', component: OLigiComponent },
-  { path: 'about-league3333333', component: AboutLeagueComponent},
+  { path: 'about-league-v1', component: OLigiComponent },
+  { path: 'about-league-v2', component: AboutLeagueComponent},
+  { path: 'about-league-v3', component: AboutLeagueV2Component},
+  { path: 'about-league-v4', component: AboutLeagueV3Component},
   { 
     path: 'players', 
     children: [
